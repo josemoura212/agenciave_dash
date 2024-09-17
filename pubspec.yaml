@@ -1,24 +1,31 @@
 name: agenciave_dash
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+description: "Dashboards interativa para a Agência Vê"
+version: 0.0.1
+homepage: https://dash.mangatrix.net
 
 environment:
-  sdk: '>=3.3.2 <4.0.0'
+  sdk: ">=3.3.2 <4.0.0"
 
 dependencies:
+  asyncstate: ^2.1.0
   dio: ^5.7.0
   flutter:
     sdk: flutter
+  flutter_getit: ^2.0.0
   flutter_signals: ^0.0.1
   intl: ^0.19.0
+  json_annotation: ^4.9.0
   shared_preferences: ^2.3.2
   syncfusion_flutter_charts: ^26.2.14
+  top_snackbar_flutter: ^3.1.0
+  validatorless: ^1.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.12
 
 flutter:
   uses-material-design: true
