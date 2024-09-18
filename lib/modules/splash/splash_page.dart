@@ -26,6 +26,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
           child: SizedBox(
             height: 250,
             child: Card(
+              elevation: 12,
               child: AutofillGroup(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,7 +54,11 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
                         if (_formKey.currentState!.validate()) {
                           final result = await controller.checkAuth(
                               apiKey: _apiKeyEC.text);
-                          if (result) Navigator.pushNamed(context, "/home");
+                          if (result) {
+                            if (context.mounted) {
+                              Navigator.pushNamed(context, "/home");
+                            }
+                          }
                         }
                       },
                       child: const Text("Entrar"),
