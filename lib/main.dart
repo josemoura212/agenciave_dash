@@ -8,7 +8,6 @@ import 'package:asyncstate/asyncstate.dart' as asyncstate;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 void main() {
@@ -17,28 +16,8 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  var isDarkMode = false;
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      isDarkMode = await _loadTheme();
-    });
-    super.initState();
-  }
-
-  Future<bool> _loadTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isDarkMode') ?? false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +29,7 @@ class _MainAppState extends State<MainApp> {
         HomeModule(),
       ],
       builder: (context, routes, flutterGetItObserver) {
-        final themeManager = Injector.get<ThemeManager>();
-
-        themeManager.isDarkMode.value = isDarkMode;
-        themeManager.toggleTheme();
+        final themeManager = Injector.get<ThemeManager>()..getDarkMode();
         return asyncstate.AsyncStateBuilder(
           loader: DashLoader(),
           builder: (asyncNavigatorObserver) {
@@ -63,9 +39,8 @@ class _MainAppState extends State<MainApp> {
                 title: "Agência Vê Dashboard",
                 theme: UiConfig.lightTheme,
                 darkTheme: UiConfig.darkTheme,
-                themeMode: themeManager.isDarkMode.value
-                    ? ThemeMode.dark
-                    : ThemeMode.light,
+                themeMode:
+                    themeManager.isDarkMode ? ThemeMode.dark : ThemeMode.light,
                 navigatorObservers: [
                   asyncNavigatorObserver,
                   flutterGetItObserver

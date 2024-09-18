@@ -12,7 +12,10 @@ class DashApplicationBindins extends ApplicationBindings {
         Bind.lazySingleton<RestClient>(
             (i) => RestClient(LocalStorageConstants.baseUrl)),
         Bind.lazySingleton<LocalStorage>((i) => SharedPreferenceImpl()),
-        Bind.lazySingleton<ThemeManager>((i) => ThemeManager(false)),
+        Bind.lazySingleton<ThemeManager>((i) => ThemeManager(
+              initialDarkMode: true,
+              localStorage: i(),
+            )),
         Bind.lazySingleton<AuthController>(
             (i) => AuthController(localStorage: i())),
       ];

@@ -1,23 +1,33 @@
+import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/core/ui/ui_config.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 class ThemeManager {
   final Signal<ThemeData> themeData;
-  final Signal<bool> isDarkMode;
+  final Signal<bool> _isDarkMode;
+  final LocalStorage _localStorage;
 
-  ThemeManager(bool initialDarkMode)
-      : themeData =
+  bool get isDarkMode => _isDarkMode.value;
+
+  ThemeManager({
+    required bool initialDarkMode,
+    required LocalStorage localStorage,
+  })  : themeData =
             Signal(initialDarkMode ? UiConfig.darkTheme : UiConfig.lightTheme),
-        isDarkMode = Signal(initialDarkMode);
+        _isDarkMode = Signal(initialDarkMode),
+        _localStorage = localStorage;
 
   void toggleTheme() async {
-    isDarkMode.value = !isDarkMode.value;
+    _isDarkMode.value = !_isDarkMode.value;
     themeData.value =
-        isDarkMode.value ? UiConfig.darkTheme : UiConfig.lightTheme;
+        _isDarkMode.value ? UiConfig.darkTheme : UiConfig.lightTheme;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isDarkMode', isDarkMode.value);
+    _localStorage.writeBool('isDarkMode', _isDarkMode.value);
+  }
+
+  Future<void> getDarkMode() async {
+    final isDark = await _localStorage.readBool('isDarkMode') ?? true;
+    _isDarkMode.value = isDark;
   }
 }

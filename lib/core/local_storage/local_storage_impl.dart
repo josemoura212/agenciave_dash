@@ -33,4 +33,16 @@ class SharedPreferenceImpl implements LocalStorage {
     final sp = await _instance;
     sp.setString(key, value);
   }
+
+  @override
+  Future<void> writeBool(String key, bool value) async {
+    final sp = await _instance;
+    sp.setBool(key, value);
+  }
+
+  @override
+  Future<bool?> readBool(String key) async {
+    final sp = await _instance;
+    return sp.getBool(key);
+  }
 }
