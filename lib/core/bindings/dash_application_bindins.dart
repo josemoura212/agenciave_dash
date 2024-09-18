@@ -1,3 +1,4 @@
+import 'package:agenciave_dash/core/auth/auth_controller.dart';
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage_impl.dart';
@@ -12,5 +13,7 @@ class DashApplicationBindins extends ApplicationBindings {
             (i) => RestClient(LocalStorageConstants.baseUrl)),
         Bind.lazySingleton<LocalStorage>((i) => SharedPreferenceImpl()),
         Bind.lazySingleton<ThemeManager>((i) => ThemeManager(false)),
+        Bind.lazySingleton<AuthController>(
+            (i) => AuthController(localStorage: i())),
       ];
 }

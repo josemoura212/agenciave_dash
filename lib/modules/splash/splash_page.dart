@@ -18,6 +18,11 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
   final controller = Injector.get<SplashController>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
@@ -56,7 +61,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
                               apiKey: _apiKeyEC.text);
                           if (result) {
                             if (context.mounted) {
-                              Navigator.pushNamed(context, "/home");
+                              Navigator.pushReplacementNamed(context, "/home");
                             }
                           }
                         }

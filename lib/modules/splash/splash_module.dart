@@ -18,10 +18,11 @@ class SplashModule extends FlutterGetItModule {
             )),
         Bind.lazySingleton<SplashServices>((i) => SplashServicesImpl(
               splashRepository: i(),
-              localStorage: i(),
+              authController: i(),
             )),
         Bind.lazySingleton((i) => SplashController(
               splashServices: i(),
+              authController: i(),
             )),
       ];
 
