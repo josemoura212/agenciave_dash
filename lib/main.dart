@@ -2,8 +2,7 @@ import 'package:agenciave_dash/core/bindings/dash_application_bindins.dart';
 import 'package:agenciave_dash/core/ui/loader.dart';
 import 'package:agenciave_dash/core/ui/ui_config.dart';
 import 'package:agenciave_dash/modules/home/home_module.dart';
-import 'package:agenciave_dash/pages/splash_controller.dart';
-import 'package:agenciave_dash/pages/splash_page.dart';
+import 'package:agenciave_dash/modules/splash/splash_module.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +22,8 @@ class MainApp extends StatelessWidget {
       debugMode: kDebugMode,
       bindings: DashApplicationBindins(),
       modules: [
+        SplashModule(),
         HomeModule(),
-      ],
-      pages: [
-        FlutterGetItPageBuilder(
-          path: "/",
-          page: (_) => const SplashPage(),
-          binding: () => Bind.lazySingleton(
-              (i) => SplashController(restClient: i(), localStorage: i())),
-        )
       ],
       builder: (context, routes, flutterGetItObserver) {
         return AsyncStateBuilder(

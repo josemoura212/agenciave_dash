@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 sealed class UiConfig {
   static ThemeData get thema => ThemeData(
         primarySwatch: Colors.deepOrange,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepOrange,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        inputDecorationTheme: const InputDecorationTheme(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             minimumSize: const WidgetStatePropertyAll(
