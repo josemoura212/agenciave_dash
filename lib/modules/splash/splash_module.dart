@@ -9,7 +9,7 @@ import 'package:flutter_getit/flutter_getit.dart';
 
 class SplashModule extends FlutterGetItModule {
   @override
-  String get moduleRouteName => "/";
+  String get moduleRouteName => "/splash";
 
   @override
   List<Bind<Object>> get bindings => [
@@ -28,6 +28,6 @@ class SplashModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => {
-        moduleRouteName: (_) => const SplashPage(),
+        "/": (_) => const SplashPage(),
       };
 }

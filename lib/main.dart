@@ -46,6 +46,7 @@ class MainApp extends StatelessWidget {
                   flutterGetItObserver
                 ],
                 routes: routes,
+                initialRoute: "/splash",
               ),
             );
           },

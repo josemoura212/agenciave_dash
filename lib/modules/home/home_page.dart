@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
         Navigator.pushNamedAndRemoveUntil(
           // ignore: use_build_context_synchronously
           context,
-          "/",
+          "/splash",
           (_) => false,
         );
       }
