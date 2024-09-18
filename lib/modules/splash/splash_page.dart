@@ -20,6 +20,18 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final result = await controller.isAuthenticate();
+      messageListener(controller);
+      if (result) {
+        Navigator.pushNamedAndRemoveUntil(
+          // ignore: use_build_context_synchronously
+          context,
+          "/home",
+          (_) => false,
+        );
+      }
+    });
   }
 
   @override
@@ -59,10 +71,12 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
                         if (_formKey.currentState!.validate()) {
                           final result = await controller.checkAuth(
                               apiKey: _apiKeyEC.text);
-                          if (result) {
-                            if (context.mounted) {
-                              Navigator.pushReplacementNamed(context, "/home");
-                            }
+                          if (result && context.mounted) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              "/home",
+                              (_) => false,
+                            );
                           }
                         }
                       },

@@ -9,19 +9,21 @@ class AuthController {
   AuthController({required LocalStorage localStorage})
       : _localStorage = localStorage;
 
-  Signal<bool> get isAuthenticated => _isAuthenticated;
+  bool get isAuthenticated => _isAuthenticated.value;
 
   Future<void> setAuthenticate(String apiKey) async {
     _isAuthenticated.value = true;
     _localStorage.write(LocalStorageConstants.apiKey, apiKey);
   }
 
-  Future<void> isAuthenticate() async {
+  Future<String?> isAuthenticate() async {
     String apiKey =
         await _localStorage.read(LocalStorageConstants.apiKey) ?? "";
 
     if (apiKey.isNotEmpty) {
       _isAuthenticated.value = true;
+      return apiKey;
     }
+    return null;
   }
 }

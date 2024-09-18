@@ -17,9 +17,14 @@ class SplashServicesImpl implements SplashServices {
 
   @override
   Future<Either<AuthException, Nil>> checkAuth({required String apiKey}) async {
-    await _splashRepository.checkAuth(apiKey: apiKey);
-    _authController.setAuthenticate(apiKey);
+    final result = await _splashRepository.checkAuth(apiKey: apiKey);
 
-    return Right(Nil());
+    switch (result) {
+      case Left(value: _):
+        return Left(AuthUnauthorizedException());
+      case Right(value: _):
+        _authController.setAuthenticate(apiKey);
+        return Right(nil);
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:agenciave_dash/core/auth/auth_controller.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/services/splash/splash_services.dart';
+import 'package:asyncstate/asyncstate.dart';
 
 class SplashController with MessageStateMixin {
   final SplashServices _splashServices;
@@ -14,7 +15,8 @@ class SplashController with MessageStateMixin {
         _authController = authController;
 
   Future<bool> checkAuth({required String apiKey}) async {
-    final result = await _splashServices.checkAuth(apiKey: apiKey);
+    final result =
+        await _splashServices.checkAuth(apiKey: apiKey).asyncLoader();
 
     switch (result) {
       case Left(value: _):
@@ -25,8 +27,13 @@ class SplashController with MessageStateMixin {
     }
   }
 
-  bool isAuthenticate() {
-    _authController.isAuthenticate();
-    return _authController.isAuthenticated.value;
+  Future<bool> isAuthenticate() async {
+    final apiKey = await _authController.isAuthenticate();
+
+    if (apiKey != null) {
+      return await checkAuth(apiKey: apiKey);
+    } else {
+      return false;
+    }
   }
 }

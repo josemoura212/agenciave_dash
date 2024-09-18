@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/exceptions/auth_exception.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
@@ -22,10 +24,15 @@ class SplashRepositoryImpl implements SplashRepository {
       );
       if (response.statusCode == 200) {
         return Right(nil);
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        log("Erro 401 ou 403  1");
+        return Left(AuthUnauthorizedException());
       } else {
+        log("Erro 401 ou 403  2");
         return Left(AuthUnauthorizedException());
       }
     } catch (e) {
+      log("Erro 401 ou 403   3");
       return Left(AuthUnauthorizedException());
     }
   }
