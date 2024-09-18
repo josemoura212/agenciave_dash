@@ -53,6 +53,7 @@ class _MainAppState extends State<MainApp> {
         final themeManager = Injector.get<ThemeManager>();
 
         themeManager.isDarkMode.value = isDarkMode;
+        themeManager.toggleTheme();
         return asyncstate.AsyncStateBuilder(
           loader: DashLoader(),
           builder: (asyncNavigatorObserver) {
