@@ -7,7 +7,7 @@ final class AuthInterceptor extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final RequestOptions(:headers, :extra) = options;
-    const authHeaderKey = "Authorization";
+    const authHeaderKey = "api_key";
 
     headers.remove(authHeaderKey);
 

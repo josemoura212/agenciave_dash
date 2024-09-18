@@ -1,6 +1,8 @@
 import 'package:agenciave_dash/core/bindings/dash_application_bindins.dart';
 import 'package:agenciave_dash/core/ui/loader.dart';
+import 'package:agenciave_dash/core/ui/ui_config.dart';
 import 'package:agenciave_dash/modules/home/home_module.dart';
+import 'package:agenciave_dash/pages/splash_controller.dart';
 import 'package:agenciave_dash/pages/splash_page.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +29,8 @@ class MainApp extends StatelessWidget {
         FlutterGetItPageBuilder(
           path: "/",
           page: (_) => const SplashPage(),
+          binding: () => Bind.lazySingleton(
+              (i) => SplashController(restClient: i(), localStorage: i())),
         )
       ],
       builder: (context, routes, flutterGetItObserver) {
@@ -36,6 +40,7 @@ class MainApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: "Agência Vê Dashboard",
+              theme: UiConfig.thema,
               navigatorObservers: [
                 asyncNavigatorObserver,
                 flutterGetItObserver
