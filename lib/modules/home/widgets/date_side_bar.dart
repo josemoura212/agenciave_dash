@@ -21,19 +21,6 @@ class DateSideBar extends StatelessWidget {
             (_) => SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text("Total de Vendas: ${controller.totalVendas}"),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.refresh),
-                        onPressed: () {
-                          controller.resetSelectedDate();
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: controller.dateData.length,

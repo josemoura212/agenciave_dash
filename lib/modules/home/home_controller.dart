@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
+import 'package:intl/intl.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 import 'package:agenciave_dash/core/auth/auth_controller.dart';
@@ -34,6 +35,8 @@ class HomeController with MessageStateMixin {
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
 
+  final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+
   void setHomeData(List<HomeModel> data) {
     if (_selectedDate.value == null) {
       setChartData(_homeDataBackup.value);
@@ -47,6 +50,17 @@ class HomeController with MessageStateMixin {
       }).toList();
       setChartData(filteredData);
     }
+  }
+
+  String get totalFaturamento {
+    final total = homeData.length * 197;
+
+    return formatter.format(total);
+  }
+
+  String get totalReceita {
+    final total = homeData.length * 174.85;
+    return formatter.format(total);
   }
 
   void setChartData(List<HomeModel> data) {
