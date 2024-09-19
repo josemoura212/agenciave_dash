@@ -4,10 +4,12 @@ class Origem {
   String name;
   double value;
   String? text;
+  int total;
   Origem({
     required this.name,
     required this.value,
     this.text,
+    required this.total,
   });
 }
 

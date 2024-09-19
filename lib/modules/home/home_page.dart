@@ -56,17 +56,27 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
           Watch(
             (_) => Expanded(
               child: SfCircularChart(
-                title: const ChartTitle(text: "Origem"),
+                title: ChartTitle(
+                    text:
+                        "Origem das Vendas - Quant. ${controller.homeData.length}"),
                 legend: const Legend(isVisible: true),
                 series: [
                   PieSeries<Origem, String>(
                     explode: true,
                     explodeIndex: 0,
                     dataSource: controller.origemData,
-                    xValueMapper: (Origem data, _) => data.name,
+                    xValueMapper: (Origem data, _) =>
+                        "${data.name} : Total ${data.total}",
                     yValueMapper: (Origem data, _) => data.value,
-                    dataLabelMapper: (Origem data, _) => data.text,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                    dataLabelMapper: (Origem data, _) =>
+                        "${data.text} : Total ${data.total}",
+                    dataLabelSettings: const DataLabelSettings(
+                      isVisible: true,
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),

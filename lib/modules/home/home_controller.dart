@@ -1,3 +1,4 @@
+import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
@@ -26,47 +27,47 @@ class HomeController with MessageStateMixin {
     final List<Origem> origemTotal = [];
 
     final Map<String, int> countOrigem = {
-      "zoom": 0,
-      "whatsapp": 0,
-      "manychat": 0,
-      "chatbot": 0,
-      "bio": 0,
-      "poliana": 0,
-      "fbads-frio": 0,
-      "fbads-quente": 0,
+      "Zoom": 0,
+      "Whatsapp": 0,
+      "Manychat": 0,
+      "Chatbot": 0,
+      "Bio": 0,
+      "Poliana": 0,
+      "fbads Frio": 0,
+      "fbads Quente": 0,
     };
 
     for (var item in data) {
       switch (item.origem.toLowerCase()) {
         case "zoom":
-          countOrigem["zoom"] = (countOrigem["zoom"] ?? 0) + item.quantidade;
+          countOrigem["Zoom"] = (countOrigem["Zoom"] ?? 0) + item.quantidade;
           break;
         case "whatsapp":
-          countOrigem["whatsapp"] =
-              (countOrigem["whatsapp"] ?? 0) + item.quantidade;
+          countOrigem["Whatsapp"] =
+              (countOrigem["Whatsapp"] ?? 0) + item.quantidade;
           break;
         case "manychat":
-          countOrigem["manychat"] =
-              (countOrigem["manychat"] ?? 0) + item.quantidade;
+          countOrigem["Manychat"] =
+              (countOrigem["Manychat"] ?? 0) + item.quantidade;
           break;
         case "chatbot":
-          countOrigem["chatbot"] =
-              (countOrigem["chatbot"] ?? 0) + item.quantidade;
+          countOrigem["Chatbot"] =
+              (countOrigem["Chatbot"] ?? 0) + item.quantidade;
           break;
         case "bio":
-          countOrigem["bio"] = (countOrigem["bio"] ?? 0) + item.quantidade;
+          countOrigem["Bio"] = (countOrigem["Bio"] ?? 0) + item.quantidade;
           break;
         case "poliana":
-          countOrigem["poliana"] =
-              (countOrigem["poliana"] ?? 0) + item.quantidade;
+          countOrigem["Poliana"] =
+              (countOrigem["Poliana"] ?? 0) + item.quantidade;
           break;
         case "fbads-frio":
-          countOrigem["fbads-frio"] =
-              (countOrigem["fbads-frio"] ?? 0) + item.quantidade;
+          countOrigem["fbads Frio"] =
+              (countOrigem["fbads Frio"] ?? 0) + item.quantidade;
           break;
         case "fbads-quente":
-          countOrigem["fbads-quente"] =
-              (countOrigem["fbads-quente"] ?? 0) + item.quantidade;
+          countOrigem["fbads Quente"] =
+              (countOrigem["fbads Quente"] ?? 0) + item.quantidade;
           break;
       }
     }
@@ -75,6 +76,7 @@ class HomeController with MessageStateMixin {
       origemTotal.add(Origem(
           name: key,
           value: value.toDouble(),
+          total: value,
           text: "$key: ${(value * 100 / data.length).toStringAsFixed(2)}%"));
     });
 
@@ -83,7 +85,7 @@ class HomeController with MessageStateMixin {
 
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await _homeServices.getHomeData();
+      final result = await _homeServices.getHomeData().asyncLoader();
 
       switch (result) {
         case Left():
