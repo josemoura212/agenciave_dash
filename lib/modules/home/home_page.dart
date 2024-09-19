@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
           (_) => false,
         );
       }
+
+      await controller.getHomeData();
     });
     super.initState();
   }

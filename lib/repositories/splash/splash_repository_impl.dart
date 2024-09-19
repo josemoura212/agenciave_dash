@@ -16,8 +16,8 @@ class SplashRepositoryImpl implements SplashRepository {
   @override
   Future<Either<AuthException, Nil>> checkAuth({required String apiKey}) async {
     try {
-      final response = await _restClient.unAuth.post(
-        '${LocalStorageConstants.baseUrl}/webhook/dashboard',
+      final response = await _restClient.post(
+        LocalStorageConstants.baseUrl,
         options: Options(
           headers: {"x-api-key": apiKey},
         ),
