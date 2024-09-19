@@ -1,11 +1,11 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
+import 'package:agenciave_dash/modules/home/widgets/chart_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
-import 'package:agenciave_dash/modules/home/widgets/origem_chart.dart';
-import 'package:agenciave_dash/modules/home/widgets/states_chart.dart';
 import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
+import 'package:signals_flutter/signals_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,10 +53,24 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
                   const UpBar(),
                 ],
-                body: const CustomScrollView(
+                body: CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(child: OrigemChart()),
-                    SliverToBoxAdapter(child: StatesChart()),
+                    SliverToBoxAdapter(
+                      child: Watch(
+                        (_) => ChartWidget(
+                          title: "Origem das Vendas",
+                          chartData: controller.origemData,
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Watch(
+                        (_) => ChartWidget(
+                          title: "Estados",
+                          chartData: controller.stateData,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
