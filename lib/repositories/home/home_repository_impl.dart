@@ -27,7 +27,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
     if (response.statusCode == 200) {
       final List<HomeModel> homeData =
-          (response.data as List).map((e) => HomeModel.fromJson(e)).toList();
+          (response.data as List).map((e) => HomeModel.fromMap(e)).toList();
 
       return Right(homeData);
     } else {

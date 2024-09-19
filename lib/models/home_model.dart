@@ -1,15 +1,26 @@
 import 'dart:convert';
 
+class Origem {
+  String name;
+  double value;
+  String? text;
+  Origem({
+    required this.name,
+    required this.value,
+    this.text,
+  });
+}
+
 class HomeModel {
   int nowNumber;
   String nomeProduto;
   String origem;
-  DateTime dataVenda;
-  DateTime horaVenda;
+  String dataVenda;
+  String horaVenda;
   int quantidade;
   double faturamento;
   String moeda;
-  int numeroParcela;
+  String numeroParcela;
   String status;
   String pais;
   String estado;
@@ -40,8 +51,8 @@ class HomeModel {
       'now_number': nowNumber,
       'Nome do Produto': nomeProduto,
       'Origem': origem,
-      'Data de Venda': dataVenda.millisecondsSinceEpoch,
-      'Hora de Venda': horaVenda.millisecondsSinceEpoch,
+      'Data de Venda': dataVenda,
+      'Hora de Venda': horaVenda,
       'Qtd.': quantidade,
       'Faturamento': faturamento,
       'Moeda': moeda,
@@ -60,12 +71,12 @@ class HomeModel {
       nowNumber: map['row_number']?.toInt() ?? 0,
       nomeProduto: map['Nome do Produto'] ?? '',
       origem: map['Origem'] ?? '',
-      dataVenda: DateTime.fromMillisecondsSinceEpoch(map['Data de Venda']),
-      horaVenda: DateTime.fromMillisecondsSinceEpoch(map['Hora de Venda']),
+      dataVenda: map['Data de Venda'],
+      horaVenda: map['Hora de Venda'],
       quantidade: map['Qtd.']?.toInt() ?? 0,
       faturamento: map['Faturamento']?.toDouble() ?? 0.0,
       moeda: map['Moeda'] ?? '',
-      numeroParcela: map['Número da Parcela']?.toInt() ?? 0,
+      numeroParcela: map['Número da Parcela'],
       status: map['Status'] ?? '',
       pais: map['País'] ?? '',
       estado: map['Estado'] ?? '',
@@ -79,4 +90,9 @@ class HomeModel {
 
   factory HomeModel.fromJson(String source) =>
       HomeModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'HomeModel(nowNumber: $nowNumber, nomeProduto: $nomeProduto, origem: $origem, dataVenda: $dataVenda, horaVenda: $horaVenda, quantidade: $quantidade, faturamento: $faturamento, moeda: $moeda, numeroParcela: $numeroParcela, status: $status, pais: $pais, estado: $estado, tipoPagamento: $tipoPagamento, tipoPagamentoOferta: $tipoPagamentoOferta, valorComissaoGerada: $valorComissaoGerada)';
+  }
 }
