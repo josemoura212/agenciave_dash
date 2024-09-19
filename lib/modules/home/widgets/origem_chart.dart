@@ -1,4 +1,4 @@
-import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/models/origem_model.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
@@ -15,18 +15,17 @@ class OrigemChart extends StatelessWidget {
     return Watch(
       (_) => Expanded(
         child: SfCircularChart(
-          title: ChartTitle(
-              text: "Origem das Vendas - Quant. ${controller.homeData.length}"),
+          title: const ChartTitle(text: "Origem das Vendas"),
           legend: const Legend(isVisible: true),
           series: [
-            PieSeries<Origem, String>(
+            PieSeries<OrigemModel, String>(
               explode: true,
               explodeIndex: 0,
               dataSource: controller.origemData,
-              xValueMapper: (Origem data, _) =>
+              xValueMapper: (OrigemModel data, _) =>
                   "${data.name} : Total ${data.total}",
-              yValueMapper: (Origem data, _) => data.value,
-              dataLabelMapper: (Origem data, _) =>
+              yValueMapper: (OrigemModel data, _) => data.value,
+              dataLabelMapper: (OrigemModel data, _) =>
                   "${data.text} : Total ${data.total}",
               dataLabelSettings: const DataLabelSettings(
                 isVisible: true,
