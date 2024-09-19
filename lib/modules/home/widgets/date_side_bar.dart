@@ -11,27 +11,41 @@ class DateSideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Injector.get<HomeController>();
 
-    return Card(
-      elevation: 12,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Watch(
-          (_) => SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("Total de Vendas: ${controller.homeData.length}"),
-                const SizedBox(height: 20),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.dateData.length,
-                  itemBuilder: (_, index) {
-                    final date = controller.dateData[index];
-                    return DateTile(
-                      date: date,
-                    );
-                  },
-                ),
-              ],
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      child: Card(
+        elevation: 12,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Watch(
+            (_) => SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text("Total de Vendas: ${controller.totalVendas}"),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () {
+                          controller.resetSelectedDate();
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.dateData.length,
+                    itemBuilder: (_, index) {
+                      final date = controller.dateData[index];
+                      return DateTile(
+                        date: date,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -41,13 +55,17 @@ class DateSideBar extends StatelessWidget {
 }
 
 class DateTile extends StatelessWidget {
-  const DateTile({super.key, required this.date});
+  DateTile({super.key, required this.date});
 
   final DateModel date;
+  final HomeController controller = Injector.get<HomeController>();
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        controller.setSelectedDate(date.date);
+      },
       title: Text(
         "${date.date.day}/${date.date.month}/${date.date.year} - ${date.weekday}",
       ),
