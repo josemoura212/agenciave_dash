@@ -1,10 +1,10 @@
 import 'package:agenciave_dash/models/home_model.dart';
 
 class OrigemModel {
-  String name;
-  double value;
-  String? text;
-  int total;
+  final String name;
+  final double value;
+  final String? text;
+  final int total;
   OrigemModel({
     required this.name,
     required this.value,

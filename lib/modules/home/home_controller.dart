@@ -1,4 +1,5 @@
 import 'package:agenciave_dash/models/date_model.dart';
+import 'package:agenciave_dash/models/state_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,8 @@ class HomeController with MessageStateMixin {
   final Signal<List<HomeModel>> _homeDataBackup = Signal<List<HomeModel>>([]);
   final Signal<List<OrigemModel>> _origemData = Signal<List<OrigemModel>>([]);
   final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
+  final Signal<List<StateModel>> _stateData = Signal<List<StateModel>>([]);
+
   final Signal<int> _totalVendas = Signal<int>(0);
   final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
   final Signal<String> _totalFaturamento = Signal<String>('');
@@ -31,6 +34,8 @@ class HomeController with MessageStateMixin {
   List<HomeModel> get homeData => _homeData.value;
   List<OrigemModel> get origemData => _origemData.value;
   List<DateModel> get dateData => _dateData.value;
+  List<StateModel> get stateData => _stateData.value;
+
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
   String get totalFaturamento => _totalFaturamento.value;
@@ -68,6 +73,7 @@ class HomeController with MessageStateMixin {
     _homeData.set(data, force: true);
     _origemData.set(setOrigemData(data), force: true);
     _dateData.set(setDateData(data), force: true);
+    _stateData.set(setStateData(data), force: true);
     _totalVendas.set(data.length, force: true);
     calcTotalFaturamento();
     calcTotalReceita();

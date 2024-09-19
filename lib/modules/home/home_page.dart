@@ -51,21 +51,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
               child: NestedScrollView(
                 floatHeaderSlivers: true,
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverAppBar(
-                    floating: true,
-                    snap: true,
-                    pinned: true,
-                    backgroundColor: Colors.grey.shade900,
-                    surfaceTintColor: Colors.grey.shade900,
-                    elevation: 12,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
-                    flexibleSpace: const FlexibleSpaceBar(
-                      background: UpBar(),
-                    ),
-                  ),
+                  const UpBar(),
                 ],
                 body: const CustomScrollView(
                   slivers: [
