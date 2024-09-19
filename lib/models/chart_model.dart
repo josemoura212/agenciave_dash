@@ -64,6 +64,7 @@ List<ChartModel> setOrigemData(List<HomeModel> data) {
   }
 
   countOrigem.forEach((key, value) {
+    if (value == 0) return;
     origemTotal.add(ChartModel(
         name: key,
         value: value.toDouble(),
@@ -194,6 +195,7 @@ List<ChartModel> setStateData(List<HomeModel> data) {
   }
 
   countState.forEach((key, value) {
+    if (value == 0) return;
     stateTotal.add(ChartModel(
       name: key,
       value: value.toDouble(),
