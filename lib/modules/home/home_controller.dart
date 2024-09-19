@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
 import 'package:signals_flutter/signals_flutter.dart';
-
 import 'package:agenciave_dash/core/auth/auth_controller.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/helpers/messages.dart';
@@ -28,12 +25,16 @@ class HomeController with MessageStateMixin {
   final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
   final Signal<int> _totalVendas = Signal<int>(0);
   final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
+  final Signal<String> _totalFaturamento = Signal<String>('');
+  final Signal<String> _totalReceita = Signal<String>('');
 
   List<HomeModel> get homeData => _homeData.value;
   List<OrigemModel> get origemData => _origemData.value;
   List<DateModel> get dateData => _dateData.value;
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
+  String get totalFaturamento => _totalFaturamento.value;
+  String get totalReceita => _totalReceita.value;
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
@@ -52,15 +53,15 @@ class HomeController with MessageStateMixin {
     }
   }
 
-  String get totalFaturamento {
-    final total = homeData.length * 197;
+  void calcTotalFaturamento() {
+    final total = homeData.length * homeData[0].faturamento;
 
-    return formatter.format(total);
+    _totalFaturamento.set(formatter.format(total));
   }
 
-  String get totalReceita {
-    final total = homeData.length * 174.85;
-    return formatter.format(total);
+  void calcTotalReceita() {
+    final total = homeData.length * homeData[0].valorComissaoGerada;
+    _totalReceita.set(formatter.format(total));
   }
 
   void setChartData(List<HomeModel> data) {
@@ -68,7 +69,8 @@ class HomeController with MessageStateMixin {
     _origemData.set(setOrigemData(data), force: true);
     _dateData.set(setDateData(data), force: true);
     _totalVendas.set(data.length, force: true);
-    log("============= ${homeData.length} =============");
+    calcTotalFaturamento();
+    calcTotalReceita();
   }
 
   void resetSelectedDate() {

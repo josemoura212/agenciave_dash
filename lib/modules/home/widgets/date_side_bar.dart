@@ -55,8 +55,16 @@ class DateTile extends StatelessWidget {
       },
       title: Text(
         "${date.date.day}/${date.date.month}/${date.date.year} - ${date.weekday}",
+        style: const TextStyle(
+          fontSize: 14,
+        ),
       ),
-      subtitle: Text("Total: ${date.total} vendas"),
+      subtitle: Text(
+        "Total: ${date.total} vendas",
+        style: const TextStyle(
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }

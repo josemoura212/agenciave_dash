@@ -2,6 +2,7 @@ import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
 import 'package:agenciave_dash/modules/home/widgets/origem_chart.dart';
+import 'package:agenciave_dash/modules/home/widgets/states_chart.dart';
 import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
@@ -37,21 +38,41 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Row(
           children: [
-            SizedBox(
-              width: 300,
+            const SizedBox(
+              width: 250,
               child: DateSideBar(),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  UpBar(),
-                  OrigemChart(),
+              child: NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverAppBar(
+                    floating: true,
+                    snap: true,
+                    pinned: true,
+                    backgroundColor: Colors.grey.shade900,
+                    surfaceTintColor: Colors.grey.shade900,
+                    elevation: 12,
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                    flexibleSpace: const FlexibleSpaceBar(
+                      background: UpBar(),
+                    ),
+                  ),
                 ],
+                body: const CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(child: OrigemChart()),
+                    SliverToBoxAdapter(child: StatesChart()),
+                  ],
+                ),
               ),
             ),
           ],

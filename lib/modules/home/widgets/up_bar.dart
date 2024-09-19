@@ -13,36 +13,30 @@ class UpBar extends StatelessWidget {
     final controller = Injector.get<HomeController>();
 
     return Watch(
-      (_) => SizedBox(
-        height: 50,
-        child: Card(
-          elevation: 12,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () {
-                    controller.resetSelectedDate();
-                  },
-                  tooltip: "Resetar data",
-                ),
-                Text("Vendas: ${controller.totalVendas}"),
-                Text("Faturamento: ${controller.totalFaturamento}"),
-                Text("Receita: ${controller.totalReceita}"),
-                IconButton(
-                  icon: const Icon(Icons.brightness_6),
-                  onPressed: () {
-                    // Logic to toggle theme
-                    themeManager.toggleTheme();
-                  },
-                  tooltip: "Mudar tema",
-                ),
-              ],
+      (_) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                controller.resetSelectedDate();
+              },
+              tooltip: "Resetar data",
             ),
-          ),
+            Text("Vendas: ${controller.totalVendas}"),
+            Text("Faturamento: ${controller.totalFaturamento}"),
+            Text("Receita: ${controller.totalReceita}"),
+            IconButton(
+              icon: const Icon(Icons.brightness_6),
+              onPressed: () {
+                // Logic to toggle theme
+                themeManager.toggleTheme();
+              },
+              tooltip: "Mudar tema",
+            ),
+          ],
         ),
       ),
     );
