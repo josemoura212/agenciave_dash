@@ -18,10 +18,8 @@ class UpBar extends StatelessWidget {
       snap: true,
       pinned: true,
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
       flexibleSpace: FlexibleSpaceBar(
         background: Card(
-          elevation: 12,
           child: Watch(
             (_) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

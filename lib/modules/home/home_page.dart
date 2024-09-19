@@ -57,19 +57,22 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                   slivers: [
                     SliverToBoxAdapter(
                       child: Watch(
-                        (_) => ChartWidget(
-                          title: "Origem das Vendas",
-                          chartData: controller.origemData,
+                        (_) => Row(
+                          children: [
+                            ChartWidget(
+                              title: "Origem das Vendas",
+                              chartData: controller.origemData,
+                            ),
+                            ChartWidget(
+                              title: "Estados",
+                              chartData: controller.stateData,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: Watch(
-                        (_) => ChartWidget(
-                          title: "Estados",
-                          chartData: controller.stateData,
-                        ),
-                      ),
+                      child: Watch((_) => const SizedBox.shrink()),
                     ),
                   ],
                 ),

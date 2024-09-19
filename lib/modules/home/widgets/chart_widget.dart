@@ -15,28 +15,33 @@ class ChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SfCircularChart(
-      title: ChartTitle(text: title),
-      legend: const Legend(isVisible: true),
-      series: [
-        PieSeries<ChartModel, String>(
-          explode: true,
-          explodeIndex: 0,
-          dataSource: chartData,
-          xValueMapper: (ChartModel data, _) =>
-              "${data.name} : Total ${data.total}",
-          yValueMapper: (ChartModel data, _) => data.value,
-          dataLabelMapper: (ChartModel data, _) => data.text,
-          dataLabelSettings: const DataLabelSettings(
-            isVisible: true,
-            labelPosition: ChartDataLabelPosition.outside,
-            textStyle: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+    return Expanded(
+      child: SfCircularChart(
+        title: ChartTitle(text: title),
+        legend: const Legend(
+          isVisible: true,
+        ),
+        series: [
+          PieSeries<ChartModel, String>(
+            explode: true,
+            explodeIndex: 0,
+            dataSource: chartData,
+            xValueMapper: (ChartModel data, _) =>
+                "${data.name} : Total ${data.total}",
+            yValueMapper: (ChartModel data, _) => data.value,
+            dataLabelMapper: (ChartModel data, _) => data.text,
+            dataLabelSettings: const DataLabelSettings(
+              isVisible: true,
+              labelPosition: ChartDataLabelPosition.outside,
+              overflowMode: OverflowMode.shift,
+              textStyle: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
