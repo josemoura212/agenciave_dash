@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
+  <head>
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,52 +14,86 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+    <base href="$FLUTTER_BASE_HREF" />
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Dashboard.">
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Dashboard." />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="agenciave_dash">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="agenciave_dash" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/webp" href="icons/favicon_ellen_ok.webp"/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="icons/favicon_ellen_ok.webp" />
 
-  <title>Agência Vê Dashboard</title>
-  <link rel="manifest" href="manifest.json">
+    <title>Agência Vê Dashboard</title>
+    <link rel="manifest" href="manifest.json" />
 
-  <style>
-    body{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0; /* Remove qualquer margem padrão */
-      background-color: #383333;
-    }
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0; /* Remove qualquer margem padrão */
+        background-color: #383333;
+      }
 
-    .loader {
-      width: 60px;
-      aspect-ratio: 1;
-      --g: conic-gradient(from -90deg at 10px 10px,#fff 90deg,#0000 0);
-      background: var(--g), var(--g), var(--g);
-      background-size: 50% 50%;
-      animation: l19 1s infinite;
-    }
-    @keyframes l19 {
-      0%   {background-position:0     0, 10px 10px, 20px 20px}
-      33%  {background-position:10px  10px}
-      66%  {background-position:0    20px,10px 10px,20px 0   }
-      100% {background-position:0     0, 10px 10px, 20px 20px}
-    }
-  </style>
-</head>
-<body>
-  <div class="loader"></div>
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+      .loader {
+        --s: 20px;
+
+        --_d: calc(0.353 * var(--s));
+        width: calc(var(--s) + var(--_d));
+        aspect-ratio: 1;
+        display: grid;
+      }
+      .loader:before,
+      .loader:after {
+        content: "";
+        grid-area: 1/1;
+        clip-path: polygon(
+          var(--_d) 0,
+          100% 0,
+          100% calc(100% - var(--_d)),
+          calc(100% - var(--_d)) 100%,
+          0 100%,
+          0 var(--_d)
+        );
+        background: conic-gradient(
+          from -90deg at calc(100% - var(--_d)) var(--_d),
+          #fff 135deg,
+          #666 0 270deg,
+          #aaa 0
+        );
+        animation: l6 2s infinite;
+      }
+      .loader:after {
+        animation-delay: -1s;
+      }
+      @keyframes l6 {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(30px, 0);
+        }
+        50% {
+          transform: translate(30px, 30px);
+        }
+        75% {
+          transform: translate(0, 30px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader"></div>
+    <script src="flutter_bootstrap.js" async></script>
+  </body>
 </html>

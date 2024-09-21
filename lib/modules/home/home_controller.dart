@@ -1,5 +1,6 @@
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
+import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +26,8 @@ class HomeController with MessageStateMixin {
 
   final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
+  final Signal<List<GridMediaModel>> _gridMediaData =
+      Signal<List<GridMediaModel>>([]);
 
   final Signal<int> _totalVendas = Signal<int>(0);
   final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
@@ -36,6 +39,7 @@ class HomeController with MessageStateMixin {
 
   List<ChartModel> get origemData => _origemData.value;
   List<ChartModel> get stateData => _stateData.value;
+  List<GridMediaModel> get gridMediaData => _gridMediaData.value;
 
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
@@ -80,6 +84,7 @@ class HomeController with MessageStateMixin {
     _totalVendas.set(data.length, force: true);
     calcTotalFaturamento();
     calcTotalReceita();
+    setGridMediaData(data);
   }
 
   void resetSelectedDate() {
