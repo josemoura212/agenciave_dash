@@ -1,6 +1,8 @@
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
+import 'package:agenciave_dash/models/hour_model.dart';
+import 'package:agenciave_dash/models/weekday_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
@@ -26,19 +28,16 @@ class HomeController with MessageStateMixin {
 
   final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
-  final Signal<GridMediaModel> _gridMediaData =
-      Signal<GridMediaModel>(GridMediaModel(
-    mediaDiaria: MediaDiaria(
-      vendas: 0,
-      mediaFaturamento: "0.0",
-      mediaReceita: "0.0",
-    ),
-    mediaMensal: MediaMensal(
-      vendas: 0,
-      mediaFaturamento: "0.0",
-      mediaReceita: "0.0",
-    ),
-  ));
+  final Signal<GridMediaModel> _gridMediaData = Signal<GridMediaModel>(
+      GridMediaModel(
+          mediaDiaria: MediaDiaria(
+              vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0"),
+          mediaMensal: MediaMensal(
+              vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0")));
+
+  final Signal<List<HourModel>> _hourData = Signal<List<HourModel>>([]);
+  final Signal<List<WeekdayModel>> _weekdayData =
+      Signal<List<WeekdayModel>>([]);
 
   final Signal<int> _totalVendas = Signal<int>(0);
   final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
@@ -51,6 +50,8 @@ class HomeController with MessageStateMixin {
   List<ChartModel> get origemData => _origemData.value;
   List<ChartModel> get stateData => _stateData.value;
   GridMediaModel get gridMediaData => _gridMediaData.value;
+  List<HourModel> get hourData => _hourData.value;
+  List<WeekdayModel> get weekdayData => _weekdayData.value;
 
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
@@ -64,19 +65,19 @@ class HomeController with MessageStateMixin {
       setChartData(_homeDataBackup.value);
     } else {
       final filteredData =
-          data.where((item) => item.dataVenda == _selectedDate.value).toList();
+          data.where((item) => item.saleDate == _selectedDate.value).toList();
       setChartData(filteredData);
     }
   }
 
   void calcTotalFaturamento() {
-    final total = homeData.length * homeData[0].faturamento;
+    final total = homeData.length * homeData[0].invoicing;
 
     _totalFaturamento.set(formatter.format(total));
   }
 
   void calcTotalReceita() {
-    final total = homeData.length * homeData[0].valorComissaoGerada;
+    final total = homeData.length * homeData[0].commissionValueGenerated;
     _totalReceita.set(formatter.format(total));
   }
 
@@ -91,6 +92,8 @@ class HomeController with MessageStateMixin {
     calcTotalFaturamento();
     calcTotalReceita();
     _gridMediaData.set(setGridMediaData(dateData));
+    _hourData.set(setHourData(data), force: true);
+    _weekdayData.set(setWeekdayData(data), force: true);
   }
 
   void resetSelectedDate() {

@@ -3,14 +3,14 @@ import 'package:agenciave_dash/models/home_model.dart';
 class DateModel {
   final DateTime date;
   final int total;
-  final double faturamento;
-  final double receita;
+  final double invoicing;
+  final double revenue;
 
   DateModel({
     required this.date,
     required this.total,
-    required this.faturamento,
-    required this.receita,
+    required this.invoicing,
+    required this.revenue,
   });
 
   String get weekday {
@@ -33,16 +33,16 @@ setDateData(List<HomeModel> data) {
 
   for (var item in data) {
     countDate.update(
-      item.dataVenda,
+      item.saleDate,
       (value) => VendaModel(
-        total: value.total + item.quantidade,
-        faturamento: value.faturamento + item.faturamento,
-        receita: value.receita + item.valorComissaoGerada,
+        total: value.total + item.quantity,
+        faturamento: value.faturamento + item.invoicing,
+        receita: value.receita + item.commissionValueGenerated,
       ),
       ifAbsent: () => VendaModel(
-        total: item.quantidade,
-        faturamento: item.faturamento,
-        receita: item.valorComissaoGerada,
+        total: item.quantity,
+        faturamento: item.invoicing,
+        receita: item.commissionValueGenerated,
       ),
     );
   }
@@ -51,8 +51,8 @@ setDateData(List<HomeModel> data) {
     dateTotal.add(DateModel(
         date: key,
         total: value.total,
-        faturamento: value.faturamento,
-        receita: value.receita));
+        invoicing: value.faturamento,
+        revenue: value.receita));
   });
 
   dateTotal.sort((a, b) => a.date.compareTo(b.date));

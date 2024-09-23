@@ -2,76 +2,73 @@ import 'dart:convert';
 
 class HomeModel {
   int nowNumber;
-  String nomeProduto;
-  String origem;
-  DateTime dataVenda;
-  String horaVenda;
-  int quantidade;
-  double faturamento;
-  String moeda;
-  String numeroParcela;
+  String nameProduct;
+  String origin;
+  DateTime saleDate;
+  int quantity;
+  double invoicing;
+  String coin;
+  String recurrenceNumber;
   String status;
-  String pais;
-  String estado;
-  String tipoPagamento;
-  String tipoPagamentoOferta;
-  double valorComissaoGerada;
+  String country;
+  String state;
+  String paymentType;
+  String paymenteTypeOffer;
+  double commissionValueGenerated;
 
   HomeModel({
     required this.nowNumber,
-    required this.nomeProduto,
-    required this.origem,
-    required this.dataVenda,
-    required this.horaVenda,
-    required this.quantidade,
-    required this.faturamento,
-    required this.moeda,
-    required this.numeroParcela,
+    required this.nameProduct,
+    required this.origin,
+    required this.saleDate,
+    required this.quantity,
+    required this.invoicing,
+    required this.coin,
+    required this.recurrenceNumber,
     required this.status,
-    required this.pais,
-    required this.estado,
-    required this.tipoPagamento,
-    required this.tipoPagamentoOferta,
-    required this.valorComissaoGerada,
+    required this.country,
+    required this.state,
+    required this.paymentType,
+    required this.paymenteTypeOffer,
+    required this.commissionValueGenerated,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'now_number': nowNumber,
-      'Nome do Produto': nomeProduto,
-      'Origem': origem,
-      'Data de Venda': dataVenda,
-      'Hora de Venda': horaVenda,
-      'Qtd.': quantidade,
-      'Faturamento': faturamento,
-      'Moeda': moeda,
-      'Número da Parcela': numeroParcela,
+      'Nome do Produto': nameProduct,
+      'Origem': origin,
+      'Data de Venda': saleDate,
+      'Qtd.': quantity,
+      'Faturamento': invoicing,
+      'Moeda': coin,
+      'Número da Parcela': recurrenceNumber,
       'Status': status,
-      'País': pais,
-      'Estado': estado,
-      'Tipo de Pagamento': tipoPagamento,
-      'Tipo pagamento oferta': tipoPagamentoOferta,
-      'Valor da Comissão Gerada': valorComissaoGerada,
+      'País': country,
+      'Estado': state,
+      'Tipo de Pagamento': paymentType,
+      'Tipo pagamento oferta': paymenteTypeOffer,
+      'Valor da Comissão Gerada': commissionValueGenerated,
     };
   }
 
   factory HomeModel.fromMap(Map<String, dynamic> map) {
     return HomeModel(
       nowNumber: map['row_number']?.toInt() ?? 0,
-      nomeProduto: map['Nome do Produto'] ?? '',
-      origem: map['Origem'] ?? '',
-      dataVenda: toDate(map['Data de Venda']),
-      horaVenda: map['Hora de Venda'],
-      quantidade: map['Qtd.']?.toInt() ?? 0,
-      faturamento: map['Faturamento']?.toDouble() ?? 0.0,
-      moeda: map['Moeda'] ?? '',
-      numeroParcela: map['Número da Parcela'],
+      nameProduct: map['Nome do Produto'] ?? '',
+      origin: map['Origem'] ?? '',
+      saleDate: toDate(map['Data de Venda'], map['Hora de Venda']),
+      quantity: map['Qtd.']?.toInt() ?? 0,
+      invoicing: map['Faturamento']?.toDouble() ?? 0.0,
+      coin: map['Moeda'] ?? '',
+      recurrenceNumber: map['Número da Parcela'],
       status: map['Status'] ?? '',
-      pais: map['País'] ?? '',
-      estado: map['Estado'] ?? '',
-      tipoPagamento: map['Tipo de Pagamento'] ?? '',
-      tipoPagamentoOferta: map['Tipo pagamento oferta'] ?? '',
-      valorComissaoGerada: map['Valor da Comissão Gerada']?.toDouble() ?? 0.0,
+      country: map['País'] ?? '',
+      state: map['Estado'] ?? '',
+      paymentType: map['Tipo de Pagamento'] ?? '',
+      paymenteTypeOffer: map['Tipo pagamento oferta'] ?? '',
+      commissionValueGenerated:
+          map['Valor da Comissão Gerada']?.toDouble() ?? 0.0,
     );
   }
 
@@ -82,12 +79,12 @@ class HomeModel {
 
   @override
   String toString() {
-    return 'HomeModel(nowNumber: $nowNumber, nomeProduto: $nomeProduto, origem: $origem, dataVenda: $dataVenda, horaVenda: $horaVenda, quantidade: $quantidade, faturamento: $faturamento, moeda: $moeda, numeroParcela: $numeroParcela, status: $status, pais: $pais, estado: $estado, tipoPagamento: $tipoPagamento, tipoPagamentoOferta: $tipoPagamentoOferta, valorComissaoGerada: $valorComissaoGerada)';
+    return 'HomeModel(nowNumber: $nowNumber, nomeProduto: $nameProduct, origem: $origin, dataVenda: $saleDate, quantidade: $quantity, faturamento: $invoicing, moeda: $coin, numeroParcela: $recurrenceNumber, status: $status, pais: $country, estado: $state, tipoPagamento: $paymentType, tipoPagamentoOferta: $paymenteTypeOffer, valorComissaoGerada: $commissionValueGenerated)';
   }
 }
 
-DateTime toDate(String date) {
+DateTime toDate(String date, String hora) {
   final split = date.split("/");
-  return DateTime(
-      int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
+  return DateTime(int.parse(split[2]), int.parse(split[1]), int.parse(split[0]),
+      int.parse(hora));
 }

@@ -54,8 +54,8 @@ GridMediaModel setGridMediaData(List<DateModel> data) {
     }
     vendas += item.total;
     totalDays++;
-    totalFaturamento += item.faturamento;
-    totalReceita += item.receita;
+    totalFaturamento += item.invoicing;
+    totalReceita += item.revenue;
   }
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');

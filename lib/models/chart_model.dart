@@ -29,36 +29,34 @@ List<ChartModel> setOrigemData(List<HomeModel> data) {
   };
 
   for (var item in data) {
-    switch (item.origem.toLowerCase()) {
+    switch (item.origin.toLowerCase()) {
       case "zoom":
-        countOrigem["Zoom"] = (countOrigem["Zoom"] ?? 0) + item.quantidade;
+        countOrigem["Zoom"] = (countOrigem["Zoom"] ?? 0) + item.quantity;
         break;
       case "whatsapp":
         countOrigem["Whatsapp"] =
-            (countOrigem["Whatsapp"] ?? 0) + item.quantidade;
+            (countOrigem["Whatsapp"] ?? 0) + item.quantity;
         break;
       case "manychat":
         countOrigem["Manychat"] =
-            (countOrigem["Manychat"] ?? 0) + item.quantidade;
+            (countOrigem["Manychat"] ?? 0) + item.quantity;
         break;
       case "chatbot":
-        countOrigem["Chatbot"] =
-            (countOrigem["Chatbot"] ?? 0) + item.quantidade;
+        countOrigem["Chatbot"] = (countOrigem["Chatbot"] ?? 0) + item.quantity;
         break;
       case "bio":
-        countOrigem["Bio"] = (countOrigem["Bio"] ?? 0) + item.quantidade;
+        countOrigem["Bio"] = (countOrigem["Bio"] ?? 0) + item.quantity;
         break;
       case "poliana":
-        countOrigem["Poliana"] =
-            (countOrigem["Poliana"] ?? 0) + item.quantidade;
+        countOrigem["Poliana"] = (countOrigem["Poliana"] ?? 0) + item.quantity;
         break;
       case "fbads-frio":
         countOrigem["fbads Frio"] =
-            (countOrigem["fbads Frio"] ?? 0) + item.quantidade;
+            (countOrigem["fbads Frio"] ?? 0) + item.quantity;
         break;
       case "fbads-quente":
         countOrigem["fbads Quente"] =
-            (countOrigem["fbads Quente"] ?? 0) + item.quantidade;
+            (countOrigem["fbads Quente"] ?? 0) + item.quantity;
         break;
     }
   }
@@ -109,87 +107,87 @@ List<ChartModel> setStateData(List<HomeModel> data) {
   };
 
   for (var item in data) {
-    switch (item.estado.toLowerCase()) {
+    switch (item.state.toLowerCase()) {
       case "sp":
-        countState["SP"] = (countState["SP"] ?? 0) + item.quantidade;
+        countState["SP"] = (countState["SP"] ?? 0) + item.quantity;
         break;
       case "rj":
-        countState["RJ"] = (countState["RJ"] ?? 0) + item.quantidade;
+        countState["RJ"] = (countState["RJ"] ?? 0) + item.quantity;
         break;
       case "mg":
-        countState["MG"] = (countState["MG"] ?? 0) + item.quantidade;
+        countState["MG"] = (countState["MG"] ?? 0) + item.quantity;
         break;
       case "es":
-        countState["ES"] = (countState["ES"] ?? 0) + item.quantidade;
+        countState["ES"] = (countState["ES"] ?? 0) + item.quantity;
         break;
       case "pr":
-        countState["PR"] = (countState["PR"] ?? 0) + item.quantidade;
+        countState["PR"] = (countState["PR"] ?? 0) + item.quantity;
         break;
       case "sc":
-        countState["SC"] = (countState["SC"] ?? 0) + item.quantidade;
+        countState["SC"] = (countState["SC"] ?? 0) + item.quantity;
         break;
       case "rs":
-        countState["RS"] = (countState["RS"] ?? 0) + item.quantidade;
+        countState["RS"] = (countState["RS"] ?? 0) + item.quantity;
         break;
       case "ms":
-        countState["MS"] = (countState["MS"] ?? 0) + item.quantidade;
+        countState["MS"] = (countState["MS"] ?? 0) + item.quantity;
         break;
       case "mt":
-        countState["MT"] = (countState["MT"] ?? 0) + item.quantidade;
+        countState["MT"] = (countState["MT"] ?? 0) + item.quantity;
         break;
       case "go":
-        countState["GO"] = (countState["GO"] ?? 0) + item.quantidade;
+        countState["GO"] = (countState["GO"] ?? 0) + item.quantity;
         break;
       case "df":
-        countState["DF"] = (countState["DF"] ?? 0) + item.quantidade;
+        countState["DF"] = (countState["DF"] ?? 0) + item.quantity;
         break;
       case "ba":
-        countState["BA"] = (countState["BA"] ?? 0) + item.quantidade;
+        countState["BA"] = (countState["BA"] ?? 0) + item.quantity;
         break;
       case "se":
-        countState["SE"] = (countState["SE"] ?? 0) + item.quantidade;
+        countState["SE"] = (countState["SE"] ?? 0) + item.quantity;
         break;
       case "al":
-        countState["AL"] = (countState["AL"] ?? 0) + item.quantidade;
+        countState["AL"] = (countState["AL"] ?? 0) + item.quantity;
         break;
       case "pe":
-        countState["PE"] = (countState["PE"] ?? 0) + item.quantidade;
+        countState["PE"] = (countState["PE"] ?? 0) + item.quantity;
         break;
       case "pb":
-        countState["PB"] = (countState["PB"] ?? 0) + item.quantidade;
+        countState["PB"] = (countState["PB"] ?? 0) + item.quantity;
         break;
       case "rn":
-        countState["RN"] = (countState["RN"] ?? 0) + item.quantidade;
+        countState["RN"] = (countState["RN"] ?? 0) + item.quantity;
         break;
       case "ce":
-        countState["CE"] = (countState["CE"] ?? 0) + item.quantidade;
+        countState["CE"] = (countState["CE"] ?? 0) + item.quantity;
         break;
       case "pi":
-        countState["PI"] = (countState["PI"] ?? 0) + item.quantidade;
+        countState["PI"] = (countState["PI"] ?? 0) + item.quantity;
         break;
       case "ma":
-        countState["MA"] = (countState["MA"] ?? 0) + item.quantidade;
+        countState["MA"] = (countState["MA"] ?? 0) + item.quantity;
         break;
       case "pa":
-        countState["PA"] = (countState["PA"] ?? 0) + item.quantidade;
+        countState["PA"] = (countState["PA"] ?? 0) + item.quantity;
         break;
       case "ap":
-        countState["AP"] = (countState["AP"] ?? 0) + item.quantidade;
+        countState["AP"] = (countState["AP"] ?? 0) + item.quantity;
         break;
       case "to":
-        countState["TO"] = (countState["TO"] ?? 0) + item.quantidade;
+        countState["TO"] = (countState["TO"] ?? 0) + item.quantity;
         break;
       case "ro":
-        countState["RO"] = (countState["RO"] ?? 0) + item.quantidade;
+        countState["RO"] = (countState["RO"] ?? 0) + item.quantity;
         break;
       case "ac":
-        countState["AC"] = (countState["AC"] ?? 0) + item.quantidade;
+        countState["AC"] = (countState["AC"] ?? 0) + item.quantity;
         break;
       case "am":
-        countState["AM"] = (countState["AM"] ?? 0) + item.quantidade;
+        countState["AM"] = (countState["AM"] ?? 0) + item.quantity;
         break;
       case "rr":
-        countState["RR"] = (countState["RR"] ?? 0) + item.quantidade;
+        countState["RR"] = (countState["RR"] ?? 0) + item.quantity;
         break;
     }
   }

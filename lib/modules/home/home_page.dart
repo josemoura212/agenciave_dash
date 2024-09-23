@@ -4,6 +4,7 @@ import 'package:agenciave_dash/modules/home/widgets/chart_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
 import 'package:agenciave_dash/modules/home/widgets/table_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
+import 'package:agenciave_dash/modules/home/widgets/weekday_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
@@ -81,6 +82,9 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                           const SliverToBoxAdapter(
                             child: TableWidget(),
                           ),
+                          const SliverToBoxAdapter(
+                            child: WeekdayWidget(),
+                          )
                         ],
                       ),
                     ),
