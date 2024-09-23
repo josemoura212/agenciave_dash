@@ -48,18 +48,14 @@ GridMediaModel setGridMediaData(List<DateModel> data) {
   var totalReceita = 0.0;
 
   for (var item in data) {
-    if (item.date.month == currentMonth) {
-      vendas += item.total;
-      totalDays++;
-      totalFaturamento += item.faturamento;
-      totalReceita += item.receita;
-    } else {
-      vendas += item.total;
-      totalDays++;
-      totalFaturamento += item.faturamento;
-      totalReceita += item.receita;
+    if (item.date.month != currentMonth) {
+      currentMonth = item.date.month;
       totalMonth++;
     }
+    vendas += item.total;
+    totalDays++;
+    totalFaturamento += item.faturamento;
+    totalReceita += item.receita;
   }
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
