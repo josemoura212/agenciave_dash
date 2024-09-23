@@ -71,61 +71,71 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                         ),
                       ),
                     ),
-                    // SliverGrid.builder(
-                    //   gridDelegate:
-                    //       const SliverGridDelegateWithFixedCrossAxisCount(
-                    //     crossAxisCount: 3,
-                    //     crossAxisSpacing: 10,
-                    //     mainAxisSpacing: 10,
-                    //     childAspectRatio: 1.5,
-                    //   ),
-                    //   itemBuilder: (context, item) {
-                    //     final itemData = controller.gridMediaData[item];
-                    //     return Container(
-                    //       padding: const EdgeInsets.all(10),
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.white,
-                    //         borderRadius: BorderRadius.circular(10),
-                    //         boxShadow: [
-                    //           BoxShadow(
-                    //             color: Colors.black.withOpacity(0.1),
-                    //             blurRadius: 10,
-                    //             spreadRadius: 5,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       child: Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           Text(
-                    //             itemData.mediaDiaria[0].mediaFaturamento
-                    //                 .toString(),
-                    //             style: const TextStyle(
-                    //               fontSize: 18,
-                    //               fontWeight: FontWeight.bold,
-                    //             ),
-                    //           ),
-                    //           const SizedBox(height: 10),
-                    //           Text(
-                    //             itemData.mediaDiaria[0].mediaReceita.toString(),
-                    //             style: const TextStyle(
-                    //               fontSize: 24,
-                    //               fontWeight: FontWeight.bold,
-                    //             ),
-                    //           ),
-                    //           const SizedBox(height: 10),
-                    //           Text(
-                    //             itemData.mediaDiaria[0].vendas.toString(),
-                    //             style: const TextStyle(
-                    //               fontSize: 16,
-                    //               color: Colors.grey,
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
+                    SliverToBoxAdapter(
+                      child: Watch(
+                        (_) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de vendas diarias: ${controller.gridMediaData.mediaDiaria.vendas}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de faturamento diario: ${controller.gridMediaData.mediaDiaria.mediaFaturamento}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de receita diaria: ${controller.gridMediaData.mediaDiaria.mediaReceita}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de vendas mensais: ${controller.gridMediaData.mediaMensal.vendas}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de faturamento mensal: ${controller.gridMediaData.mediaMensal.mediaFaturamento}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Media de receita mensal: ${controller.gridMediaData.mediaMensal.mediaReceita}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

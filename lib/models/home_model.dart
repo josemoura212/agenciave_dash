@@ -4,7 +4,7 @@ class HomeModel {
   int nowNumber;
   String nomeProduto;
   String origem;
-  String dataVenda;
+  DateTime dataVenda;
   String horaVenda;
   int quantidade;
   double faturamento;
@@ -60,7 +60,7 @@ class HomeModel {
       nowNumber: map['row_number']?.toInt() ?? 0,
       nomeProduto: map['Nome do Produto'] ?? '',
       origem: map['Origem'] ?? '',
-      dataVenda: map['Data de Venda'],
+      dataVenda: toDate(map['Data de Venda']),
       horaVenda: map['Hora de Venda'],
       quantidade: map['Qtd.']?.toInt() ?? 0,
       faturamento: map['Faturamento']?.toDouble() ?? 0.0,
@@ -84,4 +84,10 @@ class HomeModel {
   String toString() {
     return 'HomeModel(nowNumber: $nowNumber, nomeProduto: $nomeProduto, origem: $origem, dataVenda: $dataVenda, horaVenda: $horaVenda, quantidade: $quantidade, faturamento: $faturamento, moeda: $moeda, numeroParcela: $numeroParcela, status: $status, pais: $pais, estado: $estado, tipoPagamento: $tipoPagamento, tipoPagamentoOferta: $tipoPagamentoOferta, valorComissaoGerada: $valorComissaoGerada)';
   }
+}
+
+DateTime toDate(String date) {
+  final split = date.split("/");
+  return DateTime(
+      int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
 }

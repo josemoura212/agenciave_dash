@@ -26,8 +26,19 @@ class HomeController with MessageStateMixin {
 
   final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
-  final Signal<List<GridMediaModel>> _gridMediaData =
-      Signal<List<GridMediaModel>>([]);
+  final Signal<GridMediaModel> _gridMediaData =
+      Signal<GridMediaModel>(GridMediaModel(
+    mediaDiaria: MediaDiaria(
+      vendas: 0,
+      mediaFaturamento: "0.0",
+      mediaReceita: "0.0",
+    ),
+    mediaMensal: MediaMensal(
+      vendas: 0,
+      mediaFaturamento: "0.0",
+      mediaReceita: "0.0",
+    ),
+  ));
 
   final Signal<int> _totalVendas = Signal<int>(0);
   final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
@@ -39,7 +50,7 @@ class HomeController with MessageStateMixin {
 
   List<ChartModel> get origemData => _origemData.value;
   List<ChartModel> get stateData => _stateData.value;
-  List<GridMediaModel> get gridMediaData => _gridMediaData.value;
+  GridMediaModel get gridMediaData => _gridMediaData.value;
 
   int get totalVendas => _totalVendas.value;
   DateTime? get selectedDate => _selectedDate.value;
@@ -52,13 +63,8 @@ class HomeController with MessageStateMixin {
     if (_selectedDate.value == null) {
       setChartData(_homeDataBackup.value);
     } else {
-      final filteredData = data.where((item) {
-        DateTime date;
-        final split = item.dataVenda.split("/");
-        date = DateTime(
-            int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
-        return date == _selectedDate.value;
-      }).toList();
+      final filteredData =
+          data.where((item) => item.dataVenda == _selectedDate.value).toList();
       setChartData(filteredData);
     }
   }
@@ -84,7 +90,7 @@ class HomeController with MessageStateMixin {
     _totalVendas.set(data.length, force: true);
     calcTotalFaturamento();
     calcTotalReceita();
-    setGridMediaData(data);
+    _gridMediaData.set(setGridMediaData(dateData));
   }
 
   void resetSelectedDate() {

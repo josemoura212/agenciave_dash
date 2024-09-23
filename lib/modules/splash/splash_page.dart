@@ -34,6 +34,20 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
     });
   }
 
+  void _submit() async {
+    if (_formKey.currentState!.validate()) {
+      final result = await controller.checkAuth(apiKey: _apiKeyEC.text);
+      if (result && context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          // ignore: use_build_context_synchronously
+          context,
+          "/home",
+          (_) => false,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +68,9 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
                       child: SizedBox(
                         width: 300,
                         child: TextFormField(
+                          textInputAction: TextInputAction.done,
                           controller: _apiKeyEC,
+                          onFieldSubmitted: (_) => _submit(),
                           decoration: const InputDecoration(
                             label: Center(
                               child: Text("API Key"),
@@ -68,17 +84,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final result = await controller.checkAuth(
-                              apiKey: _apiKeyEC.text);
-                          if (result && context.mounted) {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              "/home",
-                              (_) => false,
-                            );
-                          }
-                        }
+                        _submit();
                       },
                       child: const Text("Entrar"),
                     ),

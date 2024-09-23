@@ -3,10 +3,14 @@ import 'package:agenciave_dash/models/home_model.dart';
 class DateModel {
   final DateTime date;
   final int total;
+  final double faturamento;
+  final double receita;
 
   DateModel({
     required this.date,
     required this.total,
+    required this.faturamento,
+    required this.receita,
   });
 
   String get weekday {
@@ -25,25 +29,42 @@ class DateModel {
 
 setDateData(List<HomeModel> data) {
   final List<DateModel> dateTotal = [];
-
-  final Map<DateTime, int> countDate = {};
+  final Map<DateTime, VendaModel> countDate = {};
 
   for (var item in data) {
-    DateTime date;
-
-    final split = item.dataVenda.split("/");
-    date =
-        DateTime(int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
-
-    countDate.update(date, (value) => value + item.quantidade,
-        ifAbsent: () => item.quantidade);
+    countDate.update(
+      item.dataVenda,
+      (value) => VendaModel(
+        total: value.total + item.quantidade,
+        faturamento: value.faturamento + item.faturamento,
+        receita: value.receita + item.valorComissaoGerada,
+      ),
+      ifAbsent: () => VendaModel(
+        total: item.quantidade,
+        faturamento: item.faturamento,
+        receita: item.valorComissaoGerada,
+      ),
+    );
   }
 
   countDate.forEach((key, value) {
-    dateTotal.add(DateModel(date: key, total: value));
+    dateTotal.add(DateModel(
+        date: key,
+        total: value.total,
+        faturamento: value.faturamento,
+        receita: value.receita));
   });
 
   dateTotal.sort((a, b) => a.date.compareTo(b.date));
 
   return dateTotal;
+}
+
+class VendaModel {
+  final int total;
+  final double faturamento;
+  final double receita;
+
+  VendaModel(
+      {required this.total, required this.faturamento, required this.receita});
 }

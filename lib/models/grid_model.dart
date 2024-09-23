@@ -1,8 +1,9 @@
-import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/models/date_model.dart';
+import 'package:intl/intl.dart';
 
 class GridMediaModel {
-  final List<MediaDiaria> mediaDiaria;
-  final List<MediaMensal> mediaMensal;
+  final MediaDiaria mediaDiaria;
+  final MediaMensal mediaMensal;
 
   GridMediaModel({
     required this.mediaDiaria,
@@ -12,8 +13,8 @@ class GridMediaModel {
 
 class MediaDiaria {
   final int vendas;
-  final double mediaFaturamento;
-  final double mediaReceita;
+  final String mediaFaturamento;
+  final String mediaReceita;
   final DateTime? mes;
 
   MediaDiaria({
@@ -26,8 +27,8 @@ class MediaDiaria {
 
 class MediaMensal {
   final int vendas;
-  final double mediaFaturamento;
-  final double mediaReceita;
+  final String mediaFaturamento;
+  final String mediaReceita;
   final DateTime? mes;
 
   MediaMensal({
@@ -38,66 +39,45 @@ class MediaMensal {
   });
 }
 
-List<GridMediaModel> setGridMediaData(List<HomeModel> data) {
-  final List<MediaDiaria> mediaDiaria = [];
-  final List<MediaMensal> mediaMensal = [];
-
-  final Map<DateTime, List<HomeModel>> countDate = {};
+GridMediaModel setGridMediaData(List<DateModel> data) {
+  var vendas = 0;
+  var currentMonth = data[0].date.month;
+  var totalMonth = 1;
+  var totalDays = 0;
+  var totalFaturamento = 0.0;
+  var totalReceita = 0.0;
 
   for (var item in data) {
-    DateTime date;
-
-    final split = item.dataVenda.split("/");
-    date =
-        DateTime(int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
-
-    countDate.update(date, (value) => [...value, item], ifAbsent: () => [item]);
+    if (item.date.month == currentMonth) {
+      vendas += item.total;
+      totalDays++;
+      totalFaturamento += item.faturamento;
+      totalReceita += item.receita;
+    } else {
+      vendas += item.total;
+      totalDays++;
+      totalFaturamento += item.faturamento;
+      totalReceita += item.receita;
+      totalMonth++;
+    }
   }
 
-  countDate.forEach((key, value) {
-    final totalVendas = value.fold<int>(
-        0, (previousValue, element) => previousValue + element.quantidade);
-    final totalFaturamento = value.fold<double>(
-        0, (previousValue, element) => previousValue + element.faturamento);
-    final totalReceita = value.fold<double>(
-        0,
-        (previousValue, element) =>
-            previousValue + element.valorComissaoGerada);
+  final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
-    mediaDiaria.add(MediaDiaria(
-      vendas: totalVendas,
-      mediaFaturamento: totalFaturamento / value.length,
-      mediaReceita: totalReceita / value.length,
-      mes: key,
-    ));
-  });
+  final mediaDiaria = MediaDiaria(
+    vendas: vendas ~/ totalDays,
+    mediaFaturamento: formatter.format(totalFaturamento / totalDays),
+    mediaReceita: formatter.format(totalReceita / totalDays),
+  );
 
-  final Map<DateTime, List<MediaDiaria>> countMonth = {};
+  final mediaMensal = MediaMensal(
+    vendas: vendas ~/ totalMonth,
+    mediaFaturamento: formatter.format(totalFaturamento / totalMonth),
+    mediaReceita: formatter.format(totalReceita / totalMonth),
+  );
 
-  for (var item in mediaDiaria) {
-    DateTime date;
-
-    date = DateTime(item.mes!.year, item.mes!.month);
-
-    countMonth.update(date, (value) => [...value, item],
-        ifAbsent: () => [item]);
-  }
-
-  countMonth.forEach((key, value) {
-    final totalVendas = value.fold<int>(
-        0, (previousValue, element) => previousValue + element.vendas);
-    final totalFaturamento = value.fold<double>(0,
-        (previousValue, element) => previousValue + element.mediaFaturamento);
-    final totalReceita = value.fold<double>(
-        0, (previousValue, element) => previousValue + element.mediaReceita);
-
-    mediaMensal.add(MediaMensal(
-      vendas: totalVendas,
-      mediaFaturamento: totalFaturamento / value.length,
-      mediaReceita: totalReceita / value.length,
-      mes: key,
-    ));
-  });
-
-  return [GridMediaModel(mediaDiaria: mediaDiaria, mediaMensal: mediaMensal)];
+  return GridMediaModel(
+    mediaDiaria: mediaDiaria,
+    mediaMensal: mediaMensal,
+  );
 }
