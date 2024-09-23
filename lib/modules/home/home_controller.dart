@@ -65,7 +65,7 @@ class HomeController with MessageStateMixin {
       setChartData(_homeDataBackup.value);
     } else {
       final filteredData =
-          data.where((item) => item.saleDate == _selectedDate.value).toList();
+          data.where((item) => item.saleDate.day == selectedDate!.day).toList();
       setChartData(filteredData);
     }
   }

@@ -32,8 +32,10 @@ setDateData(List<HomeModel> data) {
   final Map<DateTime, VendaModel> countDate = {};
 
   for (var item in data) {
+    final date =
+        DateTime(item.saleDate.year, item.saleDate.month, item.saleDate.day);
     countDate.update(
-      item.saleDate,
+      date,
       (value) => VendaModel(
         total: value.total + item.quantity,
         faturamento: value.faturamento + item.invoicing,
