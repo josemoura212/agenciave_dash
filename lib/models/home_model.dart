@@ -57,6 +57,26 @@ class HomeModel {
     };
   }
 
+  factory HomeModel.empty() {
+    return HomeModel(
+      nowNumber: 0,
+      id: '',
+      nameProduct: '',
+      origin: '',
+      saleDate: DateTime.now(),
+      quantity: 0,
+      invoicing: 0.0,
+      coin: '',
+      recurrenceNumber: 0,
+      status: "empty",
+      country: '',
+      state: '',
+      paymentType: '',
+      paymenteTypeOffer: '',
+      commissionValueGenerated: 0.0,
+    );
+  }
+
   factory HomeModel.fromMap(Map<String, dynamic> map) {
     return HomeModel(
       nowNumber: map['row_number']?.toInt() ?? 0,

@@ -13,9 +13,6 @@ class UpBar extends StatelessWidget {
     final controller = Injector.get<HomeController>();
 
     return SliverAppBar(
-      forceElevated: true,
-      floating: true,
-      snap: true,
       pinned: true,
       surfaceTintColor: Colors.transparent,
       flexibleSpace: FlexibleSpaceBar(
@@ -36,6 +33,21 @@ class UpBar extends StatelessWidget {
                   Text("Vendas: ${controller.totalVendas}"),
                   Text("Faturamento: ${controller.totalFaturamento}"),
                   Text("Receita: ${controller.totalReceita}"),
+                  IconButton(
+                    icon: const Icon(Icons.calendar_today),
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        controller.setSelectedDate(pickedDate);
+                      }
+                    },
+                    tooltip: "Selecionar data",
+                  ),
                   IconButton(
                     icon: const Icon(Icons.brightness_6),
                     onPressed: () {

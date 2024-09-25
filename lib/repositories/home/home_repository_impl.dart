@@ -28,8 +28,13 @@ class HomeRepositoryImpl implements HomeRepository {
         ));
 
     if (response.statusCode == 200) {
-      final List<HomeModel> homeData =
-          (response.data as List).map((e) => HomeModel.fromMap(e)).toList();
+      final List<HomeModel> homeData = (response.data as List).map((e) {
+        try {
+          return HomeModel.fromMap(e);
+        } catch (e) {
+          return HomeModel.empty();
+        }
+      }).toList();
 
       log(homeData.toString());
 

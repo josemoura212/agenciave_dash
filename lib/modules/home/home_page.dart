@@ -1,7 +1,6 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/modules/home/widgets/chart_widget.dart';
-import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
 import 'package:agenciave_dash/modules/home/widgets/hour_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/table_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
@@ -51,44 +50,34 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
             }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 250,
-                    child: DateSideBar(),
-                  ),
-                  Expanded(
-                    child: NestedScrollView(
-                      floatHeaderSlivers: true,
-                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                        const UpBar(),
-                      ],
-                      body: CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Watch(
-                              (_) => Row(
-                                children: [
-                                  ChartWidget(
-                                    title: "Origem das Vendas",
-                                    chartData: controller.origemData,
-                                  ),
-                                  ChartWidget(
-                                    title: "Estados",
-                                    chartData: controller.stateData,
-                                  ),
-                                ],
-                              ),
+              child: NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  const UpBar(),
+                ],
+                body: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Watch(
+                        (_) => Row(
+                          children: [
+                            ChartWidget(
+                              title: "Origem das Vendas",
+                              chartData: controller.origemData,
                             ),
-                          ),
-                          const SliverToBoxAdapter(child: TableWidget()),
-                          const SliverToBoxAdapter(child: WeekdayWidget()),
-                          const SliverToBoxAdapter(child: HourWidget()),
-                        ],
+                            ChartWidget(
+                              title: "Estados",
+                              chartData: controller.stateData,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    const SliverToBoxAdapter(child: TableWidget()),
+                    const SliverToBoxAdapter(child: WeekdayWidget()),
+                    const SliverToBoxAdapter(child: HourWidget()),
+                  ],
+                ),
               ),
             );
           }),

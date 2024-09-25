@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,14 @@ class MainApp extends StatelessWidget {
           builder: (asyncNavigatorObserver) {
             return Watch(
               (_) => MaterialApp(
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('pt', 'BR'),
+                ],
                 debugShowCheckedModeBanner: false,
                 title: "Agência Vê Dashboard",
                 theme: UiConfig.lightTheme,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 sealed class UiConfig {
   static ThemeData get lightTheme => ThemeData(
-        primarySwatch: Colors.deepOrange,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepOrange,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.light,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         inputDecorationTheme: const InputDecorationTheme(
@@ -15,6 +15,10 @@ sealed class UiConfig {
             ),
           ),
         ),
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent),
+        cardColor: Colors.grey[300],
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             minimumSize: const WidgetStatePropertyAll(
@@ -43,9 +47,8 @@ sealed class UiConfig {
 
   static ThemeData get darkTheme => ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.deepOrange,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepOrange,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
           brightness: Brightness.dark,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -57,6 +60,7 @@ sealed class UiConfig {
             ),
           ),
         ),
+        cardColor: Colors.grey[850],
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             minimumSize: const WidgetStatePropertyAll(

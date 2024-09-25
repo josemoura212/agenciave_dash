@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_getit: ^2.0.0
+  flutter_localizations:
+    sdk: flutter
   intl: ^0.19.0
   loading_animation_widget: ^1.2.1
   shared_preferences: ^2.3.2
