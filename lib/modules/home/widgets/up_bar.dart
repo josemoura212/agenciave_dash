@@ -33,6 +33,10 @@ class UpBar extends StatelessWidget {
                   Text("Vendas: ${controller.totalVendas}"),
                   Text("Faturamento: ${controller.totalFaturamento}"),
                   Text("Receita: ${controller.totalReceita}"),
+                  Visibility(
+                    visible: controller.selectedDate != null,
+                    child: Text("Data: ${controller.selectedDate}"),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
