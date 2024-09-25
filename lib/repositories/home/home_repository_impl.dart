@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/exceptions/repository_exception.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
@@ -28,6 +30,8 @@ class HomeRepositoryImpl implements HomeRepository {
     if (response.statusCode == 200) {
       final List<HomeModel> homeData =
           (response.data as List).map((e) => HomeModel.fromMap(e)).toList();
+
+      log(homeData.toString());
 
       return Right(homeData);
     } else {

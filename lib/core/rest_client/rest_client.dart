@@ -11,10 +11,10 @@ final class RestClient extends DioForBrowser {
           ),
         ) {
     interceptors.addAll([
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ),
+      // LogInterceptor(
+      //   requestBody: false,
+      //   responseBody: false,
+      // ),
     ]);
   }
 }

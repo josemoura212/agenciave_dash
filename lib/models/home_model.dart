@@ -1,14 +1,17 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class HomeModel {
   int nowNumber;
+  String id;
   String nameProduct;
   String origin;
   DateTime saleDate;
   int quantity;
   double invoicing;
   String coin;
-  String recurrenceNumber;
+  int recurrenceNumber;
   String status;
   String country;
   String state;
@@ -18,6 +21,7 @@ class HomeModel {
 
   HomeModel({
     required this.nowNumber,
+    required this.id,
     required this.nameProduct,
     required this.origin,
     required this.saleDate,
@@ -36,6 +40,7 @@ class HomeModel {
   Map<String, dynamic> toMap() {
     return {
       'now_number': nowNumber,
+      "ID": id,
       'Nome do Produto': nameProduct,
       'Origem': origin,
       'Data de Venda': saleDate,
@@ -55,13 +60,14 @@ class HomeModel {
   factory HomeModel.fromMap(Map<String, dynamic> map) {
     return HomeModel(
       nowNumber: map['row_number']?.toInt() ?? 0,
+      id: map['ID'] ?? '',
       nameProduct: map['Nome do Produto'] ?? '',
       origin: map['Origem'] ?? '',
-      saleDate: toDate(map['Data de Venda'], map['Hora de Venda']),
+      saleDate: toDate(map['Data de Venda']),
       quantity: map['Qtd.']?.toInt() ?? 0,
       invoicing: map['Faturamento']?.toDouble() ?? 0.0,
       coin: map['Moeda'] ?? '',
-      recurrenceNumber: map['Número da Parcela'],
+      recurrenceNumber: map['Número da Parcela']?.hashCode ?? 0,
       status: map['Status'] ?? '',
       country: map['País'] ?? '',
       state: map['Estado'] ?? '',
@@ -79,12 +85,11 @@ class HomeModel {
 
   @override
   String toString() {
-    return 'HomeModel(nowNumber: $nowNumber, nomeProduto: $nameProduct, origem: $origin, dataVenda: $saleDate, quantidade: $quantity, faturamento: $invoicing, moeda: $coin, numeroParcela: $recurrenceNumber, status: $status, pais: $country, estado: $state, tipoPagamento: $paymentType, tipoPagamentoOferta: $paymenteTypeOffer, valorComissaoGerada: $commissionValueGenerated)';
+    return 'HomeModel(nowNumber: $nowNumber, id: $id, nameProduct: $nameProduct, origin: $origin, saleDate: $saleDate, quantity: $quantity, invoicing: $invoicing, coin: $coin, recurrenceNumber: $recurrenceNumber, status: $status, country: $country, state: $state, paymentType: $paymentType, paymenteTypeOffer: $paymenteTypeOffer, commissionValueGenerated: $commissionValueGenerated)';
   }
 }
 
-DateTime toDate(String date, String hora) {
-  final split = date.split("/");
-  return DateTime(int.parse(split[2]), int.parse(split[1]), int.parse(split[0]),
-      int.parse(hora));
+DateTime toDate(String date) {
+  DateFormat format = DateFormat("dd/MM/yyyy HH:mm");
+  return format.parse(date);
 }

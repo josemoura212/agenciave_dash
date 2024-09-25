@@ -3,7 +3,6 @@ import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:agenciave_dash/models/hour_model.dart';
 import 'package:agenciave_dash/models/weekday_model.dart';
-import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
 import 'package:signals_flutter/signals_flutter.dart';
@@ -82,18 +81,25 @@ class HomeController with MessageStateMixin {
   }
 
   void setChartData(List<HomeModel> data) {
+    var dataResult = data
+        .where((item) =>
+            item.status == "Aprovado" ||
+            item.status == "APPROVED" ||
+            item.status == "Completo" ||
+            item.status == "COMPLETED")
+        .toList();
     _homeData.set(data, force: true);
-    _dateData.set(setDateData(data), force: true);
+    _dateData.set(setDateData(dataResult), force: true);
 
-    _origemData.set(setOrigemData(data), force: true);
-    _stateData.set(setStateData(data), force: true);
+    _origemData.set(setOrigemData(dataResult), force: true);
+    _stateData.set(setStateData(dataResult), force: true);
 
-    _totalVendas.set(data.length, force: true);
+    _totalVendas.set(dataResult.length, force: true);
     calcTotalFaturamento();
     calcTotalReceita();
     _gridMediaData.set(setGridMediaData(dateData));
-    _hourData.set(setHourData(data), force: true);
-    _weekdayData.set(setWeekdayData(data), force: true);
+    _hourData.set(setHourData(dataResult), force: true);
+    _weekdayData.set(setWeekdayData(dataResult), force: true);
   }
 
   void resetSelectedDate() {
@@ -108,7 +114,7 @@ class HomeController with MessageStateMixin {
 
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await _homeServices.getHomeData().asyncLoader();
+      final result = await _homeServices.getHomeData();
 
       switch (result) {
         case Left():
