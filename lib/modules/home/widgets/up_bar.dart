@@ -21,21 +21,22 @@ class UpBar extends StatelessWidget {
             (_) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  Text("Vendas: ${controller.totalVendas}"),
+                  Text("Faturamento: ${controller.totalFaturamento}"),
+                  Text("Receita: ${controller.totalReceita}"),
+                  Visibility(
+                    visible: controller.selectedDate != null,
+                    child: Text(
+                        "Data: ${controller.selectedDate?.day}/${controller.selectedDate?.month}/${controller.selectedDate?.year}"),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.refresh),
                     onPressed: () {
                       controller.resetSelectedDate();
                     },
                     tooltip: "Resetar data",
-                  ),
-                  Text("Vendas: ${controller.totalVendas}"),
-                  Text("Faturamento: ${controller.totalFaturamento}"),
-                  Text("Receita: ${controller.totalReceita}"),
-                  Visibility(
-                    visible: controller.selectedDate != null,
-                    child: Text("Data: ${controller.selectedDate}"),
                   ),
                   IconButton(
                     icon: const Icon(Icons.calendar_today),
@@ -45,6 +46,7 @@ class UpBar extends StatelessWidget {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2101),
+                        locale: const Locale('pt', 'BR'),
                       );
                       if (pickedDate != null) {
                         controller.setSelectedDate(pickedDate);
