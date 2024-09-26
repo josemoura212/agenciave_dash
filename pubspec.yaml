@@ -18,13 +18,13 @@ dependencies:
   loading_animation_widget: ^1.2.1
   shared_preferences: ^2.3.2
   signals_flutter: ^5.5.0
-  syncfusion_flutter_charts: ^26.2.14
+  syncfusion_flutter_charts: ^27.1.50
   table_calendar: ^3.1.2
   top_snackbar_flutter: ^3.1.0
   validatorless: ^1.2.3
 
 dev_dependencies:
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
