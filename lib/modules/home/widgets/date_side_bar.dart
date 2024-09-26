@@ -90,36 +90,6 @@ class _CalendarState extends State<Calendar> {
               shape: BoxShape.circle,
             ),
           ),
-          // calendarStyle: CalendarStyle(
-          //   todayDecoration: BoxDecoration(
-          //     color: Colors.orange,
-          //     shape: BoxShape.circle,
-          //   ),
-          //   todayTextStyle: const TextStyle(
-          //     color: Colors.white,
-          //   ),
-          //   rangeStartDecoration: BoxDecoration(
-          //     color: Colors.orange,
-          //     borderRadius: BorderRadius.only(
-          //       topLeft: Radius.circular(50),
-          //       bottomLeft: Radius.circular(50),
-          //     ),
-          //   ),
-          //   rangeEndDecoration: BoxDecoration(
-          //     color: Colors.orange,
-          //     borderRadius: BorderRadius.only(
-          //       topRight: Radius.circular(50),
-          //       bottomRight: Radius.circular(50),
-          //     ),
-          //   ),
-          //   withinRangeDecoration: BoxDecoration(
-          //     color: Colors.orange.withOpacity(0.5),
-          //     shape: BoxShape.circle,
-          //   ),
-          //   withinRangeTextStyle: TextStyle(
-          //     color: Colors.white,
-          //   ),
-          // ),
         );
       },
     );
