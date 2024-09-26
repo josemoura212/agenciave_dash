@@ -14,6 +14,7 @@ class UpBar extends StatelessWidget {
 
     return SliverAppBar(
       pinned: true,
+      floating: true,
       surfaceTintColor: Colors.transparent,
       flexibleSpace: FlexibleSpaceBar(
         background: Card(
@@ -26,11 +27,11 @@ class UpBar extends StatelessWidget {
                   Text("Vendas: ${controller.totalVendas}"),
                   Text("Faturamento: ${controller.totalFaturamento}"),
                   Text("Receita: ${controller.totalReceita}"),
-                  Visibility(
-                    visible: controller.selectedDate != null,
-                    child: Text(
-                        "Data: ${controller.selectedDate?.day}/${controller.selectedDate?.month}/${controller.selectedDate?.year}"),
-                  ),
+                  // Visibility(
+                  //   visible: controller.selectedDate != null,
+                  //   child: Text(
+                  //       "Data: ${controller.selectedDate?.day}/${controller.selectedDate?.month}/${controller.selectedDate?.year}"),
+                  // ),
                   IconButton(
                     icon: const Icon(Icons.refresh),
                     onPressed: () {
@@ -41,16 +42,17 @@ class UpBar extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                        locale: const Locale('pt', 'BR'),
-                      );
-                      if (pickedDate != null) {
-                        controller.setSelectedDate(pickedDate);
-                      }
+                      controller.toggleCalendar();
+                      // DateTime? pickedDate = await showDatePicker(
+                      //   context: context,
+                      //   initialDate: DateTime.now(),
+                      //   firstDate: DateTime(2000),
+                      //   lastDate: DateTime(2101),
+                      //   locale: const Locale('pt', 'BR'),
+                      // );
+                      // if (pickedDate != null) {
+                      //   controller.setSelectedDate([pickedDate]);
+                      // }
                     },
                     tooltip: "Selecionar data",
                   ),

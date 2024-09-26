@@ -39,9 +39,12 @@ class HomeController with MessageStateMixin {
       Signal<List<WeekdayModel>>([]);
 
   final Signal<int> _totalVendas = Signal<int>(0);
-  final Signal<DateTime?> _selectedDate = Signal<DateTime?>(null);
   final Signal<String> _totalFaturamento = Signal<String>('');
   final Signal<String> _totalReceita = Signal<String>('');
+
+  final Signal<DateTime?> _selectedEndDate = Signal<DateTime?>(null);
+  final Signal<DateTime?> _selectedStartDate = Signal<DateTime?>(null);
+  final Signal<bool> _showCalendar = Signal<bool>(false);
 
   List<HomeModel> get homeData => _homeData.value;
   List<DateModel> get dateData => _dateData.value;
@@ -53,34 +56,50 @@ class HomeController with MessageStateMixin {
   List<WeekdayModel> get weekdayData => _weekdayData.value;
 
   int get totalVendas => _totalVendas.value;
-  DateTime? get selectedDate => _selectedDate.value;
+  DateTime? get selectedStartDate => _selectedStartDate.value;
+  DateTime? get selectedEndDate => _selectedEndDate.value;
+
   String get totalFaturamento => _totalFaturamento.value;
   String get totalReceita => _totalReceita.value;
+  bool get showCalendar => _showCalendar.value;
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
-  void setHomeData(List<HomeModel> data) {
-    if (_selectedDate.value == null) {
-      setChartData(_homeDataBackup.value);
-    } else {
-      final filteredData =
-          data.where((item) => item.saleDate.day == selectedDate!.day).toList();
-      setChartData(filteredData);
+  void _setHomeData(List<HomeModel> data) {
+    if (_selectedStartDate.value == null) {
+      _setChartData(_homeDataBackup.value);
+    } else if (_selectedStartDate.value != null &&
+        _selectedEndDate.value != null) {
+      final filteredData = data.where((item) {
+        final normalizedSaleDate = DateTime(
+            item.saleDate.year, item.saleDate.month, item.saleDate.day);
+        final normalizedStartDate = DateTime(selectedStartDate!.year,
+            selectedStartDate!.month, selectedStartDate!.day);
+        final normalizedEndDate = DateTime(selectedEndDate!.year,
+            selectedEndDate!.month, selectedEndDate!.day);
+
+        return normalizedSaleDate.isAfter(
+                normalizedStartDate.subtract(const Duration(days: 1))) &&
+            normalizedSaleDate
+                .isBefore(normalizedEndDate.add(const Duration(days: 1)));
+      }).toList();
+
+      _setChartData(filteredData);
     }
   }
 
-  void calcTotalFaturamento() {
+  void _calcTotalFaturamento() {
     final total = homeData.length * homeData[0].invoicing;
 
     _totalFaturamento.set(formatter.format(total));
   }
 
-  void calcTotalReceita() {
+  void _calcTotalReceita() {
     final total = homeData.length * homeData[0].commissionValueGenerated;
     _totalReceita.set(formatter.format(total));
   }
 
-  void setChartData(List<HomeModel> data) {
+  void _setChartData(List<HomeModel> data) {
     var dataResult = data
         .where((item) =>
             item.status == "Aprovado" ||
@@ -95,21 +114,28 @@ class HomeController with MessageStateMixin {
     _stateData.set(setStateData(dataResult), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
-    calcTotalFaturamento();
-    calcTotalReceita();
+    _calcTotalFaturamento();
+    _calcTotalReceita();
     _gridMediaData.set(setGridMediaData(dateData));
     _hourData.set(setHourData(dataResult), force: true);
     _weekdayData.set(setWeekdayData(dataResult), force: true);
   }
 
   void resetSelectedDate() {
-    _selectedDate.set(null, force: true);
-    setHomeData(homeData);
+    _selectedStartDate.set(null, force: true);
+    _selectedEndDate.set(null, force: true);
+    toggleCalendar();
+    _setHomeData(homeData);
   }
 
-  void setSelectedDate(DateTime date) {
-    _selectedDate.set(date, force: true);
-    setHomeData(homeData);
+  void toggleCalendar() {
+    _showCalendar.set(!showCalendar);
+  }
+
+  void setSelectedDate(DateTime? start, DateTime? end) {
+    _selectedStartDate.value = start;
+    _selectedEndDate.value = end;
+    _setHomeData(homeData);
   }
 
   Future<void> getHomeData() async {
@@ -121,7 +147,7 @@ class HomeController with MessageStateMixin {
           showError("Erro ao buscar dados");
         case Right(value: List<HomeModel> data):
           _homeDataBackup.set(data, force: true);
-          setHomeData(data);
+          _setHomeData(data);
       }
     }
   }

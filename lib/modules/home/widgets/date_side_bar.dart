@@ -3,6 +3,7 @@ import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class DateSideBar extends StatelessWidget {
   const DateSideBar({super.key});
@@ -51,7 +52,7 @@ class DateTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        controller.setSelectedDate(date.date);
+        // controller.setSelectedDate(date.date);
       },
       title: Text(
         "${date.date.day}/${date.date.month}/${date.date.year} - ${date.weekday}",
@@ -65,6 +66,72 @@ class DateTile extends StatelessWidget {
           fontSize: 12,
         ),
       ),
+    );
+  }
+}
+
+class Calendar extends StatefulWidget {
+  const Calendar({super.key});
+
+  @override
+  State<Calendar> createState() => _CalendarState();
+}
+
+class _CalendarState extends State<Calendar> {
+  final controller = Injector.get<HomeController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Watch(
+      (_) {
+        print(
+            "============================== CALENDAR ==============================");
+        return TableCalendar(
+          locale: 'pt_BR',
+          focusedDay: DateTime.now(),
+          firstDay: DateTime.utc(2018),
+          lastDay: DateTime.utc(2030),
+          availableGestures: AvailableGestures.none,
+          headerStyle: HeaderStyle(titleCentered: true),
+          calendarFormat: CalendarFormat.month,
+          availableCalendarFormats: {CalendarFormat.month: "Month"},
+          rangeSelectionMode: RangeSelectionMode.toggledOn,
+          onRangeSelected: (start, end, focusedDay) {
+            setState(() {
+              controller.setSelectedDate(start, end);
+            });
+          },
+          selectedDayPredicate: (day) {
+            print("==============================");
+            return isSameDay(
+                controller.selectedStartDate, controller.selectedEndDate);
+          },
+          calendarStyle: CalendarStyle(
+            todayDecoration: BoxDecoration(
+              color: Colors.orange,
+              shape: BoxShape.circle,
+            ),
+            todayTextStyle: const TextStyle(
+              color: Colors.white,
+            ),
+            rangeStartDecoration: BoxDecoration(
+              color: Colors.orange,
+              shape: BoxShape.circle,
+            ),
+            rangeEndDecoration: BoxDecoration(
+              color: Colors.orange,
+              shape: BoxShape.circle,
+            ),
+            withinRangeDecoration: BoxDecoration(
+              color: Colors.orange.withOpacity(0.5),
+              shape: BoxShape.circle,
+            ),
+            withinRangeTextStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
     );
   }
 }

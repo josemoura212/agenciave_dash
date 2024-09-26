@@ -1,6 +1,7 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/modules/home/widgets/chart_widget.dart';
+import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
 import 'package:agenciave_dash/modules/home/widgets/hour_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/table_widget.dart';
 import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
@@ -43,44 +44,48 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: controller.getHomeData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox.shrink();
-            }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: NestedScrollView(
-                floatHeaderSlivers: true,
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  const UpBar(),
-                ],
-                body: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Watch(
-                        (_) => Row(
-                          children: [
-                            ChartWidget(
+        future: controller.getHomeData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox.shrink();
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                const UpBar(),
+              ],
+              body: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                      child: Watch((_) => Visibility(
+                            visible: controller.showCalendar,
+                            child: Calendar(),
+                          ))),
+                  SliverToBoxAdapter(
+                    child: Watch(
+                      (_) => Row(
+                        children: [
+                          ChartWidget(
                               title: "Origem das Vendas",
-                              chartData: controller.origemData,
-                            ),
-                            ChartWidget(
+                              chartData: controller.origemData),
+                          ChartWidget(
                               title: "Estados",
-                              chartData: controller.stateData,
-                            ),
-                          ],
-                        ),
+                              chartData: controller.stateData),
+                        ],
                       ),
                     ),
-                    const SliverToBoxAdapter(child: TableWidget()),
-                    const SliverToBoxAdapter(child: WeekdayWidget()),
-                    const SliverToBoxAdapter(child: HourWidget()),
-                  ],
-                ),
+                  ),
+                  const SliverToBoxAdapter(child: TableWidget()),
+                  const SliverToBoxAdapter(child: WeekdayWidget()),
+                  const SliverToBoxAdapter(child: HourWidget()),
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
