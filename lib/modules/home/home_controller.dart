@@ -11,6 +11,7 @@ import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/models/home_model.dart';
 import 'package:agenciave_dash/services/home/home_services.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomeController with MessageStateMixin {
   HomeController({
@@ -42,9 +43,13 @@ class HomeController with MessageStateMixin {
   final Signal<String> _totalFaturamento = Signal<String>('');
   final Signal<String> _totalReceita = Signal<String>('');
 
-  final Signal<DateTime?> _selectedEndDate = Signal<DateTime?>(null);
-  final Signal<DateTime?> _selectedStartDate = Signal<DateTime?>(null);
+  final Signal<DateTime?> _rangeEndDay = Signal<DateTime?>(null);
+  final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
+  final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
+  final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
   final Signal<bool> _showCalendar = Signal<bool>(false);
+  final Signal<RangeSelectionMode> _rangeSelectionMode =
+      Signal<RangeSelectionMode>(RangeSelectionMode.toggledOn);
 
   List<HomeModel> get homeData => _homeData.value;
   List<DateModel> get dateData => _dateData.value;
@@ -56,8 +61,13 @@ class HomeController with MessageStateMixin {
   List<WeekdayModel> get weekdayData => _weekdayData.value;
 
   int get totalVendas => _totalVendas.value;
-  DateTime? get selectedStartDate => _selectedStartDate.value;
-  DateTime? get selectedEndDate => _selectedEndDate.value;
+
+  DateTime? get rangeStartDay => _rangeStartDay.value;
+  DateTime? get rangeEndDay => _rangeEndDay.value;
+  DateTime? get selectedDay => _selectedDay.value;
+  DateTime get focusedDay => _focusedDay.value;
+
+  RangeSelectionMode get rangeSelectionMode => _rangeSelectionMode.value;
 
   String get totalFaturamento => _totalFaturamento.value;
   String get totalReceita => _totalReceita.value;
@@ -66,17 +76,16 @@ class HomeController with MessageStateMixin {
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
   void _setHomeData(List<HomeModel> data) {
-    if (_selectedStartDate.value == null) {
+    if (_rangeStartDay.value == null) {
       _setChartData(_homeDataBackup.value);
-    } else if (_selectedStartDate.value != null &&
-        _selectedEndDate.value != null) {
+    } else if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
       final filteredData = data.where((item) {
         final normalizedSaleDate = DateTime(
             item.saleDate.year, item.saleDate.month, item.saleDate.day);
-        final normalizedStartDate = DateTime(selectedStartDate!.year,
-            selectedStartDate!.month, selectedStartDate!.day);
-        final normalizedEndDate = DateTime(selectedEndDate!.year,
-            selectedEndDate!.month, selectedEndDate!.day);
+        final normalizedStartDate = DateTime(
+            rangeStartDay!.year, rangeStartDay!.month, rangeStartDay!.day);
+        final normalizedEndDate =
+            DateTime(rangeEndDay!.year, rangeEndDay!.month, rangeEndDay!.day);
 
         return normalizedSaleDate.isAfter(
                 normalizedStartDate.subtract(const Duration(days: 1))) &&
@@ -122,8 +131,9 @@ class HomeController with MessageStateMixin {
   }
 
   void resetSelectedDate() {
-    _selectedStartDate.set(null, force: true);
-    _selectedEndDate.set(null, force: true);
+    _rangeStartDay.set(null, force: true);
+    _rangeEndDay.set(null, force: true);
+    _selectedDay.set(null, force: true);
     toggleCalendar();
     _setHomeData(homeData);
   }
@@ -132,9 +142,29 @@ class HomeController with MessageStateMixin {
     _showCalendar.set(!showCalendar);
   }
 
-  void setSelectedDate(DateTime? start, DateTime? end) {
-    _selectedStartDate.value = start;
-    _selectedEndDate.value = end;
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    _selectedDay.set(selectedDay, force: true);
+    _focusedDay.set(focusedDay, force: true);
+
+    _rangeSelectionMode.set(RangeSelectionMode.toggledOff, force: true);
+    _rangeStartDay.set(null, force: true);
+    _rangeEndDay.set(null, force: true);
+    _setHomeData(homeData);
+  }
+
+  void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+    if (start == null || end == null) {
+      return;
+    } else if (start.isAfter(end)) {
+      _rangeStartDay.set(end, force: true);
+      _rangeEndDay.set(start, force: true);
+    }
+    _selectedDay.set(null, force: true);
+    _focusedDay.set(focusedDay, force: true);
+
+    _rangeSelectionMode.set(RangeSelectionMode.toggledOn, force: true);
+    _rangeStartDay.set(start, force: true);
+    _rangeEndDay.set(end, force: true);
     _setHomeData(homeData);
   }
 
