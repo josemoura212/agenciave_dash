@@ -1,8 +1,10 @@
 import 'package:agenciave_dash/core/ui/theme_manager.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
+import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class UpBar extends StatelessWidget {
   const UpBar({super.key});
@@ -12,57 +14,77 @@ class UpBar extends StatelessWidget {
     final themeManager = Injector.get<ThemeManager>();
     final controller = Injector.get<HomeController>();
 
-    return SliverAppBar(
-      pinned: true,
-      floating: true,
-      surfaceTintColor: Colors.transparent,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Card(
-          child: Watch(
-            (_) => Padding(
+    return Watch(
+      (_) => SliverAppBar(
+        pinned: true,
+        floating: true,
+        toolbarHeight: controller.selectedDay != null ||
+                controller.rangeEndDay != null &&
+                    controller.rangeStartDay != null
+            ? kToolbarHeight + 30
+            : kToolbarHeight,
+        surfaceTintColor: Colors.transparent,
+        flexibleSpace: FlexibleSpaceBar(
+          background: Card(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Column(
                 children: [
-                  Text("Vendas: ${controller.totalVendas}"),
-                  Text("Faturamento: ${controller.totalFaturamento}"),
-                  Text("Receita: ${controller.totalReceita}"),
-                  // Visibility(
-                  //   visible: controller.selectedDate != null,
-                  //   child: Text(
-                  //       "Data: ${controller.selectedDate?.day}/${controller.selectedDate?.month}/${controller.selectedDate?.year}"),
-                  // ),
-                  IconButton(
-                    icon: const Icon(Icons.refresh),
-                    onPressed: () {
-                      controller.resetSelectedDate();
-                    },
-                    tooltip: "Resetar data",
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.calendar_today),
-                    onPressed: () async {
-                      controller.toggleCalendar();
-                      // DateTime? pickedDate = await showDatePicker(
-                      //   context: context,
-                      //   initialDate: DateTime.now(),
-                      //   firstDate: DateTime(2000),
-                      //   lastDate: DateTime(2101),
-                      //   locale: const Locale('pt', 'BR'),
-                      // );
-                      // if (pickedDate != null) {
-                      //   controller.setSelectedDate([pickedDate]);
-                      // }
-                    },
-                    tooltip: "Selecionar data",
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.brightness_6),
-                    onPressed: () {
-                      // Logic to toggle theme
-                      themeManager.toggleTheme();
-                    },
-                    tooltip: "Mudar tema",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text("Vendas: ${controller.totalVendas}"),
+                      Text("Faturamento: ${controller.totalFaturamento}"),
+                      Text("Receita: ${controller.totalReceita}"),
+                      IconButton(
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () {
+                          controller.resetSelectedDate();
+                        },
+                        tooltip: "Resetar data",
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.calendar_today),
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            builder: (_) => Dialog(
+                              child: SizedBox(
+                                height: 350,
+                                width: 350,
+                                child: Calendar(
+                                  onDaySelected: (selectedDay, focusedDay) {
+                                    if (!isSameDay(
+                                        controller.selectedDay, selectedDay)) {
+                                      controller.onDaySelected(
+                                          selectedDay, focusedDay);
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  onRangeSelected: (start, end, focusedDay) {
+                                    controller.onRangeSelected(
+                                        start, end, focusedDay);
+                                    if (controller.rangeStartDay != null &&
+                                        controller.rangeEndDay != null) {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        tooltip: "Selecionar data",
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.brightness_6),
+                        onPressed: () {
+                          // Logic to toggle theme
+                          themeManager.toggleTheme();
+                        },
+                        tooltip: "Mudar tema",
+                      ),
+                    ],
                   ),
                 ],
               ),

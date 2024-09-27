@@ -47,7 +47,6 @@ class HomeController with MessageStateMixin {
   final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
   final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
-  final Signal<bool> _showCalendar = Signal<bool>(false);
   final Signal<RangeSelectionMode> _rangeSelectionMode =
       Signal<RangeSelectionMode>(RangeSelectionMode.toggledOn);
 
@@ -71,13 +70,23 @@ class HomeController with MessageStateMixin {
 
   String get totalFaturamento => _totalFaturamento.value;
   String get totalReceita => _totalReceita.value;
-  bool get showCalendar => _showCalendar.value;
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
   void _setHomeData(List<HomeModel> data) {
     if (_rangeStartDay.value == null) {
       _setChartData(_homeDataBackup.value);
+    } else if (_selectedDay.value != null) {
+      final filteredData = data.where((item) {
+        final normalizedSaleDate = DateTime(
+            item.saleDate.year, item.saleDate.month, item.saleDate.day);
+        final normalizedSelectedDate =
+            DateTime(selectedDay!.year, selectedDay!.month, selectedDay!.day);
+
+        return normalizedSaleDate.isAtSameMomentAs(normalizedSelectedDate);
+      }).toList();
+
+      _setChartData(filteredData);
     } else if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
       final filteredData = data.where((item) {
         final normalizedSaleDate = DateTime(
@@ -134,37 +143,42 @@ class HomeController with MessageStateMixin {
     _rangeStartDay.set(null, force: true);
     _rangeEndDay.set(null, force: true);
     _selectedDay.set(null, force: true);
-    toggleCalendar();
     _setHomeData(homeData);
   }
 
-  void toggleCalendar() {
-    _showCalendar.set(!showCalendar);
+  void onRangeSelectionModeChanged() {
+    final mode = rangeSelectionMode == RangeSelectionMode.toggledOff
+        ? RangeSelectionMode.toggledOn
+        : RangeSelectionMode.toggledOff;
+    _rangeSelectionMode.set(mode, force: true);
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    _rangeSelectionMode.set(RangeSelectionMode.toggledOff, force: true);
     _selectedDay.set(selectedDay, force: true);
     _focusedDay.set(focusedDay, force: true);
 
-    _rangeSelectionMode.set(RangeSelectionMode.toggledOff, force: true);
     _rangeStartDay.set(null, force: true);
     _rangeEndDay.set(null, force: true);
     _setHomeData(homeData);
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-    if (start == null || end == null) {
-      return;
-    } else if (start.isAfter(end)) {
-      _rangeStartDay.set(end, force: true);
-      _rangeEndDay.set(start, force: true);
+    if (start != null) {
+      _rangeStartDay.set(start, force: true);
+    }
+
+    if (end != null) {
+      _rangeEndDay.set(end, force: true);
+    }
+    if (start != null && end != null) {
+      if (start.isAfter(end)) {
+        _rangeStartDay.set(end, force: true);
+        _rangeEndDay.set(start, force: true);
+      }
     }
     _selectedDay.set(null, force: true);
     _focusedDay.set(focusedDay, force: true);
-
-    _rangeSelectionMode.set(RangeSelectionMode.toggledOn, force: true);
-    _rangeStartDay.set(start, force: true);
-    _rangeEndDay.set(end, force: true);
     _setHomeData(homeData);
   }
 

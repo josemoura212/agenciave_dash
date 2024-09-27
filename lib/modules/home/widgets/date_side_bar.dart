@@ -4,18 +4,16 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+class Calendar extends StatelessWidget {
+  const Calendar(
+      {super.key, required this.onDaySelected, required this.onRangeSelected});
 
-  @override
-  State<Calendar> createState() => _CalendarState();
-}
-
-class _CalendarState extends State<Calendar> {
-  final controller = Injector.get<HomeController>();
+  final void Function(DateTime, DateTime) onDaySelected;
+  final void Function(DateTime?, DateTime?, DateTime) onRangeSelected;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Injector.get<HomeController>();
     return Watch(
       (_) {
         return TableCalendar(
@@ -30,15 +28,9 @@ class _CalendarState extends State<Calendar> {
           focusedDay: controller.focusedDay,
           rangeStartDay: controller.rangeStartDay,
           rangeEndDay: controller.rangeEndDay,
-          onDaySelected: (selectedDay, focusedDay) {
-            if (!isSameDay(controller.selectedDay, selectedDay)) {
-              controller.onDaySelected(selectedDay, focusedDay);
-            }
-          },
-          onRangeSelected: (start, end, focusedDay) {
-            controller.onRangeSelected(start, end, focusedDay);
-          },
           selectedDayPredicate: (day) => isSameDay(controller.selectedDay, day),
+          onDaySelected: onDaySelected,
+          onRangeSelected: onRangeSelected,
           daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: const TextStyle(
               fontSize: 14,
@@ -67,26 +59,24 @@ class _CalendarState extends State<Calendar> {
               color: Colors.deepOrange,
             ),
             rangeStartDecoration: BoxDecoration(
-              color: Colors.orange, // Cor de fundo para o início do intervalo
+              color: Colors.orange,
               shape: BoxShape.circle,
             ),
             rangeEndDecoration: BoxDecoration(
-              color: Colors.orange, // Cor de fundo para o fim do intervalo
+              color: Colors.orange,
               shape: BoxShape.circle,
             ),
             withinRangeDecoration: BoxDecoration(
-              color: Colors.orange.withOpacity(
-                  0.5), // Cor de fundo para os dias dentro do intervalo
+              color: Colors.orange.withOpacity(0.5),
               shape: BoxShape.circle,
             ),
-            rangeHighlightColor: Colors.orange
-                .withOpacity(0.3), // Cor de destaque para o intervalo
+            rangeHighlightColor: Colors.orange.withOpacity(0.3),
             selectedDecoration: BoxDecoration(
-              color: Colors.deepOrange, // Cor de fundo para o dia selecionado
+              color: Colors.deepOrange,
               shape: BoxShape.circle,
             ),
             todayDecoration: BoxDecoration(
-              color: Colors.orangeAccent, // Cor de fundo para o dia atual
+              color: Colors.orangeAccent,
               shape: BoxShape.circle,
             ),
           ),

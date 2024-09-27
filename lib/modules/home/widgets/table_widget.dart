@@ -12,7 +12,8 @@ class TableWidget extends StatelessWidget {
 
     return Watch(
       (_) => Visibility(
-        visible: controller.rangeStartDay == null,
+        visible: controller.selectedDay == null ||
+            controller.rangeEndDay == null && controller.rangeStartDay == null,
         child: Card(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
