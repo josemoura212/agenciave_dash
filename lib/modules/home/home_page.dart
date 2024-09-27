@@ -72,8 +72,12 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                     ),
                   ),
                   const SliverToBoxAdapter(child: TableWidget()),
-                  const SliverToBoxAdapter(child: WeekdayWidget()),
-                  const SliverToBoxAdapter(child: HourWidget()),
+                  const SliverToBoxAdapter(
+                    child: Row(
+                      children: [WeekdayWidget(), HourWidget()],
+                    ),
+                  ),
+                  // const SliverToBoxAdapter(child: HourWidget()),
                 ],
               ),
             ),

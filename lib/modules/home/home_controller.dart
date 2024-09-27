@@ -103,21 +103,6 @@ class HomeController with MessageStateMixin {
     }
   }
 
-  void _calcTotalFaturamento() {
-    final total = homeData.fold<double>(
-        0, (previusValue, element) => previusValue + element.invoicing);
-
-    _totalFaturamento.set(formatter.format(total));
-  }
-
-  void _calcTotalReceita() {
-    final total = homeData.fold<double>(
-        0,
-        (previusValue, element) =>
-            previusValue + element.commissionValueGenerated);
-    _totalReceita.set(formatter.format(total));
-  }
-
   void _setChartData(List<HomeModel> data) {
     var dataResult = data
         .where((item) =>
@@ -140,47 +125,78 @@ class HomeController with MessageStateMixin {
     _weekdayData.set(setWeekdayData(dataResult), force: true);
   }
 
+  void _calcTotalFaturamento() {
+    final total = homeData.fold<double>(
+        0, (previusValue, element) => previusValue + element.invoicing);
+
+    _totalFaturamento.set(formatter.format(total));
+  }
+
+  void _calcTotalReceita() {
+    final total = homeData.fold<double>(
+        0,
+        (previusValue, element) =>
+            previusValue + element.commissionValueGenerated);
+    _totalReceita.set(formatter.format(total));
+  }
+
   void resetSelectedDate() {
-    _rangeStartDay.set(null, force: true);
-    _rangeEndDay.set(null, force: true);
-    _selectedDay.set(null, force: true);
-    _setHomeData(_homeDataBackup.value);
+    _rangeStartDay.value = null;
+    _rangeEndDay.value = null;
+    _selectedDay.value = null;
+    if (_homeData.value.length != _homeDataBackup.value.length) {
+      _setHomeData(_homeDataBackup.value);
+    }
   }
 
   void onRangeSelectionModeChanged() {
     final mode = rangeSelectionMode == RangeSelectionMode.toggledOff
         ? RangeSelectionMode.toggledOn
         : RangeSelectionMode.toggledOff;
-    _rangeSelectionMode.set(mode, force: true);
+    _rangeSelectionMode.value = mode;
     resetSelectedDate();
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    _rangeSelectionMode.set(RangeSelectionMode.toggledOff, force: true);
-    _selectedDay.set(selectedDay, force: true);
-    _focusedDay.set(focusedDay, force: true);
+    _selectedDay.value = selectedDay;
+    _focusedDay.value = focusedDay;
 
-    _rangeStartDay.set(null, force: true);
-    _rangeEndDay.set(null, force: true);
+    _rangeStartDay.value = null;
+    _rangeEndDay.value = null;
     _setHomeData(_homeDataBackup.value);
+
+    // final firstDay = _homeDataBackup.value.first.saleDate;
+    // final lastDay = _homeDataBackup.value.last.saleDate;
+
+    // if (focusedDay.isBefore(firstDay)) {
+    //   focusedDay = firstDay;
+    // } else if (focusedDay.isAfter(lastDay)) {
+    //   focusedDay = lastDay;
+    // }
+
+    // if (isSameDay(focusedDay, firstDay) || focusedDay.isBefore(lastDay)) {
+    //   _selectedDay.value = selectedDay;
+    //   _focusedDay.value = focusedDay;
+    //   _setHomeData(_homeDataBackup.value);
+    // }
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     if (start != null) {
-      _rangeStartDay.set(start, force: true);
+      _rangeStartDay.value = start;
     }
 
     if (end != null) {
-      _rangeEndDay.set(end, force: true);
+      _rangeEndDay.value = end;
     }
     if (start != null && end != null) {
       if (start.isAfter(end)) {
-        _rangeStartDay.set(end, force: true);
-        _rangeEndDay.set(start, force: true);
+        _rangeStartDay.value = end;
+        _rangeEndDay.value = start;
       }
     }
-    _selectedDay.set(null, force: true);
-    _focusedDay.set(focusedDay, force: true);
+    _selectedDay.value = null;
+    _focusedDay.value = focusedDay;
     _setHomeData(_homeDataBackup.value);
   }
 

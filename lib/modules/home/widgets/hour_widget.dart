@@ -12,29 +12,31 @@ class HourWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Injector.get<HomeController>();
 
-    return Watch(
-      (_) => SfCartesianChart(
-        primaryXAxis: const CategoryAxis(),
-        title: const ChartTitle(text: 'Vendas por hora'),
-        tooltipBehavior: TooltipBehavior(
-          enable: true,
-          header: "Vendas",
-        ),
-        series: [
-          ColumnSeries<HourModel, String>(
-            dataSource: controller.hourData,
-            xValueMapper: (HourModel data, _) => "${data.hour}:00h",
-            yValueMapper: (HourModel data, _) => data.quantity,
-            dataLabelSettings: const DataLabelSettings(
-              isVisible: true,
-              labelPosition: ChartDataLabelPosition.outside,
-              textStyle: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+    return Expanded(
+      child: Watch(
+        (_) => SfCartesianChart(
+          primaryXAxis: const CategoryAxis(),
+          title: const ChartTitle(text: 'Vendas por hora'),
+          tooltipBehavior: TooltipBehavior(
+            enable: true,
+            header: "Vendas",
+          ),
+          series: [
+            ColumnSeries<HourModel, String>(
+              dataSource: controller.hourData,
+              xValueMapper: (HourModel data, _) => "${data.hour}:00h",
+              yValueMapper: (HourModel data, _) => data.quantity,
+              dataLabelSettings: const DataLabelSettings(
+                isVisible: true,
+                labelPosition: ChartDataLabelPosition.outside,
+                textStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
