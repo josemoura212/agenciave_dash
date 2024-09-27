@@ -74,18 +74,13 @@ class HomeController with MessageStateMixin {
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
   void _setHomeData(List<HomeModel> data) {
-    if (_rangeStartDay.value == null) {
-      _setChartData(_homeDataBackup.value);
-    } else if (_selectedDay.value != null) {
+    if (_selectedDay.value != null) {
       final filteredData = data.where((item) {
         final normalizedSaleDate = DateTime(
             item.saleDate.year, item.saleDate.month, item.saleDate.day);
-        final normalizedSelectedDate =
-            DateTime(selectedDay!.year, selectedDay!.month, selectedDay!.day);
 
-        return normalizedSaleDate.isAtSameMomentAs(normalizedSelectedDate);
+        return isSameDay(normalizedSaleDate, _selectedDay.value);
       }).toList();
-
       _setChartData(filteredData);
     } else if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
       final filteredData = data.where((item) {
@@ -103,17 +98,23 @@ class HomeController with MessageStateMixin {
       }).toList();
 
       _setChartData(filteredData);
+    } else {
+      _setChartData(data);
     }
   }
 
   void _calcTotalFaturamento() {
-    final total = homeData.length * homeData[0].invoicing;
+    final total = homeData.fold<double>(
+        0, (previusValue, element) => previusValue + element.invoicing);
 
     _totalFaturamento.set(formatter.format(total));
   }
 
   void _calcTotalReceita() {
-    final total = homeData.length * homeData[0].commissionValueGenerated;
+    final total = homeData.fold<double>(
+        0,
+        (previusValue, element) =>
+            previusValue + element.commissionValueGenerated);
     _totalReceita.set(formatter.format(total));
   }
 
@@ -143,7 +144,7 @@ class HomeController with MessageStateMixin {
     _rangeStartDay.set(null, force: true);
     _rangeEndDay.set(null, force: true);
     _selectedDay.set(null, force: true);
-    _setHomeData(homeData);
+    _setHomeData(_homeDataBackup.value);
   }
 
   void onRangeSelectionModeChanged() {
@@ -151,6 +152,7 @@ class HomeController with MessageStateMixin {
         ? RangeSelectionMode.toggledOn
         : RangeSelectionMode.toggledOff;
     _rangeSelectionMode.set(mode, force: true);
+    resetSelectedDate();
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -160,7 +162,7 @@ class HomeController with MessageStateMixin {
 
     _rangeStartDay.set(null, force: true);
     _rangeEndDay.set(null, force: true);
-    _setHomeData(homeData);
+    _setHomeData(_homeDataBackup.value);
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
@@ -179,7 +181,7 @@ class HomeController with MessageStateMixin {
     }
     _selectedDay.set(null, force: true);
     _focusedDay.set(focusedDay, force: true);
-    _setHomeData(homeData);
+    _setHomeData(_homeDataBackup.value);
   }
 
   Future<void> getHomeData() async {

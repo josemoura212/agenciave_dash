@@ -50,7 +50,7 @@ class UpBar extends StatelessWidget {
                             context: context,
                             builder: (_) => Dialog(
                               child: SizedBox(
-                                height: 350,
+                                height: 400,
                                 width: 350,
                                 child: Calendar(
                                   onDaySelected: (selectedDay, focusedDay) {
