@@ -55,7 +55,7 @@ class HomeController with MessageStateMixin {
   }
 
   final Signal<RangeSelectionMode> _rangeSelectionMode =
-      Signal<RangeSelectionMode>(RangeSelectionMode.toggledOn);
+      Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
 
   List<HomeModel> get homeData => _homeData.value;
   List<DateModel> get dateData => _dateData.value;
@@ -158,9 +158,12 @@ class HomeController with MessageStateMixin {
 
   void resetSelectedDate() {
     DateTime now = DateTime.now();
-    _rangeStartDay.value = null;
-    _rangeEndDay.value = null;
-    _selectedDay.value = null;
+    if (_rangeSelectionMode.value == RangeSelectionMode.toggledOn) {
+      _rangeStartDay.value = null;
+      _rangeEndDay.value = null;
+    } else {
+      _selectedDay.value = null;
+    }
     _focusedDay.value = now;
     if (_homeData.value.length != _homeDataBackup.value.length) {
       _setHomeData(_homeDataBackup.value);

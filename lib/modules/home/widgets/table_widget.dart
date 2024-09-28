@@ -21,7 +21,7 @@ class TableWidget extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
                     "Media de vendas diarias: ${controller.gridMediaData.mediaDiaria.vendas}",
                     style: const TextStyle(
@@ -45,11 +45,12 @@ class TableWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
                     "Media de vendas mensais: ${controller.gridMediaData.mediaMensal.vendas}",
                     style: const TextStyle(
@@ -73,6 +74,7 @@ class TableWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ],
