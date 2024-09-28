@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/core/ui/theme_manager.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
@@ -62,11 +64,18 @@ class UpBar extends StatelessWidget {
                                     }
                                   },
                                   onRangeSelected: (start, end, focusedDay) {
-                                    controller.onRangeSelected(
-                                        start, end, focusedDay);
+                                    log('4522 passou pelo onRangeSelected do up_bar: start: $start end: $end focusedDay: $focusedDay');
+                                    // se start e end do controller forem preenchidas, retorna
                                     if (controller.rangeStartDay != null &&
                                         controller.rangeEndDay != null) {
-                                      Navigator.pop(context);
+                                      return;
+                                    } else {
+                                      controller.onRangeSelected(
+                                          start, end, focusedDay);
+                                      if (controller.rangeStartDay != null &&
+                                          controller.rangeEndDay != null) {
+                                        Navigator.pop(context);
+                                      }
                                     }
                                   },
                                 ),

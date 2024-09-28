@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
@@ -47,6 +49,11 @@ class HomeController with MessageStateMixin {
   final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
   final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
+
+  set focusedDay(DateTime focusedDay) {
+    _focusedDay.value = focusedDay;
+  }
+
   final Signal<RangeSelectionMode> _rangeSelectionMode =
       Signal<RangeSelectionMode>(RangeSelectionMode.toggledOn);
 
@@ -141,9 +148,11 @@ class HomeController with MessageStateMixin {
   }
 
   void resetSelectedDate() {
+    DateTime now = DateTime.now();
     _rangeStartDay.value = null;
     _rangeEndDay.value = null;
     _selectedDay.value = null;
+    _focusedDay.value = now;
     if (_homeData.value.length != _homeDataBackup.value.length) {
       _setHomeData(_homeDataBackup.value);
     }
@@ -182,21 +191,45 @@ class HomeController with MessageStateMixin {
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+
+    log('4522 starttt: ${start}');
+    log('4522 enddd: ${end}');
+    log('4522 focusedDay: $focusedDay');
+    log('4522 selectedDay ${_selectedDay.value}');
+
+    if(_rangeStartDay.value != null && _rangeEndDay.value != null){
+      return;
+    }
+
+
+    
+    
     if (start != null) {
       _rangeStartDay.value = start;
+      _focusedDay.value = start;
     }
 
     if (end != null) {
       _rangeEndDay.value = end;
+      // _focusedDay.value = end;
     }
+
     if (start != null && end != null) {
       if (start.isAfter(end)) {
         _rangeStartDay.value = end;
         _rangeEndDay.value = start;
+        _focusedDay.value = end;
+        
       }
+      
     }
+    
     _selectedDay.value = null;
-    _focusedDay.value = focusedDay;
+
+    log('4522 depois starttt: ${start}');
+    log('4522 depois enddd: ${end}');
+    log('4522 depois focusedDay: $focusedDay');
+    log('4522 depois selectedDay ${_selectedDay.value}');
     _setHomeData(_homeDataBackup.value);
   }
 
