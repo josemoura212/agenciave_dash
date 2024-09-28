@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:agenciave_dash/core/ui/theme_manager.dart';
 import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/modules/home/widgets/date_side_bar.dart';
@@ -20,16 +18,11 @@ class UpBar extends StatelessWidget {
       (_) => SliverAppBar(
         pinned: true,
         floating: true,
-        toolbarHeight: controller.selectedDay != null ||
-                controller.rangeEndDay != null &&
-                    controller.rangeStartDay != null
-            ? kToolbarHeight + 30
-            : kToolbarHeight,
         surfaceTintColor: Colors.transparent,
         flexibleSpace: FlexibleSpaceBar(
           background: Card(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
               child: Column(
                 children: [
                   Row(
@@ -46,7 +39,12 @@ class UpBar extends StatelessWidget {
                         tooltip: "Resetar data",
                       ),
                       IconButton(
-                        icon: const Icon(Icons.calendar_today),
+                        icon: controller.selectedDay != null ||
+                                controller.rangeEndDay != null &&
+                                    controller.rangeStartDay != null
+                            ? Text(
+                                "Data selecionada: ${controller.selectedDayFormatted}")
+                            : Icon(Icons.calendar_today),
                         onPressed: () async {
                           showDialog(
                             context: context,
@@ -64,8 +62,6 @@ class UpBar extends StatelessWidget {
                                     }
                                   },
                                   onRangeSelected: (start, end, focusedDay) {
-                                    log('4522 passou pelo onRangeSelected do up_bar: start: $start end: $end focusedDay: $focusedDay');
-                                    // se start e end do controller forem preenchidas, retorna
                                     if (controller.rangeStartDay != null &&
                                         controller.rangeEndDay != null) {
                                       return;

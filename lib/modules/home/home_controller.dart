@@ -73,6 +73,15 @@ class HomeController with MessageStateMixin {
   DateTime? get selectedDay => _selectedDay.value;
   DateTime get focusedDay => _focusedDay.value;
 
+  String? get selectedDayFormatted {
+    if (rangeStartDay != null && rangeEndDay != null) {
+      return "${DateFormat('dd/MM/yyyy').format(rangeStartDay!)} - ${DateFormat('dd/MM/yyyy').format(rangeEndDay!)}";
+    }
+    return selectedDay != null
+        ? DateFormat('dd/MM/yyyy').format(selectedDay!)
+        : null;
+  }
+
   RangeSelectionMode get rangeSelectionMode => _rangeSelectionMode.value;
 
   String get totalFaturamento => _totalFaturamento.value;
@@ -173,37 +182,18 @@ class HomeController with MessageStateMixin {
     _rangeStartDay.value = null;
     _rangeEndDay.value = null;
     _setHomeData(_homeDataBackup.value);
-
-    // final firstDay = _homeDataBackup.value.first.saleDate;
-    // final lastDay = _homeDataBackup.value.last.saleDate;
-
-    // if (focusedDay.isBefore(firstDay)) {
-    //   focusedDay = firstDay;
-    // } else if (focusedDay.isAfter(lastDay)) {
-    //   focusedDay = lastDay;
-    // }
-
-    // if (isSameDay(focusedDay, firstDay) || focusedDay.isBefore(lastDay)) {
-    //   _selectedDay.value = selectedDay;
-    //   _focusedDay.value = focusedDay;
-    //   _setHomeData(_homeDataBackup.value);
-    // }
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-
-    log('4522 starttt: ${start}');
-    log('4522 enddd: ${end}');
+    log('4522 starttt: $start');
+    log('4522 enddd: $end');
     log('4522 focusedDay: $focusedDay');
     log('4522 selectedDay ${_selectedDay.value}');
 
-    if(_rangeStartDay.value != null && _rangeEndDay.value != null){
+    if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
       return;
     }
 
-
-    
-    
     if (start != null) {
       _rangeStartDay.value = start;
       _focusedDay.value = start;
@@ -211,7 +201,6 @@ class HomeController with MessageStateMixin {
 
     if (end != null) {
       _rangeEndDay.value = end;
-      // _focusedDay.value = end;
     }
 
     if (start != null && end != null) {
@@ -219,15 +208,13 @@ class HomeController with MessageStateMixin {
         _rangeStartDay.value = end;
         _rangeEndDay.value = start;
         _focusedDay.value = end;
-        
       }
-      
     }
-    
+
     _selectedDay.value = null;
 
-    log('4522 depois starttt: ${start}');
-    log('4522 depois enddd: ${end}');
+    log('4522 depois starttt: $start');
+    log('4522 depois enddd: $end');
     log('4522 depois focusedDay: $focusedDay');
     log('4522 depois selectedDay ${_selectedDay.value}');
     _setHomeData(_homeDataBackup.value);
