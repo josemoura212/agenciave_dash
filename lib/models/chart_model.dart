@@ -58,6 +58,19 @@ List<ChartModel> setOrigemData(List<HomeModel> data) {
         countOrigem["fbads Quente"] =
             (countOrigem["fbads Quente"] ?? 0) + item.quantity;
         break;
+      case "redirect-cap":
+        countOrigem["Redirect Cap"] =
+            (countOrigem["Redirect Cap"] ?? 0) + item.quantity;
+        break;
+      case "email":
+        countOrigem["Email"] = (countOrigem["Email"] ?? 0) + item.quantity;
+        break;
+      case "aluno":
+        countOrigem["Aluno"] = (countOrigem["Aluno"] ?? 0) + item.quantity;
+        break;
+      default:
+        countOrigem["Outros"] = (countOrigem["Outros"] ?? 0) + item.quantity;
+        break;
     }
   }
 

@@ -34,6 +34,7 @@ class UpBar extends StatelessWidget {
                     title: "Vendas Internas",
                     product: Product.vi,
                     color: Colors.greenAccent[400]!,
+                    colortText: Colors.black,
                   ),
                   _PageToogle(
                     controller: controller,

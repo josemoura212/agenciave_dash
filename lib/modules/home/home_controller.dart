@@ -118,7 +118,10 @@ class HomeController with MessageStateMixin {
   final release = {
     "1": [DateTime.utc(2024, 7, 30), DateTime.utc(2024, 8, 05)],
     "2": [DateTime.utc(2024, 9, 01), DateTime.utc(2024, 9, 5)],
-    "3": [DateTime.utc(2024, 9, 27), DateTime.now()],
+    "3": [
+      DateTime.utc(2024, 9, 27, 0, 0, 0),
+      DateTime.now().add(Duration(hours: 3))
+    ],
   };
 
   Future<void> changeRelease(bool toglee, {bool initial = false}) async {
@@ -126,6 +129,18 @@ class HomeController with MessageStateMixin {
     final end = release.length;
     final current = selectedRelease;
     if (initial) {
+      final releaseResult =
+          await _localStore.read(LocalStorageConstants.release);
+      if (releaseResult != null) {
+        _selectedRelease.set(int.parse(releaseResult), force: true);
+        _rangeStartDay.set(release[releaseResult]![0], force: true);
+        _rangeEndDay.set(release[releaseResult]![1], force: true);
+        _focusedDay.set(release[releaseResult]![0].add(Duration(days: 1)),
+            force: true);
+        _rangeSelectionMode.value = RangeSelectionMode.toggledOn;
+        _setHomeData(_homeDataBackup.value);
+        return;
+      }
       _selectedRelease.set(1, force: true);
       _rangeStartDay.set(release["1"]![0], force: true);
       _rangeEndDay.set(release["1"]![1], force: true);
@@ -300,7 +315,7 @@ class HomeController with MessageStateMixin {
     _totalReceita.set('', force: true);
     await getHomeData().asyncLoader();
     if (product == Product.pe) {
-      changeRelease(true, initial: true);
+      changeRelease(true);
     }
   }
 
@@ -313,7 +328,11 @@ class HomeController with MessageStateMixin {
           showError("Erro ao buscar dados");
         case Right(value: List<HomeModel> data):
           _homeDataBackup.set(data, force: true);
-          _setHomeData(data);
+          if (selectedProduct == Product.pe) {
+            changeRelease(true, initial: true);
+          } else {
+            _setHomeData(data);
+          }
       }
     }
   }
