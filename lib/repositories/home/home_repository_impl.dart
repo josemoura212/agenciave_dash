@@ -6,6 +6,7 @@ import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/core/rest_client/rest_client.dart';
 import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/modules/home/home_controller.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
 import 'package:dio/dio.dart';
 
@@ -20,9 +21,10 @@ class HomeRepositoryImpl implements HomeRepository {
         _localStorage = localStorage;
 
   @override
-  Future<Either<RepositoryException, List<HomeModel>>> getHomeData() async {
+  Future<Either<RepositoryException, List<HomeModel>>> getHomeData(
+      Product product) async {
     final apiKey = await _localStorage.read(LocalStorageConstants.apiKey);
-    final response = await _restClient.get("",
+    final response = await _restClient.get("?name=${product.toString()}",
         options: Options(
           headers: {"x-api-key": apiKey},
         ));

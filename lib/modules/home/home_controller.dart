@@ -5,6 +5,7 @@ import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:agenciave_dash/models/hour_model.dart';
 import 'package:agenciave_dash/models/weekday_model.dart';
+import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:intl/intl.dart';
 import 'package:signals_flutter/signals_flutter.dart';
@@ -14,6 +15,24 @@ import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/models/home_model.dart';
 import 'package:agenciave_dash/services/home/home_services.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+enum Product {
+  vi,
+  si,
+  pe;
+
+  @override
+  toString() {
+    switch (this) {
+      case Product.vi:
+        return 'VI';
+      case Product.si:
+        return 'SI';
+      case Product.pe:
+        return 'PE';
+    }
+  }
+}
 
 class HomeController with MessageStateMixin {
   HomeController({
@@ -50,6 +69,8 @@ class HomeController with MessageStateMixin {
   final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
 
+  final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
+
   set focusedDay(DateTime focusedDay) {
     _focusedDay.value = focusedDay;
   }
@@ -72,6 +93,8 @@ class HomeController with MessageStateMixin {
   DateTime? get rangeEndDay => _rangeEndDay.value;
   DateTime? get selectedDay => _selectedDay.value;
   DateTime get focusedDay => _focusedDay.value;
+
+  Product get selectedProduct => _selectedProduct.value;
 
   String? get selectedDayFormatted {
     if (rangeStartDay != null && rangeEndDay != null) {
@@ -223,9 +246,31 @@ class HomeController with MessageStateMixin {
     _setHomeData(_homeDataBackup.value);
   }
 
+  Future<void> changeProduct(Product product) async {
+    _selectedProduct.set(product);
+    _homeData.set([], force: true);
+    _homeDataBackup.set([], force: true);
+    _dateData.set([], force: true);
+    _origemData.set([], force: true);
+    _stateData.set([], force: true);
+    _gridMediaData.set(
+        GridMediaModel(
+            mediaDiaria: MediaDiaria(
+                vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0"),
+            mediaMensal: MediaMensal(
+                vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0")),
+        force: true);
+    _hourData.set([], force: true);
+    _weekdayData.set([], force: true);
+    _totalVendas.set(0, force: true);
+    _totalFaturamento.set('', force: true);
+    _totalReceita.set('', force: true);
+    await getHomeData().asyncLoader();
+  }
+
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await _homeServices.getHomeData();
+      final result = await _homeServices.getHomeData(selectedProduct);
 
       switch (result) {
         case Left():
