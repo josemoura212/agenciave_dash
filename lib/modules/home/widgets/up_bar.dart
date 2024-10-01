@@ -19,7 +19,7 @@ class UpBar extends StatelessWidget {
         pinned: true,
         floating: true,
         surfaceTintColor: Colors.transparent,
-        toolbarHeight: 150,
+        toolbarHeight: 100,
         flexibleSpace: FlexibleSpaceBar(
           background: Column(
             children: [
@@ -163,8 +163,11 @@ class _PageToogle extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           ),
-          padding:
-              EdgeInsets.all(controller.selectedProduct == product ? 10 : 5),
+          padding: EdgeInsets.only(
+              top: controller.selectedProduct == product ? 10 : 5,
+              bottom: 5,
+              left: 10,
+              right: 10),
           child: Text(
             title,
             style: TextStyle(
