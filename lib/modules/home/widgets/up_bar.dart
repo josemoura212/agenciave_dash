@@ -19,7 +19,7 @@ class UpBar extends StatelessWidget {
         pinned: true,
         floating: true,
         surfaceTintColor: Colors.transparent,
-        toolbarHeight: 100,
+        toolbarHeight: 90,
         flexibleSpace: FlexibleSpaceBar(
           background: Column(
             children: [
@@ -45,7 +45,58 @@ class UpBar extends StatelessWidget {
                     controller: controller,
                     title: "Profissão Expert",
                     product: Product.pe,
-                    color: Colors.yellowAccent[400]!,
+                    color: Colors.yellowAccent[700]!,
+                    colortText: Colors.black,
+                  ),
+                  Spacer(),
+                  Visibility(
+                    visible: controller.selectedProduct == Product.pe,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.yellowAccent[400],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              controller.changeRelease(false);
+                            },
+                            tooltip: "Lançamento Anterior",
+                          ),
+                          Text(
+                            "Lançamento: ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              controller.changeRelease(true);
+                            },
+                            tooltip: "Lançamento Posterior",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
                   ),
                 ],
               ),
@@ -141,12 +192,14 @@ class _PageToogle extends StatelessWidget {
     required this.title,
     required this.product,
     required this.color,
+    this.colortText,
   });
 
   final HomeController controller;
   final String title;
   final Product product;
   final Color color;
+  final Color? colortText;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +226,7 @@ class _PageToogle extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: colortText ?? Colors.white,
             ),
           ),
         ),

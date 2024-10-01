@@ -1,5 +1,5 @@
-import 'dart:developer';
-
+import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
+import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
@@ -42,6 +42,7 @@ class HomeController with MessageStateMixin {
   final HomeServices _homeServices;
 
   final _authController = Injector.get<AuthController>();
+  final _localStore = Injector.get<LocalStorage>();
 
   final Signal<List<HomeModel>> _homeData = Signal<List<HomeModel>>([]);
   final Signal<List<HomeModel>> _homeDataBackup = Signal<List<HomeModel>>([]);
@@ -68,6 +69,7 @@ class HomeController with MessageStateMixin {
   final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
   final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
+  final Signal<int> _selectedRelease = Signal<int>(1);
 
   final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
 
@@ -95,6 +97,7 @@ class HomeController with MessageStateMixin {
   DateTime get focusedDay => _focusedDay.value;
 
   Product get selectedProduct => _selectedProduct.value;
+  int get selectedRelease => _selectedRelease.value;
 
   String? get selectedDayFormatted {
     if (rangeStartDay != null && rangeEndDay != null) {
@@ -111,6 +114,44 @@ class HomeController with MessageStateMixin {
   String get totalReceita => _totalReceita.value;
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+
+  final release = {
+    "1": [DateTime.utc(2024, 7, 30), DateTime.utc(2024, 8, 05)],
+    "2": [DateTime.utc(2024, 9, 01), DateTime.utc(2024, 9, 5)],
+    "3": [DateTime.utc(2024, 9, 27), DateTime.now()],
+  };
+
+  Future<void> changeRelease(bool toglee, {bool initial = false}) async {
+    final start = 0;
+    final end = release.length;
+    final current = selectedRelease;
+    if (initial) {
+      _selectedRelease.set(1, force: true);
+      _rangeStartDay.set(release["1"]![0], force: true);
+      _rangeEndDay.set(release["1"]![1], force: true);
+      _focusedDay.set(release["1"]![0].add(Duration(days: 1)), force: true);
+      _rangeSelectionMode.value = RangeSelectionMode.toggledOn;
+      _setHomeData(_homeDataBackup.value);
+      return;
+    }
+    if (toglee) {
+      if (current != end) {
+        _selectedRelease.set(current + 1);
+      }
+    } else {
+      if (current != start) {
+        _selectedRelease.set(current - 1);
+      }
+    }
+    _rangeStartDay.value = release[selectedRelease.toString()]![0];
+    _rangeEndDay.value = release[selectedRelease.toString()]![1];
+    _focusedDay.value =
+        release[selectedRelease.toString()]![0].add(Duration(days: 1));
+    _rangeSelectionMode.value = RangeSelectionMode.toggledOn;
+    _setHomeData(_homeDataBackup.value);
+    await _localStore.write(
+        LocalStorageConstants.release, selectedRelease.toString());
+  }
 
   void _setHomeData(List<HomeModel> data) {
     if (_selectedDay.value != null) {
@@ -211,11 +252,6 @@ class HomeController with MessageStateMixin {
   }
 
   void onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-    log('4522 starttt: $start');
-    log('4522 enddd: $end');
-    log('4522 focusedDay: $focusedDay');
-    log('4522 selectedDay ${_selectedDay.value}');
-
     if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
       return;
     }
@@ -239,14 +275,11 @@ class HomeController with MessageStateMixin {
 
     _selectedDay.value = null;
 
-    log('4522 depois starttt: $start');
-    log('4522 depois enddd: $end');
-    log('4522 depois focusedDay: $focusedDay');
-    log('4522 depois selectedDay ${_selectedDay.value}');
     _setHomeData(_homeDataBackup.value);
   }
 
   Future<void> changeProduct(Product product) async {
+    await _localStore.write(LocalStorageConstants.product, product.toString());
     _selectedProduct.set(product);
     _homeData.set([], force: true);
     _homeDataBackup.set([], force: true);
@@ -266,6 +299,9 @@ class HomeController with MessageStateMixin {
     _totalFaturamento.set('', force: true);
     _totalReceita.set('', force: true);
     await getHomeData().asyncLoader();
+    if (product == Product.pe) {
+      changeRelease(true, initial: true);
+    }
   }
 
   Future<void> getHomeData() async {
@@ -286,6 +322,14 @@ class HomeController with MessageStateMixin {
     final apyKey = await _authController.isAuthenticate();
 
     if (apyKey != null) {
+      final productResult =
+          await _localStore.read(LocalStorageConstants.product);
+      if (productResult != null) {
+        _selectedProduct.set(
+            Product.values
+                .firstWhere((element) => element.toString() == productResult),
+            force: true);
+      }
       return true;
     } else {
       showError("Usuário não autenticado");
