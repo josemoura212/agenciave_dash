@@ -169,4 +169,16 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
 
     _setHomeData(_homeDataBackup.value);
   }
+
+  void toogleSettings() {
+    _showSettings.value = !_showSettings.value;
+  }
+
+  void toogleOrigen() {
+    _showOrigen.value = !_showOrigen.value;
+  }
+
+  void toogleState() {
+    _showState.value = !_showState.value;
+  }
 }

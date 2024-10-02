@@ -87,6 +87,7 @@ class HomeController
     _rangeStartDay.set(null, force: true);
     _rangeEndDay.set(null, force: true);
     _focusedDay.set(DateTime.now(), force: true);
+    _showSettings.set(false, force: true);
     await getHomeData().asyncLoader();
     if (product == Product.pe) {
       changeRelease(true);

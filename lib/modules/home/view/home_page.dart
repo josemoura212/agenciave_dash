@@ -61,12 +61,18 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                     child: Watch(
                       (_) => Row(
                         children: [
-                          ChartWidget(
-                              title: "Origem das Vendas",
-                              chartData: controller.origemData),
-                          ChartWidget(
-                              title: "Estados",
-                              chartData: controller.stateData),
+                          Visibility(
+                            visible: controller.showOrigen,
+                            child: ChartWidget(
+                                title: "Origem das Vendas",
+                                chartData: controller.origemData),
+                          ),
+                          Visibility(
+                            visible: controller.showState,
+                            child: ChartWidget(
+                                title: "Estados",
+                                chartData: controller.stateData),
+                          ),
                         ],
                       ),
                     ),

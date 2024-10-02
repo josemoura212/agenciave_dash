@@ -24,54 +24,71 @@ mixin _HomeControllerVariables {
 
   final Signal<List<HomeModel>> _homeData = Signal<List<HomeModel>>([]);
   final Signal<List<HomeModel>> _homeDataBackup = Signal<List<HomeModel>>([]);
+  List<HomeModel> get homeData => _homeData.value;
+
   final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
+  List<DateModel> get dateData => _dateData.value;
 
   final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
+  List<ChartModel> get origemData => _origemData.value;
+
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
+  List<ChartModel> get stateData => _stateData.value;
+
   final Signal<GridMediaModel> _gridMediaData = Signal<GridMediaModel>(
       GridMediaModel(
           mediaDiaria: MediaDiaria(
               vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0"),
           mediaMensal: MediaMensal(
               vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0")));
+  GridMediaModel get gridMediaData => _gridMediaData.value;
 
   final Signal<List<HourModel>> _hourData = Signal<List<HourModel>>([]);
+  List<HourModel> get hourData => _hourData.value;
+
   final Signal<List<WeekdayModel>> _weekdayData =
       Signal<List<WeekdayModel>>([]);
+  List<WeekdayModel> get weekdayData => _weekdayData.value;
 
   final Signal<int> _totalVendas = Signal<int>(0);
+  int get totalVendas => _totalVendas.value;
+
   final Signal<String> _totalFaturamento = Signal<String>('');
+  String get totalFaturamento => _totalFaturamento.value;
+
   final Signal<String> _totalReceita = Signal<String>('');
+  String get totalReceita => _totalReceita.value;
+
+  final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
+  DateTime? get rangeStartDay => _rangeStartDay.value;
 
   final Signal<DateTime?> _rangeEndDay = Signal<DateTime?>(null);
-  final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
+  DateTime? get rangeEndDay => _rangeEndDay.value;
+
   final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
+  DateTime? get selectedDay => _selectedDay.value;
+
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
+  DateTime get focusedDay => _focusedDay.value;
+
   final Signal<int> _selectedRelease = Signal<int>(1);
+  int get selectedRelease => _selectedRelease.value;
 
   final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
+  Product get selectedProduct => _selectedProduct.value;
 
   final Signal<RangeSelectionMode> _rangeSelectionMode =
       Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
+  RangeSelectionMode get rangeSelectionMode => _rangeSelectionMode.value;
 
-  List<HomeModel> get homeData => _homeData.value;
-  List<DateModel> get dateData => _dateData.value;
+  final Signal<bool> _showSettings = Signal<bool>(false);
+  bool get showSettings => _showSettings.value;
 
-  List<ChartModel> get origemData => _origemData.value;
-  List<ChartModel> get stateData => _stateData.value;
-  GridMediaModel get gridMediaData => _gridMediaData.value;
-  List<HourModel> get hourData => _hourData.value;
-  List<WeekdayModel> get weekdayData => _weekdayData.value;
+  final Signal<bool> _showOrigen = Signal<bool>(true);
+  bool get showOrigen => _showOrigen.value;
 
-  int get totalVendas => _totalVendas.value;
-
-  DateTime? get rangeStartDay => _rangeStartDay.value;
-  DateTime? get rangeEndDay => _rangeEndDay.value;
-  DateTime? get selectedDay => _selectedDay.value;
-  DateTime get focusedDay => _focusedDay.value;
-
-  Product get selectedProduct => _selectedProduct.value;
-  int get selectedRelease => _selectedRelease.value;
+  final Signal<bool> _showState = Signal<bool>(true);
+  bool get showState => _showState.value;
 
   set focusedDay(DateTime focusedDay) {
     _focusedDay.value = focusedDay;
@@ -85,11 +102,6 @@ mixin _HomeControllerVariables {
         ? DateFormat('dd/MM/yyyy').format(selectedDay!)
         : null;
   }
-
-  RangeSelectionMode get rangeSelectionMode => _rangeSelectionMode.value;
-
-  String get totalFaturamento => _totalFaturamento.value;
-  String get totalReceita => _totalReceita.value;
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 

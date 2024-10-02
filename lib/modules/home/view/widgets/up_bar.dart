@@ -19,7 +19,7 @@ class UpBar extends StatelessWidget {
         pinned: true,
         floating: true,
         surfaceTintColor: Colors.transparent,
-        toolbarHeight: 90,
+        toolbarHeight: controller.showSettings ? 125 : 90,
         flexibleSpace: FlexibleSpaceBar(
           background: Column(
             children: [
@@ -166,18 +166,49 @@ class UpBar extends StatelessWidget {
                             tooltip: "Selecionar data",
                           ),
                           IconButton(
-                            icon: const Icon(Icons.brightness_6),
+                            icon: Icon(controller.showSettings
+                                ? Icons.arrow_drop_up_rounded
+                                : Icons.arrow_drop_down_rounded),
                             onPressed: () {
-                              themeManager.toggleTheme();
+                              controller.toogleSettings();
                             },
-                            tooltip: "Mudar tema",
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_drop_down_rounded),
-                            onPressed: () {},
                             tooltip: "Abrir Configurações",
                           ),
                         ],
+                      ),
+                      Visibility(
+                        visible: controller.showSettings,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              "Origem",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller.showOrigen,
+                              onChanged: (_) => controller.toogleOrigen(),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Estados",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller.showState,
+                              onChanged: (_) => controller.toogleState(),
+                            ),
+                            Spacer(),
+                            IconButton(
+                              icon: const Icon(Icons.brightness_6),
+                              onPressed: () {
+                                themeManager.toggleTheme();
+                              },
+                              tooltip: "Mudar tema",
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ],
                   ),
