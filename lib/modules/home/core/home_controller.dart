@@ -48,14 +48,21 @@ class HomeController
     final apyKey = await _authController.isAuthenticate();
 
     if (apyKey != null) {
-      final productResult =
-          await _localStore.read(LocalStorageConstants.product);
-      if (productResult != null) {
-        _selectedProduct.set(
-            Product.values
-                .firstWhere((element) => element.toString() == productResult),
-            force: true);
-      }
+      final result = await Future.wait([
+        _localStore.read(LocalStorageConstants.product),
+        _localStore.readBool(LocalStorageConstants.origen),
+        _localStore.readBool(LocalStorageConstants.state),
+        _localStore.readBool(LocalStorageConstants.paymentType),
+      ]);
+
+      _selectedProduct.set(
+          Product.values
+              .firstWhere((element) => element.toString() == result[0]),
+          force: true);
+      _showOrigen.set(result[1] as bool, force: true);
+      _showState.set(result[2] as bool, force: true);
+      _showPaymentType.set(result[3] as bool, force: true);
+
       return true;
     } else {
       showError("Usuário não autenticado");

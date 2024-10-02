@@ -64,14 +64,16 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                           Visibility(
                             visible: controller.showOrigen,
                             child: ChartWidget(
-                                title: "Origem das Vendas",
-                                chartData: controller.origemData),
+                              title: "Origem das Vendas",
+                              chartData: controller.origemData,
+                            ),
                           ),
                           Visibility(
                             visible: controller.showState,
                             child: ChartWidget(
-                                title: "Estados",
-                                chartData: controller.stateData),
+                              title: "Estados",
+                              chartData: controller.stateData,
+                            ),
                           ),
                         ],
                       ),
@@ -98,9 +100,15 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                     ),
                   ),
                   const SliverToBoxAdapter(child: TableWidget()),
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Row(
-                      children: [WeekdayWidget(), HourWidget()],
+                      children: [
+                        WeekdayWidget(),
+                        HourWidget(
+                            title: "Vendas por hora",
+                            tooltip: "Vendas",
+                            data: controller.hourData)
+                      ],
                     ),
                   ),
                   // const SliverToBoxAdapter(child: HourWidget()),

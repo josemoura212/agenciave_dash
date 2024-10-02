@@ -206,7 +206,7 @@ class UpBar extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             Checkbox(
-                              value: controller.showState,
+                              value: controller.showPaymentType,
                               onChanged: (_) => controller
                                   .toggleShowHide(ShowAndHide.paymentType),
                             ),

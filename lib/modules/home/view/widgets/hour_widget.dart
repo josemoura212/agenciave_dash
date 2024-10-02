@@ -6,7 +6,14 @@ import 'package:signals_flutter/signals_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HourWidget extends StatelessWidget {
-  const HourWidget({super.key});
+  const HourWidget(
+      {super.key,
+      required this.title,
+      required this.tooltip,
+      required this.data});
+  final String title;
+  final String tooltip;
+  final List<HourModel> data;
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +23,10 @@ class HourWidget extends StatelessWidget {
       child: Watch(
         (_) => SfCartesianChart(
           primaryXAxis: const CategoryAxis(),
-          title: const ChartTitle(text: 'Vendas por hora'),
+          title: ChartTitle(text: title),
           tooltipBehavior: TooltipBehavior(
             enable: true,
-            header: "Vendas",
+            header: tooltip,
           ),
           series: [
             ColumnSeries<HourModel, String>(

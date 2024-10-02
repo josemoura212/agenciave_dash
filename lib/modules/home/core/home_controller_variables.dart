@@ -18,6 +18,20 @@ enum Product {
   }
 }
 
+enum GetData {
+  homeData,
+  dateData,
+  origemData,
+  stateData,
+  paymentTypeData,
+  gridMediaData,
+  hourData,
+  weekdayData,
+  totalVendas,
+  totalFaturamento,
+  totalReceita,
+}
+
 enum ShowAndHide {
   settings,
   origem,
@@ -127,4 +141,32 @@ mixin _HomeControllerVariables {
       DateTime.now().add(Duration(hours: 3))
     ],
   };
+
+  Object getData<T>(GetData data) {
+    switch (data) {
+      case GetData.homeData:
+        return _homeData.value;
+      case GetData.dateData:
+        return _dateData.value;
+      case GetData.origemData:
+        return _origemData.value;
+      case GetData.stateData:
+        return _stateData.value;
+      case GetData.paymentTypeData:
+        return _paymentTypeData.value;
+      case GetData.gridMediaData:
+        return _gridMediaData.value;
+      case GetData.hourData:
+        return _hourData.value;
+
+      case GetData.weekdayData:
+        return _weekdayData.value;
+      case GetData.totalVendas:
+        return _totalVendas.value;
+      case GetData.totalFaturamento:
+        return _totalFaturamento.value;
+      case GetData.totalReceita:
+        return _totalReceita.value;
+    }
+  }
 }
