@@ -313,6 +313,10 @@ class HomeController with MessageStateMixin {
     _totalVendas.set(0, force: true);
     _totalFaturamento.set('', force: true);
     _totalReceita.set('', force: true);
+    _selectedDay.set(null, force: true);
+    _rangeStartDay.set(null, force: true);
+    _rangeEndDay.set(null, force: true);
+    _focusedDay.set(DateTime.now(), force: true);
     await getHomeData().asyncLoader();
     if (product == Product.pe) {
       changeRelease(true);
