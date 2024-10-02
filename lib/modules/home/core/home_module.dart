@@ -1,5 +1,5 @@
-import 'package:agenciave_dash/modules/home/home_controller.dart';
-import 'package:agenciave_dash/modules/home/home_page.dart';
+import 'package:agenciave_dash/modules/home/core/home_controller.dart';
+import 'package:agenciave_dash/modules/home/view/home_page.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
 import 'package:agenciave_dash/repositories/home/home_repository_impl.dart';
 import 'package:agenciave_dash/services/home/home_services.dart';

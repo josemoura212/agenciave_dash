@@ -1,4 +1,4 @@
-import 'package:agenciave_dash/modules/home/home_controller.dart';
+import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';

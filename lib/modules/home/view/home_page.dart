@@ -1,10 +1,10 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
-import 'package:agenciave_dash/modules/home/home_controller.dart';
-import 'package:agenciave_dash/modules/home/widgets/chart_widget.dart';
-import 'package:agenciave_dash/modules/home/widgets/hour_widget.dart';
-import 'package:agenciave_dash/modules/home/widgets/table_widget.dart';
-import 'package:agenciave_dash/modules/home/widgets/up_bar.dart';
-import 'package:agenciave_dash/modules/home/widgets/weekday_widget.dart';
+import 'package:agenciave_dash/modules/home/core/home_controller.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/chart_widget.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/hour_widget.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/table_widget.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/up_bar.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/weekday_widget.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';

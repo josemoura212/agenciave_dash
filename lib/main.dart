@@ -2,7 +2,7 @@ import 'package:agenciave_dash/core/bindings/dash_application_bindins.dart';
 import 'package:agenciave_dash/core/ui/loader.dart';
 import 'package:agenciave_dash/core/ui/theme_manager.dart';
 import 'package:agenciave_dash/core/ui/ui_config.dart';
-import 'package:agenciave_dash/modules/home/home_module.dart';
+import 'package:agenciave_dash/modules/home/core/home_module.dart';
 import 'package:agenciave_dash/modules/splash/splash_module.dart';
 import 'package:asyncstate/asyncstate.dart' as asyncstate;
 import 'package:flutter/foundation.dart';
