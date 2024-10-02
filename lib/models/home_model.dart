@@ -18,6 +18,9 @@ class HomeModel {
   String paymentType;
   String paymenteTypeOffer;
   double commissionValueGenerated;
+  String name;
+  String email;
+  String phone;
 
   HomeModel({
     required this.nowNumber,
@@ -35,6 +38,9 @@ class HomeModel {
     required this.paymentType,
     required this.paymenteTypeOffer,
     required this.commissionValueGenerated,
+    required this.name,
+    required this.email,
+    required this.phone,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,6 +60,9 @@ class HomeModel {
       'Tipo de Pagamento': paymentType,
       'Tipo pagamento oferta': paymenteTypeOffer,
       'Valor da Comissão Gerada': commissionValueGenerated,
+      'Nome': name,
+      'Email': email,
+      'Telefone': phone,
     };
   }
 
@@ -74,6 +83,9 @@ class HomeModel {
       paymentType: '',
       paymenteTypeOffer: '',
       commissionValueGenerated: 0.0,
+      name: '',
+      email: '',
+      phone: '',
     );
   }
 
@@ -95,6 +107,9 @@ class HomeModel {
       paymenteTypeOffer: map['Tipo pagamento oferta'] ?? '',
       commissionValueGenerated:
           map['Valor da Comissão Gerada']?.toDouble() ?? 0.0,
+      name: map['Nome'] ?? '',
+      email: map['Email'] ?? '',
+      phone: map['Telefone'].toString(),
     );
   }
 
@@ -105,7 +120,7 @@ class HomeModel {
 
   @override
   String toString() {
-    return 'HomeModel(nowNumber: $nowNumber, id: $id, nameProduct: $nameProduct, origin: $origin, saleDate: $saleDate, quantity: $quantity, invoicing: $invoicing, coin: $coin, recurrenceNumber: $recurrenceNumber, status: $status, country: $country, state: $state, paymentType: $paymentType, paymenteTypeOffer: $paymenteTypeOffer, commissionValueGenerated: $commissionValueGenerated)';
+    return 'HomeModel(nowNumber: $nowNumber, id: $id, nameProduct: $nameProduct, origin: $origin, saleDate: $saleDate, quantity: $quantity, invoicing: $invoicing, coin: $coin, recurrenceNumber: $recurrenceNumber, status: $status, country: $country, state: $state, paymentType: $paymentType, paymenteTypeOffer: $paymenteTypeOffer, commissionValueGenerated: $commissionValueGenerated), name: $name, email: $email, phone: $phone';
   }
 }
 

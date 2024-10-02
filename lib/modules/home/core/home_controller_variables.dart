@@ -18,6 +18,13 @@ enum Product {
   }
 }
 
+enum ShowAndHide {
+  settings,
+  origem,
+  state,
+  paymentType,
+}
+
 mixin _HomeControllerVariables {
   final _authController = Injector.get<AuthController>();
   final _localStore = Injector.get<LocalStorage>();
@@ -34,6 +41,10 @@ mixin _HomeControllerVariables {
 
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
   List<ChartModel> get stateData => _stateData.value;
+
+  final Signal<List<ChartModel>> _paymentTypeData =
+      Signal<List<ChartModel>>([]);
+  List<ChartModel> get paymentTypeData => _paymentTypeData.value;
 
   final Signal<GridMediaModel> _gridMediaData = Signal<GridMediaModel>(
       GridMediaModel(
@@ -89,6 +100,9 @@ mixin _HomeControllerVariables {
 
   final Signal<bool> _showState = Signal<bool>(true);
   bool get showState => _showState.value;
+
+  final Signal<bool> _showPaymentType = Signal<bool>(true);
+  bool get showPaymentType => _showPaymentType.value;
 
   set focusedDay(DateTime focusedDay) {
     _focusedDay.value = focusedDay;

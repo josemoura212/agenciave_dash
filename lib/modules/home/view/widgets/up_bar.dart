@@ -170,7 +170,7 @@ class UpBar extends StatelessWidget {
                                 ? Icons.arrow_drop_up_rounded
                                 : Icons.arrow_drop_down_rounded),
                             onPressed: () {
-                              controller.toogleSettings();
+                              controller.toggleShowHide(ShowAndHide.settings);
                             },
                             tooltip: "Abrir Configurações",
                           ),
@@ -187,7 +187,8 @@ class UpBar extends StatelessWidget {
                             ),
                             Checkbox(
                               value: controller.showOrigen,
-                              onChanged: (_) => controller.toogleOrigen(),
+                              onChanged: (_) =>
+                                  controller.toggleShowHide(ShowAndHide.origem),
                             ),
                             Spacer(),
                             Text(
@@ -196,7 +197,18 @@ class UpBar extends StatelessWidget {
                             ),
                             Checkbox(
                               value: controller.showState,
-                              onChanged: (_) => controller.toogleState(),
+                              onChanged: (_) =>
+                                  controller.toggleShowHide(ShowAndHide.state),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Tipos de Pagamento",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller.showState,
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.paymentType),
                             ),
                             Spacer(),
                             IconButton(

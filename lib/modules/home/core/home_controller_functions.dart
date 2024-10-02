@@ -88,6 +88,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
 
     _origemData.set(setOrigemData(dataResult), force: true);
     _stateData.set(setStateData(dataResult), force: true);
+    _paymentTypeData.set(setPaymentType(dataResult), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
     _calcTotalFaturamento();
@@ -170,15 +171,21 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     _setHomeData(_homeDataBackup.value);
   }
 
-  void toogleSettings() {
-    _showSettings.value = !_showSettings.value;
-  }
+  void toggleShowHide(ShowAndHide showHide) {
+    switch (showHide) {
+      case ShowAndHide.settings:
+        _showSettings.value = !_showSettings.value;
 
-  void toogleOrigen() {
-    _showOrigen.value = !_showOrigen.value;
-  }
-
-  void toogleState() {
-    _showState.value = !_showState.value;
+        break;
+      case ShowAndHide.origem:
+        _showOrigen.value = !_showOrigen.value;
+        break;
+      case ShowAndHide.state:
+        _showState.value = !_showState.value;
+        break;
+      case ShowAndHide.paymentType:
+        _showPaymentType.value = !_showPaymentType.value;
+        break;
+    }
   }
 }

@@ -77,6 +77,26 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                       ),
                     ),
                   ),
+                  SliverToBoxAdapter(
+                    child: Watch(
+                      (_) => Row(
+                        children: [
+                          Visibility(
+                            visible: controller.showPaymentType,
+                            child: ChartWidget(
+                                title: "Tipo de Pagamento",
+                                chartData: controller.paymentTypeData),
+                          ),
+                          // Visibility(
+                          //   visible: controller.showCountry,
+                          //   child: ChartWidget(
+                          //       title: "Países",
+                          //       chartData: controller.countryData),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
                   const SliverToBoxAdapter(child: TableWidget()),
                   const SliverToBoxAdapter(
                     child: Row(

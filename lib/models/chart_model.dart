@@ -86,38 +86,33 @@ List<ChartModel> setOrigemData(List<HomeModel> data) {
   return origemTotal;
 }
 
+List<ChartModel> setPaymentType(List<HomeModel> data) {
+  final List<ChartModel> paymentTypeTotal = [];
+
+  final Map<String, int> countPaymentType = {};
+
+  for (var item in data) {
+    final paymentType = item.paymentType.toLowerCase();
+    countPaymentType[paymentType] =
+        (countPaymentType[paymentType] ?? 0) + item.quantity;
+  }
+
+  countPaymentType.forEach((key, value) {
+    if (value == 0) return;
+    paymentTypeTotal.add(ChartModel(
+        name: key,
+        value: value.toDouble(),
+        total: value,
+        text: "$key: ${(value * 100 / data.length).toStringAsFixed(2)}%"));
+  });
+
+  return paymentTypeTotal;
+}
+
 List<ChartModel> setStateData(List<HomeModel> data) {
   final List<ChartModel> stateTotal = [];
 
-  final Map<String, int> countState = {
-    "SP": 0,
-    "RJ": 0,
-    "MG": 0,
-    "ES": 0,
-    "PR": 0,
-    "SC": 0,
-    "RS": 0,
-    "MS": 0,
-    "MT": 0,
-    "GO": 0,
-    "DF": 0,
-    "BA": 0,
-    "SE": 0,
-    "AL": 0,
-    "PE": 0,
-    "PB": 0,
-    "RN": 0,
-    "CE": 0,
-    "PI": 0,
-    "MA": 0,
-    "PA": 0,
-    "AP": 0,
-    "TO": 0,
-    "RO": 0,
-    "AC": 0,
-    "AM": 0,
-    "RR": 0,
-  };
+  final Map<String, int> countState = {};
 
   for (var item in data) {
     switch (item.state.toLowerCase()) {
