@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:intl/intl.dart';
 
 class RawSaleModel {
@@ -113,11 +111,6 @@ class RawSaleModel {
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory RawSaleModel.fromJson(String source) =>
-      RawSaleModel.fromMap(json.decode(source));
-
   @override
   String toString() {
     return 'HomeModel(nowNumber: $nowNumber, id: $id, nameProduct: $nameProduct, origin: $origin, saleDate: $saleDate, quantity: $quantity, invoicing: $invoicing, coin: $coin, recurrenceNumber: $recurrenceNumber, status: $status, country: $country, state: $state, paymentType: $paymentType, paymenteTypeOffer: $paymenteTypeOffer, commissionValueGenerated: $commissionValueGenerated), name: $name, email: $email, phone: $phone';
@@ -152,7 +145,7 @@ enum Status {
       case Status.refunded:
         return 'Reembolsado';
       case Status.disputed:
-        return 'Pedido de reembolso';
+        return 'Pedido de reemb.';
       case Status.expired:
         return 'Expirado';
       case Status.completed:
@@ -160,13 +153,13 @@ enum Status {
       case Status.billetPrint:
         return 'Boleto Impresso';
       case Status.awaitPayment:
-        return 'Aguardando Pagamento';
+        return 'Aguardando Pagto';
       case Status.chargeback:
         return 'Chargeback';
       case Status.denied:
         return 'Negado';
       case Status.latePayment:
-        return 'Pagamento Atrasado';
+        return 'Pagto Atrasado';
       default:
         return 'Outros';
     }

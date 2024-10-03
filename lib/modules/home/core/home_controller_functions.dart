@@ -76,13 +76,6 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
   }
 
   void _setChartData(List<RawSaleModel> data) {
-    // var dataResult = data
-    //     .where((item) =>
-    //         item.status == "Aprovado" ||
-    //         item.status == "APPROVED" ||
-    //         item.status == "Completo" ||
-    //         item.status == "COMPLETED")
-    //     .toList();
     _homeData.set(data, force: true);
     _processedSaleData.set(ProcessedSaleModel.fromRawModel(data), force: true);
   }

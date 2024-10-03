@@ -23,8 +23,9 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
     final data = switch (type) {
       TypeData.origem => _originFormat(item.origin),
       TypeData.state => _stateFormat(item.state),
-      TypeData.paymentType => item.paymentType,
-      TypeData.paymentTypeOffer => item.paymenteTypeOffer,
+      TypeData.paymentType => _paymentTypeFomart(item.paymentType),
+      TypeData.paymentTypeOffer =>
+        _paymentTypeOfferFormat(item.paymenteTypeOffer),
       TypeData.country => item.country,
       TypeData.status => throw UnimplementedError(),
       TypeData.buyer => throw UnimplementedError(),
@@ -45,6 +46,32 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
   });
 
   return resultData;
+}
+
+String _paymentTypeOfferFormat(String value) {
+  return switch (value.toLowerCase()) {
+    "parcelamento padrão (até 12×)" => "Parcelamento Padrão",
+    "apenas à vista" => "À Vista",
+    _ => "Outros",
+  };
+}
+
+String _paymentTypeFomart(String value) {
+  return switch (value.toLowerCase()) {
+    "boleto bancário" || "billet" => "Boleto",
+    "cartão de crédito" || "credit_card" => "Cartão",
+    "pix" => "Pix",
+    "paypal" => "PayPal",
+    "google pay" => "Google Pay",
+    "apple pay" => "Apple Pay",
+    "transferência" => "Transferência",
+    "conta hotmart (saldo hotmart)" => "Hotmart Saldo",
+    "conta hotmart" => "Conta Hotmart",
+    "pagamento híbrido" => "Híbrido",
+    "conta hotmart (cartão)" => "Hotmart Cartão ",
+    "conta hotmart (cartão + saldo)" => "Hotmart Cartão + Saldo",
+    _ => "Outros",
+  };
 }
 
 String _originFormat(String value) {
