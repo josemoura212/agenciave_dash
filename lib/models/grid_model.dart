@@ -9,6 +9,18 @@ class GridMediaModel {
     required this.mediaDiaria,
     required this.mediaMensal,
   });
+
+  GridMediaModel.empty()
+      : mediaDiaria = MediaDiaria(
+          vendas: 0,
+          mediaFaturamento: '',
+          mediaReceita: '',
+        ),
+        mediaMensal = MediaMensal(
+          vendas: 0,
+          mediaFaturamento: '',
+          mediaReceita: '',
+        );
 }
 
 class MediaDiaria {

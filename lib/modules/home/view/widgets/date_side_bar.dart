@@ -67,11 +67,11 @@ class Calendar extends StatelessWidget {
               availableCalendarFormats: {CalendarFormat.month: "Month"},
               rangeSelectionMode:
                   controller.getData(GetData.rangeSelectionMode),
-              focusedDay: controller.getData(GetData.focusDay),
-              rangeStartDay: controller.getData(GetData.rangeStartDay),
-              rangeEndDay: controller.getData(GetData.rangeEndDay),
+              focusedDay: controller.focusedDay,
+              rangeStartDay: controller.rangeStartDay,
+              rangeEndDay: controller.rangeEndDay,
               selectedDayPredicate: (day) =>
-                  isSameDay(controller.getData(GetData.selectedDay), day),
+                  isSameDay(controller.selectedDay, day),
               onDaySelected: onDaySelected,
               onRangeSelected: onRangeSelected,
               daysOfWeekStyle: DaysOfWeekStyle(

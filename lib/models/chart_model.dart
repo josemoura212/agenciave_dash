@@ -19,18 +19,13 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
   final List<ChartModel> resultData = [];
   final Map<String, int> dataMap = {};
 
-  String format(String value) {
-    // return value.toLowerCase().replaceAll('-', ' ');
-    return value;
-  }
-
   for (var item in data) {
     final data = switch (type) {
-      TypeData.origem => format(item.origin),
-      TypeData.state => format(item.state).toUpperCase(),
-      TypeData.paymentType => format(item.paymentType),
-      TypeData.paymentTypeOffer => format(item.paymenteTypeOffer),
-      TypeData.country => format(item.country),
+      TypeData.origem => _originFormat(item.origin),
+      TypeData.state => _stateFormat(item.state),
+      TypeData.paymentType => item.paymentType,
+      TypeData.paymentTypeOffer => item.paymenteTypeOffer,
+      TypeData.country => item.country,
       TypeData.status => throw UnimplementedError(),
       TypeData.buyer => throw UnimplementedError(),
       TypeData.media => throw UnimplementedError(),
@@ -50,4 +45,55 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
   });
 
   return resultData;
+}
+
+String _originFormat(String value) {
+  return switch (value.toLowerCase()) {
+    "zoom" => "Zoom",
+    "whatsapp" => "Whatsapp",
+    "manychat" => "Manychat",
+    "chatbot" => "Chatbot",
+    "bio" => "Bio",
+    "listboos" => "ListBoss",
+    "poliana" => "Poliana",
+    "fbads-frio" => "fbads Frio",
+    "fbads-quente" => "fbads Quente",
+    "redirect-cap" => "Redirect Cap",
+    "email" => "Email",
+    "aluno" => "Aluno",
+    _ => "Outros",
+  };
+}
+
+String _stateFormat(String value) {
+  return switch (value.toUpperCase()) {
+    "AC" => "AC",
+    "AL" => "AL",
+    "AP" => "AP",
+    "AM" => "AM",
+    "BA" => "BA",
+    "CE" => "CE",
+    "DF" => "DF",
+    "ES" => "ES",
+    "GO" => "GO",
+    "MA" => "MA",
+    "MT" => "MT",
+    "MS" => "MS",
+    "MG" => "MG",
+    "PA" => "PA",
+    "PB" => "PB",
+    "PR" => "PR",
+    "PE" => "PE",
+    "PI" => "PI",
+    "RJ" => "RJ",
+    "RN" => "RN",
+    "RS" => "RS",
+    "RO" => "RO",
+    "RR" => "RR",
+    "SC" => "SC",
+    "SP" => "SP",
+    "SE" => "SE",
+    "TO" => "TO",
+    _ => "Outros",
+  };
 }

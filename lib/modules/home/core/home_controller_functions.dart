@@ -84,40 +84,11 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
             item.status == "COMPLETED")
         .toList();
     _homeData.set(data, force: true);
-    _dateData.set(setDateData(dataResult), force: true);
-
-    _origemData.set(setChartData(dataResult, TypeData.origem), force: true);
-    _stateData.set(setChartData(dataResult, TypeData.state), force: true);
-    _paymentTypeData.set(setChartData(dataResult, TypeData.paymentType),
+    _processedSaleData.set(ProcessedSaleModel.fromRawModel(dataResult),
         force: true);
-    _paymentTypeOfferData
-        .set(setChartData(dataResult, TypeData.paymentTypeOffer), force: true);
-
-    _totalVendas.set(dataResult.length, force: true);
-    _calcTotalFaturamento();
-    _calcTotalReceita();
-    _gridMediaData.set(setGridMediaData(_dateData.value));
-    _hourData.set(setCartesianData(dataResult, TypeData.hour), force: true);
-    _weekdayData.set(setWeekdayData(dataResult), force: true);
-    _statusData.set(setCartesianData(data, TypeData.status), force: true);
   }
 
   final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
-
-  void _calcTotalFaturamento() {
-    final total = _homeData.value.fold<double>(
-        0, (previusValue, element) => previusValue + element.invoicing);
-
-    _totalFaturamento.set(formatter.format(total));
-  }
-
-  void _calcTotalReceita() {
-    final total = _homeData.value.fold<double>(
-        0,
-        (previusValue, element) =>
-            previusValue + element.commissionValueGenerated);
-    _totalReceita.set(formatter.format(total));
-  }
 
   void resetSelectedDate() {
     DateTime now = DateTime.now();

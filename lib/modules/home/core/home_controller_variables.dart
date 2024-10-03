@@ -32,12 +32,8 @@ enum GetData {
   totalVendas,
   totalFaturamento,
   totalReceita,
-  focusDay,
-  selectedDay,
   selectedRelease,
   selectedProduct,
-  rangeStartDay,
-  rangeEndDay,
   rangeSelectionMode,
   showSettings,
 }
@@ -58,40 +54,10 @@ mixin _HomeControllerVariables {
   final Signal<List<RawSaleModel>> _homeDataBackup =
       Signal<List<RawSaleModel>>([]);
 
-  final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
-
-  final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
-
-  final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
-
-  final Signal<List<ChartModel>> _paymentTypeData =
-      Signal<List<ChartModel>>([]);
-
-  final Signal<List<ChartModel>> _paymentTypeOfferData =
-      Signal<List<ChartModel>>([]);
-
-  final Signal<GridMediaModel> _gridMediaData = Signal<GridMediaModel>(
-      GridMediaModel(
-          mediaDiaria: MediaDiaria(
-              vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0"),
-          mediaMensal: MediaMensal(
-              vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0")));
-  GridMediaModel get gridMediaData => _gridMediaData.value;
-
-  final Signal<List<CartesianModel>> _hourData =
-      Signal<List<CartesianModel>>([]);
-
-  final Signal<List<WeekdayModel>> _weekdayData =
-      Signal<List<WeekdayModel>>([]);
-
-  final Signal<List<CartesianModel>> _statusData =
-      Signal<List<CartesianModel>>([]);
-
-  final Signal<int> _totalVendas = Signal<int>(0);
-
-  final Signal<String> _totalFaturamento = Signal<String>('');
-
-  final Signal<String> _totalReceita = Signal<String>('');
+  final Signal<ProcessedSaleModel> _processedSaleData =
+      Signal<ProcessedSaleModel>(ProcessedSaleModel.empty());
+  ProcessedSaleModel get processedSaleData => _processedSaleData.value;
+  GridMediaModel get gridMediaData => _processedSaleData.value.mediaData;
 
   final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
   DateTime? get rangeStartDay => _rangeStartDay.value;
@@ -106,8 +72,10 @@ mixin _HomeControllerVariables {
   DateTime get focusedDay => _focusedDay.value;
 
   final Signal<int> _selectedRelease = Signal<int>(1);
+  int get selectedRelease => _selectedRelease.value;
 
   final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
+  Product get selectedProduct => _selectedProduct.value;
 
   final Signal<RangeSelectionMode> _rangeSelectionMode =
       Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
@@ -164,41 +132,33 @@ mixin _HomeControllerVariables {
       case GetData.homeData:
         return _homeData.value as T;
       case GetData.dateData:
-        return _dateData.value as T;
+        return _processedSaleData.value.dateData as T;
       case GetData.origemData:
-        return _origemData.value as T;
+        return _processedSaleData.value.origemData as T;
       case GetData.stateData:
-        return _stateData.value as T;
+        return _processedSaleData.value.stateData as T;
       case GetData.paymentTypeData:
-        return _paymentTypeData.value as T;
+        return _processedSaleData.value.paymentTypeData as T;
       case GetData.paymentTypeOfferData:
-        return _paymentTypeOfferData.value as T;
+        return _processedSaleData.value.paymentTypeOfferData as T;
       case GetData.gridMediaData:
-        return _gridMediaData.value as T;
+        return _processedSaleData.value.mediaData as T;
       case GetData.hourData:
-        return _hourData.value as T;
+        return _processedSaleData.value.hourData as T;
       case GetData.weekdayData:
-        return _weekdayData.value as T;
+        return _processedSaleData.value.weekdayData as T;
       case GetData.status:
-        return _statusData.value as T;
+        return _processedSaleData.value.status as T;
       case GetData.totalVendas:
-        return _totalVendas.value as T;
+        return _processedSaleData.value.totalSales as T;
       case GetData.totalFaturamento:
-        return _totalFaturamento.value as T;
+        return _processedSaleData.value.totalInvoicing as T;
       case GetData.totalReceita:
-        return _totalReceita.value as T;
-      case GetData.focusDay:
-        return _focusedDay.value as T;
-      case GetData.selectedDay:
-        return _selectedDay.value! as T;
+        return _processedSaleData.value.totalCommission as T;
       case GetData.selectedRelease:
         return _selectedRelease.value as T;
       case GetData.selectedProduct:
         return _selectedProduct.value as T;
-      case GetData.rangeStartDay:
-        return _rangeStartDay.value! as T;
-      case GetData.rangeEndDay:
-        return _rangeEndDay.value! as T;
       case GetData.rangeSelectionMode:
         return _rangeSelectionMode.value as T;
       case GetData.showSettings:

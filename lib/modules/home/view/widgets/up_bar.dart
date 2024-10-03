@@ -140,9 +140,7 @@ class UpBar extends StatelessWidget {
                                     width: 350,
                                     child: Calendar(
                                       onDaySelected: (selectedDay, focusedDay) {
-                                        if (!isSameDay(
-                                            controller
-                                                .getData(GetData.selectedDay),
+                                        if (!isSameDay(controller.selectedDay,
                                             selectedDay)) {
                                           controller.onDaySelected(
                                               selectedDay, focusedDay);

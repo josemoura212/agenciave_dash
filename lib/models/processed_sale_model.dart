@@ -18,6 +18,7 @@ class ProcessedSaleModel {
   final GridMediaModel mediaData;
   final List<DateModel> dateData;
   final List<BuyerModel> buyerData;
+  final int totalSales;
   final String totalInvoicing;
   final String totalCommission;
 
@@ -32,22 +33,36 @@ class ProcessedSaleModel {
     required this.paymentTypeOfferData,
     required this.countryData,
     required this.mediaData,
+    required this.totalSales,
     required this.buyerData,
     required this.totalCommission,
     required this.totalInvoicing,
   });
 
+  ProcessedSaleModel.empty()
+      : weekdayData = [],
+        hourData = [],
+        status = [],
+        origemData = [],
+        stateData = [],
+        paymentTypeData = [],
+        paymentTypeOfferData = [],
+        countryData = [],
+        totalSales = 0,
+        mediaData = GridMediaModel.empty(),
+        dateData = [],
+        buyerData = [],
+        totalInvoicing = '',
+        totalCommission = '';
+
   factory ProcessedSaleModel.fromRawModel(List<RawSaleModel> raw) {
     final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
     final dateData = setDateData(raw);
-    final totalInvoicing = raw.fold<double>(
-        0, (previusValue, element) => previusValue + element.invoicing);
+    final totalInvoicing = raw.fold<double>(0, (p, e) => p + e.invoicing);
 
-    final totalCommission = raw.fold<double>(
-        0,
-        (previusValue, element) =>
-            previusValue + element.commissionValueGenerated);
+    final totalCommission =
+        raw.fold<double>(0, (p, e) => p + e.commissionValueGenerated);
 
     return ProcessedSaleModel(
       weekdayData: setWeekdayData(raw),
@@ -60,6 +75,7 @@ class ProcessedSaleModel {
       paymentTypeOfferData: setChartData(raw, TypeData.paymentTypeOffer),
       countryData: setChartData(raw, TypeData.country),
       mediaData: setGridMediaData(dateData),
+      totalSales: raw.fold(0, (p, e) => p + e.quantity),
       totalCommission: formatter.format(totalCommission),
       totalInvoicing: formatter.format(totalInvoicing),
       buyerData: [],
