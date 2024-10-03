@@ -19,7 +19,8 @@ class CartesianWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Injector.get<HomeController>();
 
-    return Expanded(
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2 - 50,
       child: Watch(
         (_) => SfCartesianChart(
           primaryXAxis: const CategoryAxis(),

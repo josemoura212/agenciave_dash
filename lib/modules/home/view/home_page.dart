@@ -100,37 +100,25 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                                   GetData.paymentTypeOfferData),
                             ),
                           ),
+                          TableWidget(),
+                          WeekdayWidget(),
+                          CartesianWidget(
+                            title: "Vendas por hora",
+                            tooltip: "Vendas",
+                            data: GetData.hourData,
+                          ),
+                          CartesianWidget(
+                            title: "Status de compra",
+                            tooltip: "Status",
+                            data: GetData.status,
+                          ),
+                          CartesianWidget(
+                            title: "Status de compra",
+                            tooltip: "Status",
+                            data: GetData.status,
+                          ),
                         ],
                       ),
-                    ),
-                  ),
-                  const SliverToBoxAdapter(child: TableWidget()),
-                  SliverToBoxAdapter(
-                    child: Row(
-                      children: [
-                        WeekdayWidget(),
-                        CartesianWidget(
-                          title: "Vendas por hora",
-                          tooltip: "Vendas",
-                          data: GetData.hourData,
-                        )
-                      ],
-                    ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: Row(
-                      children: [
-                        CartesianWidget(
-                          title: "Status de compra",
-                          tooltip: "Status",
-                          data: GetData.status,
-                        ),
-                        CartesianWidget(
-                          title: "Status de compra",
-                          tooltip: "Status",
-                          data: GetData.status,
-                        ),
-                      ],
                     ),
                   ),
                 ],
