@@ -29,14 +29,14 @@ class HomeController
 
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await _homeServices.getHomeData(selectedProduct);
+      final result = await _homeServices.getHomeData(_selectedProduct.value);
 
       switch (result) {
         case Left():
           showError("Erro ao buscar dados");
         case Right(value: List<RawSaleModel> data):
           _homeDataBackup.set(data, force: true);
-          if (selectedProduct == Product.pe) {
+          if (_selectedProduct.value == Product.pe) {
             changeRelease(true, initial: true);
           } else {
             _setHomeData(data);

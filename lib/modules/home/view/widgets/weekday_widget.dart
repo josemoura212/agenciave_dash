@@ -22,7 +22,7 @@ class WeekdayWidget extends StatelessWidget {
           ),
           series: [
             ColumnSeries<WeekdayModel, String>(
-              dataSource: controller.weekdayData,
+              dataSource: controller.getData(GetData.weekdayData),
               xValueMapper: (WeekdayModel data, _) => data.weekday,
               yValueMapper: (WeekdayModel data, _) => data.quantity,
               dataLabelSettings: const DataLabelSettings(

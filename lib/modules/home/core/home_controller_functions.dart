@@ -4,7 +4,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
   Future<void> changeRelease(bool toglee, {bool initial = false}) async {
     final start = 0;
     final end = release.length;
-    final current = selectedRelease;
+    final current = _selectedRelease.value;
     if (initial) {
       final releaseResult =
           await _localStore.read(LocalStorageConstants.release);
@@ -35,14 +35,14 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         _selectedRelease.set(current - 1);
       }
     }
-    _rangeStartDay.value = release[selectedRelease.toString()]![0];
-    _rangeEndDay.value = release[selectedRelease.toString()]![1];
+    _rangeStartDay.value = release[_selectedRelease.value.toString()]![0];
+    _rangeEndDay.value = release[_selectedRelease.value.toString()]![1];
     _focusedDay.value =
-        release[selectedRelease.toString()]![0].add(Duration(days: 1));
+        release[_selectedRelease.value.toString()]![0].add(Duration(days: 1));
     _rangeSelectionMode.value = RangeSelectionMode.toggledOn;
     _setHomeData(_homeDataBackup.value);
     await _localStore.write(
-        LocalStorageConstants.release, selectedRelease.toString());
+        LocalStorageConstants.release, _selectedRelease.value.toString());
   }
 
   void _setHomeData(List<RawSaleModel> data) {
@@ -58,10 +58,10 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
       final filteredData = data.where((item) {
         final normalizedSaleDate = DateTime(
             item.saleDate.year, item.saleDate.month, item.saleDate.day);
-        final normalizedStartDate = DateTime(
-            rangeStartDay!.year, rangeStartDay!.month, rangeStartDay!.day);
-        final normalizedEndDate =
-            DateTime(rangeEndDay!.year, rangeEndDay!.month, rangeEndDay!.day);
+        final normalizedStartDate = DateTime(_rangeStartDay.value!.year,
+            _rangeStartDay.value!.month, _rangeStartDay.value!.day);
+        final normalizedEndDate = DateTime(_rangeEndDay.value!.year,
+            _rangeEndDay.value!.month, _rangeEndDay.value!.day);
 
         return normalizedSaleDate.isAfter(
                 normalizedStartDate.subtract(const Duration(days: 1))) &&
@@ -94,28 +94,30 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         .set(setChartData(dataResult, TypeData.paymentTypeOffer), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
-    // _calcTotalFaturamento();
-    // _calcTotalReceita();
-    _gridMediaData.set(setGridMediaData(dateData));
+    _calcTotalFaturamento();
+    _calcTotalReceita();
+    _gridMediaData.set(setGridMediaData(_dateData.value));
     _hourData.set(setCartesianData(dataResult, TypeData.hour), force: true);
     _weekdayData.set(setWeekdayData(dataResult), force: true);
     _statusData.set(setCartesianData(data, TypeData.status), force: true);
   }
 
-  // void _calcTotalFaturamento() {
-  //   final total = homeData.fold<double>(
-  //       0, (previusValue, element) => previusValue + element.invoicing);
+  final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
-  //   _totalFaturamento.set(formatter.format(total));
-  // }
+  void _calcTotalFaturamento() {
+    final total = _homeData.value.fold<double>(
+        0, (previusValue, element) => previusValue + element.invoicing);
 
-  // void _calcTotalReceita() {
-  //   final total = homeData.fold<double>(
-  //       0,
-  //       (previusValue, element) =>
-  //           previusValue + element.commissionValueGenerated);
-  //   _totalReceita.set(formatter.format(total));
-  // }
+    _totalFaturamento.set(formatter.format(total));
+  }
+
+  void _calcTotalReceita() {
+    final total = _homeData.value.fold<double>(
+        0,
+        (previusValue, element) =>
+            previusValue + element.commissionValueGenerated);
+    _totalReceita.set(formatter.format(total));
+  }
 
   void resetSelectedDate() {
     DateTime now = DateTime.now();
@@ -132,7 +134,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
   }
 
   void onRangeSelectionModeChanged() {
-    final mode = rangeSelectionMode == RangeSelectionMode.toggledOff
+    final mode = _rangeSelectionMode.value == RangeSelectionMode.toggledOff
         ? RangeSelectionMode.toggledOn
         : RangeSelectionMode.toggledOff;
     _rangeSelectionMode.value = mode;

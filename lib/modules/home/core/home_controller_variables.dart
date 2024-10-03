@@ -32,6 +32,14 @@ enum GetData {
   totalVendas,
   totalFaturamento,
   totalReceita,
+  focusDay,
+  selectedDay,
+  selectedRelease,
+  selectedProduct,
+  rangeStartDay,
+  rangeEndDay,
+  rangeSelectionMode,
+  showSettings,
 }
 
 enum ShowAndHide {
@@ -49,20 +57,15 @@ mixin _HomeControllerVariables {
   final Signal<List<RawSaleModel>> _homeData = Signal<List<RawSaleModel>>([]);
   final Signal<List<RawSaleModel>> _homeDataBackup =
       Signal<List<RawSaleModel>>([]);
-  List<RawSaleModel> get homeData => _homeData.value;
 
   final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
-  List<DateModel> get dateData => _dateData.value;
 
   final Signal<List<ChartModel>> _origemData = Signal<List<ChartModel>>([]);
-  List<ChartModel> get origemData => _origemData.value;
 
   final Signal<List<ChartModel>> _stateData = Signal<List<ChartModel>>([]);
-  List<ChartModel> get stateData => _stateData.value;
 
   final Signal<List<ChartModel>> _paymentTypeData =
       Signal<List<ChartModel>>([]);
-  List<ChartModel> get paymentTypeData => _paymentTypeData.value;
 
   final Signal<List<ChartModel>> _paymentTypeOfferData =
       Signal<List<ChartModel>>([]);
@@ -77,23 +80,18 @@ mixin _HomeControllerVariables {
 
   final Signal<List<CartesianModel>> _hourData =
       Signal<List<CartesianModel>>([]);
-  List<CartesianModel> get hourData => _hourData.value;
 
   final Signal<List<WeekdayModel>> _weekdayData =
       Signal<List<WeekdayModel>>([]);
-  List<WeekdayModel> get weekdayData => _weekdayData.value;
 
   final Signal<List<CartesianModel>> _statusData =
       Signal<List<CartesianModel>>([]);
 
   final Signal<int> _totalVendas = Signal<int>(0);
-  int get totalVendas => _totalVendas.value;
 
   final Signal<String> _totalFaturamento = Signal<String>('');
-  String get totalFaturamento => _totalFaturamento.value;
 
   final Signal<String> _totalReceita = Signal<String>('');
-  String get totalReceita => _totalReceita.value;
 
   final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
   DateTime? get rangeStartDay => _rangeStartDay.value;
@@ -108,26 +106,19 @@ mixin _HomeControllerVariables {
   DateTime get focusedDay => _focusedDay.value;
 
   final Signal<int> _selectedRelease = Signal<int>(1);
-  int get selectedRelease => _selectedRelease.value;
 
   final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
-  Product get selectedProduct => _selectedProduct.value;
 
   final Signal<RangeSelectionMode> _rangeSelectionMode =
       Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
-  RangeSelectionMode get rangeSelectionMode => _rangeSelectionMode.value;
 
   final Signal<bool> _showSettings = Signal<bool>(false);
-  bool get showSettings => _showSettings.value;
 
   final Signal<bool> _showOrigen = Signal<bool>(true);
-  bool get showOrigen => _showOrigen.value;
 
   final Signal<bool> _showState = Signal<bool>(true);
-  bool get showState => _showState.value;
 
   final Signal<bool> _showPaymentType = Signal<bool>(true);
-  bool get showPaymentType => _showPaymentType.value;
 
   final Signal<bool> _showPaymentTypeOffer = Signal<bool>(true);
 
@@ -136,15 +127,13 @@ mixin _HomeControllerVariables {
   }
 
   String? get selectedDayFormatted {
-    if (rangeStartDay != null && rangeEndDay != null) {
-      return "${DateFormat('dd/MM/yyyy').format(rangeStartDay!)} - ${DateFormat('dd/MM/yyyy').format(rangeEndDay!)}";
+    if (_rangeStartDay.value != null && _rangeEndDay.value != null) {
+      return "${DateFormat('dd/MM/yyyy').format(_rangeStartDay.value!)} - ${DateFormat('dd/MM/yyyy').format(_rangeEndDay.value!)}";
     }
-    return selectedDay != null
-        ? DateFormat('dd/MM/yyyy').format(selectedDay!)
+    return _selectedDay.value != null
+        ? DateFormat('dd/MM/yyyy').format(_selectedDay.value!)
         : null;
   }
-
-  
 
   final release = {
     "1": [DateTime.utc(2024, 7, 30), DateTime.utc(2024, 8, 05)],
@@ -170,34 +159,50 @@ mixin _HomeControllerVariables {
     }
   }
 
-  Object getData<T>(GetData data) {
+  T getData<T>(GetData data) {
     switch (data) {
       case GetData.homeData:
-        return _homeData.value;
+        return _homeData.value as T;
       case GetData.dateData:
-        return _dateData.value;
+        return _dateData.value as T;
       case GetData.origemData:
-        return _origemData.value;
+        return _origemData.value as T;
       case GetData.stateData:
-        return _stateData.value;
+        return _stateData.value as T;
       case GetData.paymentTypeData:
-        return _paymentTypeData.value;
+        return _paymentTypeData.value as T;
       case GetData.paymentTypeOfferData:
-        return _paymentTypeOfferData.value;
+        return _paymentTypeOfferData.value as T;
       case GetData.gridMediaData:
-        return _gridMediaData.value;
+        return _gridMediaData.value as T;
       case GetData.hourData:
-        return _hourData.value;
+        return _hourData.value as T;
       case GetData.weekdayData:
-        return _weekdayData.value;
+        return _weekdayData.value as T;
       case GetData.status:
-        return _statusData.value;
+        return _statusData.value as T;
       case GetData.totalVendas:
-        return _totalVendas.value;
+        return _totalVendas.value as T;
       case GetData.totalFaturamento:
-        return _totalFaturamento.value;
+        return _totalFaturamento.value as T;
       case GetData.totalReceita:
-        return _totalReceita.value;
+        return _totalReceita.value as T;
+      case GetData.focusDay:
+        return _focusedDay.value as T;
+      case GetData.selectedDay:
+        return _selectedDay.value! as T;
+      case GetData.selectedRelease:
+        return _selectedRelease.value as T;
+      case GetData.selectedProduct:
+        return _selectedProduct.value as T;
+      case GetData.rangeStartDay:
+        return _rangeStartDay.value! as T;
+      case GetData.rangeEndDay:
+        return _rangeEndDay.value! as T;
+      case GetData.rangeSelectionMode:
+        return _rangeSelectionMode.value as T;
+      case GetData.showSettings:
+        return _showSettings.value as T;
     }
   }
 }

@@ -25,9 +25,9 @@ class Calendar extends StatelessWidget {
                 ToggleButtons(
                   borderRadius: BorderRadius.circular(10),
                   isSelected: [
-                    controller.rangeSelectionMode ==
+                    controller.getData(GetData.rangeSelectionMode) ==
                         RangeSelectionMode.toggledOff,
-                    controller.rangeSelectionMode ==
+                    controller.getData(GetData.rangeSelectionMode) ==
                         RangeSelectionMode.toggledOn
                   ],
                   onPressed: (index) {
@@ -59,23 +59,19 @@ class Calendar extends StatelessWidget {
             ),
             TableCalendar(
               locale: 'pt_BR',
-              firstDay: controller.dateData.first.date,
-              lastDay: controller.dateData.last.date,
+              firstDay: controller.getData(GetData.dateData).first.date,
+              lastDay: controller.getData(GetData.dateData).last.date,
               availableGestures: AvailableGestures.none,
               headerStyle: HeaderStyle(titleCentered: true),
               calendarFormat: CalendarFormat.month,
               availableCalendarFormats: {CalendarFormat.month: "Month"},
-              rangeSelectionMode: controller.rangeSelectionMode,
-              focusedDay: controller.focusedDay,
-              // focusedDay: controller.rangeEndDay != null
-              // ? (controller.focusedDay.isBefore(controller.rangeEndDay!) || controller.focusedDay.isAtSameMomentAs(controller.rangeEndDay!)
-              //     ? controller.focusedDay
-              //     : controller.rangeEndDay!)
-              // : controller.focusedDay,
-              rangeStartDay: controller.rangeStartDay,
-              rangeEndDay: controller.rangeEndDay,
+              rangeSelectionMode:
+                  controller.getData(GetData.rangeSelectionMode),
+              focusedDay: controller.getData(GetData.focusDay),
+              rangeStartDay: controller.getData(GetData.rangeStartDay),
+              rangeEndDay: controller.getData(GetData.rangeEndDay),
               selectedDayPredicate: (day) =>
-                  isSameDay(controller.selectedDay, day),
+                  isSameDay(controller.getData(GetData.selectedDay), day),
               onDaySelected: onDaySelected,
               onRangeSelected: onRangeSelected,
               daysOfWeekStyle: DaysOfWeekStyle(

@@ -20,7 +20,8 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
   final Map<String, int> dataMap = {};
 
   String format(String value) {
-    return value.toLowerCase().replaceAll('-', ' ');
+    // return value.toLowerCase().replaceAll('-', ' ');
+    return value;
   }
 
   for (var item in data) {

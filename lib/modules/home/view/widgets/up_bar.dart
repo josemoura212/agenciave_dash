@@ -19,7 +19,7 @@ class UpBar extends StatelessWidget {
         pinned: true,
         floating: true,
         surfaceTintColor: Colors.transparent,
-        toolbarHeight: controller.showSettings ? 125 : 90,
+        toolbarHeight: controller.getData(GetData.showSettings) ? 125 : 90,
         flexibleSpace: FlexibleSpaceBar(
           background: Column(
             children: [
@@ -51,7 +51,8 @@ class UpBar extends StatelessWidget {
                   ),
                   Spacer(),
                   Visibility(
-                    visible: controller.selectedProduct == Product.pe,
+                    visible: controller.getData(GetData.selectedProduct) ==
+                        Product.pe,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.yellowAccent[400],
@@ -110,9 +111,12 @@ class UpBar extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text("Vendas: ${controller.totalVendas}"),
-                          Text("Faturamento: ${controller.totalFaturamento}"),
-                          Text("Receita: ${controller.totalReceita}"),
+                          Text(
+                              "Vendas: ${controller.getData(GetData.totalVendas)}"),
+                          Text(
+                              "Faturamento: ${controller.getData(GetData.totalFaturamento)}"),
+                          Text(
+                              "Receita: ${controller.getData(GetData.totalReceita)}"),
                           IconButton(
                             icon: const Icon(Icons.refresh),
                             onPressed: () {
@@ -136,7 +140,9 @@ class UpBar extends StatelessWidget {
                                     width: 350,
                                     child: Calendar(
                                       onDaySelected: (selectedDay, focusedDay) {
-                                        if (!isSameDay(controller.selectedDay,
+                                        if (!isSameDay(
+                                            controller
+                                                .getData(GetData.selectedDay),
                                             selectedDay)) {
                                           controller.onDaySelected(
                                               selectedDay, focusedDay);
@@ -151,8 +157,7 @@ class UpBar extends StatelessWidget {
                                         } else {
                                           controller.onRangeSelected(
                                               start, end, focusedDay);
-                                          if (controller.rangeStartDay !=
-                                                  null &&
+                                          if (controller.rangeEndDay != null &&
                                               controller.rangeEndDay != null) {
                                             Navigator.pop(context);
                                           }
@@ -166,7 +171,7 @@ class UpBar extends StatelessWidget {
                             tooltip: "Selecionar data",
                           ),
                           IconButton(
-                            icon: Icon(controller.showSettings
+                            icon: Icon(controller.getData(GetData.showSettings)
                                 ? Icons.arrow_drop_up_rounded
                                 : Icons.arrow_drop_down_rounded),
                             onPressed: () {
@@ -177,7 +182,7 @@ class UpBar extends StatelessWidget {
                         ],
                       ),
                       Visibility(
-                        visible: controller.showSettings,
+                        visible: controller.getData(GetData.showSettings),
                         child: Row(
                           children: [
                             Spacer(),
@@ -186,7 +191,8 @@ class UpBar extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             Checkbox(
-                              value: controller.showOrigen,
+                              value:
+                                  controller.getShowAndHide(ShowAndHide.origem),
                               onChanged: (_) =>
                                   controller.toggleShowHide(ShowAndHide.origem),
                             ),
@@ -196,7 +202,8 @@ class UpBar extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             Checkbox(
-                              value: controller.showState,
+                              value:
+                                  controller.getShowAndHide(ShowAndHide.state),
                               onChanged: (_) =>
                                   controller.toggleShowHide(ShowAndHide.state),
                             ),
@@ -206,7 +213,8 @@ class UpBar extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             ),
                             Checkbox(
-                              value: controller.showPaymentType,
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.paymentType),
                               onChanged: (_) => controller
                                   .toggleShowHide(ShowAndHide.paymentType),
                             ),
@@ -275,7 +283,9 @@ class _PageToogle extends StatelessWidget {
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           ),
           padding: EdgeInsets.only(
-              top: controller.selectedProduct == product ? 10 : 5,
+              top: controller.getData(GetData.selectedProduct) == product
+                  ? 10
+                  : 5,
               bottom: 5,
               left: 10,
               right: 10),

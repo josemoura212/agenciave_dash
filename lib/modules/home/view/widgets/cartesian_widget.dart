@@ -30,8 +30,7 @@ class CartesianWidget extends StatelessWidget {
           ),
           series: [
             ColumnSeries<CartesianModel, String>(
-              dataSource: controller.getData<List<CartesianModel>>(data)
-                  as List<CartesianModel>,
+              dataSource: controller.getData(data),
               xValueMapper: (CartesianModel data, _) => data.value,
               yValueMapper: (CartesianModel data, _) => data.quantity,
               dataLabelSettings: const DataLabelSettings(

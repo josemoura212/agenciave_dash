@@ -67,24 +67,28 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                         alignment: WrapAlignment.center,
                         children: [
                           Visibility(
-                            visible: controller.showOrigen,
+                            visible:
+                                controller.getShowAndHide(ShowAndHide.origem),
                             child: ChartWidget(
                               title: "Origem das Vendas",
-                              chartData: controller.origemData,
+                              chartData: controller.getData(GetData.origemData),
                             ),
                           ),
                           Visibility(
-                            visible: controller.showState,
+                            visible:
+                                controller.getShowAndHide(ShowAndHide.state),
                             child: ChartWidget(
                               title: "Estados",
-                              chartData: controller.stateData,
+                              chartData: controller.getData(GetData.stateData),
                             ),
                           ),
                           Visibility(
-                            visible: controller.showPaymentType,
+                            visible: controller
+                                .getShowAndHide(ShowAndHide.paymentType),
                             child: ChartWidget(
                               title: "Tipo de Pagamento",
-                              chartData: controller.paymentTypeData,
+                              chartData:
+                                  controller.getData(GetData.paymentTypeData),
                             ),
                           ),
                           Visibility(
@@ -93,8 +97,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                             child: ChartWidget(
                               title: "Tipos de Pagamento Oferta",
                               chartData: controller.getData<List<ChartModel>>(
-                                      GetData.paymentTypeOfferData)
-                                  as List<ChartModel>,
+                                  GetData.paymentTypeOfferData),
                             ),
                           ),
                         ],
