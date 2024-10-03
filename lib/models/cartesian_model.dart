@@ -12,15 +12,15 @@ class CartesianModel {
 }
 
 List<CartesianModel> setCartesianData(List<RawSaleModel> data, TypeData type) {
-  final List<CartesianModel> hourTotal = [];
-  final Map<String, int> countHour = {};
+  final List<CartesianModel> resultData = [];
+  final Map<String, int> dataMap = {};
 
   for (var item in data) {
-    countHour.update(
+    dataMap.update(
       switch (type) {
-        TypeData.hour => "${item.saleDate.hour}:00h",
+        TypeData.hour => "${item.saleDate.hour.toString().padLeft(2, "0")}:00h",
         TypeData.weekday => throw UnimplementedError(),
-        TypeData.status => item.status,
+        TypeData.status => item.status.name,
         TypeData.origem => throw UnimplementedError(),
         TypeData.state => throw UnimplementedError(),
         TypeData.paymentType => throw UnimplementedError(),
@@ -34,14 +34,14 @@ List<CartesianModel> setCartesianData(List<RawSaleModel> data, TypeData type) {
     );
   }
 
-  countHour.forEach((key, value) {
-    hourTotal.add(CartesianModel(
+  dataMap.forEach((key, value) {
+    resultData.add(CartesianModel(
       value: key,
       quantity: value,
     ));
   });
 
-  hourTotal.sort((a, b) => a.value.compareTo(b.value));
+  resultData.sort((a, b) => a.value.compareTo(b.value));
 
-  return hourTotal;
+  return resultData;
 }

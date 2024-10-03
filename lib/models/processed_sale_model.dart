@@ -59,10 +59,20 @@ class ProcessedSaleModel {
     final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
     final dateData = setDateData(raw);
-    final totalInvoicing = raw.fold<double>(0, (p, e) => p + e.invoicing);
+    final totalInvoicing = raw
+        .where(
+            (e) => e.status == Status.aproved || e.status == Status.completed)
+        .fold<double>(0, (p, e) => p + e.invoicing);
 
-    final totalCommission =
-        raw.fold<double>(0, (p, e) => p + e.commissionValueGenerated);
+    final totalCommission = raw
+        .where(
+            (e) => e.status == Status.aproved || e.status == Status.completed)
+        .fold<double>(0, (p, e) => p + e.commissionValueGenerated);
+
+    final totalSales = raw
+        .where(
+            (e) => e.status == Status.aproved || e.status == Status.completed)
+        .fold(0, (p, e) => p + e.quantity);
 
     return ProcessedSaleModel(
       weekdayData: setWeekdayData(raw),
@@ -75,7 +85,7 @@ class ProcessedSaleModel {
       paymentTypeOfferData: setChartData(raw, TypeData.paymentTypeOffer),
       countryData: setChartData(raw, TypeData.country),
       mediaData: setGridMediaData(dateData),
-      totalSales: raw.fold(0, (p, e) => p + e.quantity),
+      totalSales: totalSales,
       totalCommission: formatter.format(totalCommission),
       totalInvoicing: formatter.format(totalInvoicing),
       buyerData: [],
@@ -108,77 +118,4 @@ class BuyerModel {
     required this.phone,
     required this.status,
   });
-}
-
-enum Status {
-  aproved,
-  canceled,
-  refunded,
-  completed,
-  awaitPayment,
-  chargeback,
-  expired,
-  disputed,
-  billetPrint,
-  denied,
-  latePayment,
-  others;
-
-  String get name {
-    switch (this) {
-      case Status.aproved:
-        return 'Aprovado';
-      case Status.canceled:
-        return 'Cancelado';
-      case Status.refunded:
-        return 'Reembolsado';
-      case Status.disputed:
-        return 'Pedido de reembolso';
-      case Status.expired:
-        return 'Expirado';
-      case Status.completed:
-        return 'Concluído';
-      case Status.billetPrint:
-        return 'Boleto Impresso';
-      case Status.awaitPayment:
-        return 'Aguardando Pagamento';
-      case Status.chargeback:
-        return 'Chargeback';
-      case Status.denied:
-        return 'Negado';
-      case Status.latePayment:
-        return 'Pagamento Atrasado';
-      default:
-        return 'Outros';
-    }
-  }
-
-  factory Status.fromString(String status) {
-    switch (status.toLowerCase()) {
-      case 'aprovado' || 'aproved':
-        return Status.aproved;
-      case 'pendente' || "delayed":
-        return Status.canceled;
-      case 'reembolsado':
-        return Status.refunded;
-      case 'disputado' || "disputed":
-        return Status.disputed;
-      case 'boleto impresso' || "billet_printed":
-        return Status.billetPrint;
-      case 'expirado' || "expired":
-        return Status.expired;
-      case 'completo' || "completed":
-        return Status.completed;
-      case 'aguardando pagto':
-        return Status.awaitPayment;
-      case 'chargeback':
-        return Status.chargeback;
-      case 'negado' || "denied":
-        return Status.denied;
-      case 'pagamento atrasado':
-        return Status.latePayment;
-      default:
-        return Status.others;
-    }
-  }
 }

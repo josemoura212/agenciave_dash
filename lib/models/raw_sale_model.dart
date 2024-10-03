@@ -12,7 +12,7 @@ class RawSaleModel {
   double invoicing;
   String coin;
   int recurrenceNumber;
-  String status;
+  Status status;
   String country;
   String state;
   String paymentType;
@@ -77,7 +77,7 @@ class RawSaleModel {
       invoicing: 0.0,
       coin: '',
       recurrenceNumber: 0,
-      status: "empty",
+      status: Status.others,
       country: '',
       state: '',
       paymentType: '',
@@ -100,7 +100,7 @@ class RawSaleModel {
       invoicing: map['Faturamento']?.toDouble() ?? 0.0,
       coin: map['Moeda'] ?? '',
       recurrenceNumber: map['Número da Parcela']?.hashCode ?? 0,
-      status: map['Status'] ?? '',
+      status: Status.fromString(map['Status'] ?? ''),
       country: map['País'] ?? '',
       state: map['Estado'] ?? '',
       paymentType: map['Tipo de Pagamento'] ?? '',
@@ -127,4 +127,77 @@ class RawSaleModel {
 DateTime toDate(String date) {
   DateFormat format = DateFormat("dd/MM/yyyy HH:mm");
   return format.parse(date);
+}
+
+enum Status {
+  aproved,
+  canceled,
+  refunded,
+  completed,
+  awaitPayment,
+  chargeback,
+  expired,
+  disputed,
+  billetPrint,
+  denied,
+  latePayment,
+  others;
+
+  String get name {
+    switch (this) {
+      case Status.aproved:
+        return 'Aprovado';
+      case Status.canceled:
+        return 'Cancelado';
+      case Status.refunded:
+        return 'Reembolsado';
+      case Status.disputed:
+        return 'Pedido de reembolso';
+      case Status.expired:
+        return 'Expirado';
+      case Status.completed:
+        return 'Concluído';
+      case Status.billetPrint:
+        return 'Boleto Impresso';
+      case Status.awaitPayment:
+        return 'Aguardando Pagamento';
+      case Status.chargeback:
+        return 'Chargeback';
+      case Status.denied:
+        return 'Negado';
+      case Status.latePayment:
+        return 'Pagamento Atrasado';
+      default:
+        return 'Outros';
+    }
+  }
+
+  factory Status.fromString(String status) {
+    switch (status.toLowerCase()) {
+      case 'aprovado' || 'aproved':
+        return Status.aproved;
+      case 'pendente' || "delayed":
+        return Status.canceled;
+      case 'reembolsado':
+        return Status.refunded;
+      case 'disputado' || "disputed":
+        return Status.disputed;
+      case 'boleto impresso' || "billet_printed":
+        return Status.billetPrint;
+      case 'expirado' || "expired":
+        return Status.expired;
+      case 'completo' || "completed":
+        return Status.completed;
+      case 'aguardando pagto':
+        return Status.awaitPayment;
+      case 'chargeback':
+        return Status.chargeback;
+      case 'negado' || "denied":
+        return Status.denied;
+      case 'pagamento atrasado':
+        return Status.latePayment;
+      default:
+        return Status.others;
+    }
+  }
 }
