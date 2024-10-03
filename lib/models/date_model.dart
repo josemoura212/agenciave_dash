@@ -1,4 +1,4 @@
-import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/models/raw_sale_model.dart';
 
 class DateModel {
   final DateTime date;
@@ -27,7 +27,7 @@ class DateModel {
   }
 }
 
-setDateData(List<HomeModel> data) {
+setDateData(List<RawSaleModel> data) {
   final List<DateModel> dateTotal = [];
   final Map<DateTime, VendaModel> countDate = {};
 

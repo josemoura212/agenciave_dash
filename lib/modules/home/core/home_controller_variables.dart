@@ -46,9 +46,10 @@ mixin _HomeControllerVariables {
   final _authController = Injector.get<AuthController>();
   final _localStore = Injector.get<LocalStorage>();
 
-  final Signal<List<HomeModel>> _homeData = Signal<List<HomeModel>>([]);
-  final Signal<List<HomeModel>> _homeDataBackup = Signal<List<HomeModel>>([]);
-  List<HomeModel> get homeData => _homeData.value;
+  final Signal<List<RawSaleModel>> _homeData = Signal<List<RawSaleModel>>([]);
+  final Signal<List<RawSaleModel>> _homeDataBackup =
+      Signal<List<RawSaleModel>>([]);
+  List<RawSaleModel> get homeData => _homeData.value;
 
   final Signal<List<DateModel>> _dateData = Signal<List<DateModel>>([]);
   List<DateModel> get dateData => _dateData.value;

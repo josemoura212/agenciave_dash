@@ -4,6 +4,7 @@ import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:agenciave_dash/models/cartesian_model.dart';
+import 'package:agenciave_dash/models/processed_sale_model.dart';
 import 'package:agenciave_dash/models/weekday_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
@@ -12,7 +13,7 @@ import 'package:signals_flutter/signals_flutter.dart';
 import 'package:agenciave_dash/core/auth/auth_controller.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/helpers/messages.dart';
-import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/services/home/home_services.dart';
 import 'package:table_calendar/table_calendar.dart';
 part 'home_controller_variables.dart';
@@ -33,7 +34,7 @@ class HomeController
       switch (result) {
         case Left():
           showError("Erro ao buscar dados");
-        case Right(value: List<HomeModel> data):
+        case Right(value: List<RawSaleModel> data):
           _homeDataBackup.set(data, force: true);
           if (selectedProduct == Product.pe) {
             changeRelease(true, initial: true);

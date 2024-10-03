@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
-class HomeModel {
+class RawSaleModel {
   int nowNumber;
   String id;
   String nameProduct;
@@ -22,7 +22,7 @@ class HomeModel {
   String email;
   String phone;
 
-  HomeModel({
+  RawSaleModel({
     required this.nowNumber,
     required this.id,
     required this.nameProduct,
@@ -66,8 +66,8 @@ class HomeModel {
     };
   }
 
-  factory HomeModel.empty() {
-    return HomeModel(
+  factory RawSaleModel.empty() {
+    return RawSaleModel(
       nowNumber: 0,
       id: '',
       nameProduct: '',
@@ -89,8 +89,8 @@ class HomeModel {
     );
   }
 
-  factory HomeModel.fromMap(Map<String, dynamic> map) {
-    return HomeModel(
+  factory RawSaleModel.fromMap(Map<String, dynamic> map) {
+    return RawSaleModel(
       nowNumber: map['row_number']?.toInt() ?? 0,
       id: map['ID'] ?? '',
       nameProduct: map['Nome do Produto'] ?? '',
@@ -115,8 +115,8 @@ class HomeModel {
 
   String toJson() => json.encode(toMap());
 
-  factory HomeModel.fromJson(String source) =>
-      HomeModel.fromMap(json.decode(source));
+  factory RawSaleModel.fromJson(String source) =>
+      RawSaleModel.fromMap(json.decode(source));
 
   @override
   String toString() {

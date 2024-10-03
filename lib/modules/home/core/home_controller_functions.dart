@@ -45,7 +45,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         LocalStorageConstants.release, selectedRelease.toString());
   }
 
-  void _setHomeData(List<HomeModel> data) {
+  void _setHomeData(List<RawSaleModel> data) {
     if (_selectedDay.value != null) {
       final filteredData = data.where((item) {
         final normalizedSaleDate = DateTime(
@@ -75,7 +75,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     }
   }
 
-  void _setChartData(List<HomeModel> data) {
+  void _setChartData(List<RawSaleModel> data) {
     var dataResult = data
         .where((item) =>
             item.status == "Aprovado" ||
@@ -86,18 +86,20 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     _homeData.set(data, force: true);
     _dateData.set(setDateData(dataResult), force: true);
 
-    _origemData.set(setOrigemData(dataResult), force: true);
-    _stateData.set(setStateData(dataResult), force: true);
-    _paymentTypeData.set(setPaymentType(dataResult), force: true);
-    _paymentTypeOfferData.set(setPaymentTypeOffer(dataResult), force: true);
+    _origemData.set(setChartData(dataResult, TypeData.origem), force: true);
+    _stateData.set(setChartData(dataResult, TypeData.state), force: true);
+    _paymentTypeData.set(setChartData(dataResult, TypeData.paymentType),
+        force: true);
+    _paymentTypeOfferData
+        .set(setChartData(dataResult, TypeData.paymentTypeOffer), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
     _calcTotalFaturamento();
     _calcTotalReceita();
     _gridMediaData.set(setGridMediaData(dateData));
-    _hourData.set(setHourData(dataResult), force: true);
+    _hourData.set(setCartesianData(dataResult, TypeData.hour), force: true);
     _weekdayData.set(setWeekdayData(dataResult), force: true);
-    _statusData.set(setStatusData(data), force: true);
+    _statusData.set(setCartesianData(data, TypeData.status), force: true);
   }
 
   void _calcTotalFaturamento() {

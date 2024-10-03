@@ -1,4 +1,4 @@
-import 'package:agenciave_dash/models/home_model.dart';
+import 'package:agenciave_dash/models/raw_sale_model.dart';
 
 class WeekdayModel {
   final String _weekDay;
@@ -21,7 +21,7 @@ class WeekdayModel {
   }
 }
 
-List<WeekdayModel> setWeekdayData(List<HomeModel> data) {
+List<WeekdayModel> setWeekdayData(List<RawSaleModel> data) {
   final List<WeekdayModel> weekdayTotal = [];
   final Map<String, int> countWeekday = {};
 
