@@ -144,7 +144,7 @@ mixin _HomeControllerVariables {
         : null;
   }
 
-  final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+  
 
   final release = {
     "1": [DateTime.utc(2024, 7, 30), DateTime.utc(2024, 8, 05)],

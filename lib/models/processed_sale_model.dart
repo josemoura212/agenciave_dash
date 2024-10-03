@@ -1,8 +1,10 @@
 import 'package:agenciave_dash/models/cartesian_model.dart';
 import 'package:agenciave_dash/models/chart_model.dart';
+import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/models/weekday_model.dart';
+import 'package:intl/intl.dart';
 
 class ProcessedSaleModel {
   final List<WeekdayModel> weekdayData;
@@ -14,9 +16,10 @@ class ProcessedSaleModel {
   final List<ChartModel> paymentTypeOfferData;
   final List<ChartModel> countryData;
   final GridMediaModel mediaData;
+  final List<DateModel> dateData;
   final List<BuyerModel> buyerData;
-  final double totalInvoicing;
-  final double totalCommission;
+  final String totalInvoicing;
+  final String totalCommission;
 
   ProcessedSaleModel({
     required this.weekdayData,
@@ -24,6 +27,7 @@ class ProcessedSaleModel {
     required this.status,
     required this.origemData,
     required this.stateData,
+    required this.dateData,
     required this.paymentTypeData,
     required this.paymentTypeOfferData,
     required this.countryData,
@@ -33,35 +37,34 @@ class ProcessedSaleModel {
     required this.totalInvoicing,
   });
 
-  // factory ProcessedSaleModel.fromRawModel({List<RawSaleModel> raw}) {
-  //   final List<WeekdayModel> weekdayData = [];
-  //   final List<CartesianModel> hourData = [];
-  //   final List<CartesianModel> status = [];
-  //   final List<ChartModel> origemData = [];
-  //   final List<ChartModel> stateData = [];
-  //   final List<ChartModel> paymentTypeData = [];
-  //   final List<ChartModel> paymentTypeOfferData = [];
-  //   final List<ChartModel> countryData = [];
-  //   final GridMediaModel mediaData = GridMediaModel(
-  //     mediaDiaria: MediaDiaria(
-  //       vendas: 0,
-  //       mediaFaturamento: "0.0",
-  //       mediaReceita: "0.0",
-  //     ),
-  //     mediaMensal: MediaMensal(
-  //       vendas: 0,
-  //       mediaFaturamento: "0.0",
-  //       mediaReceita: "0.0",
-  //     ),
-  //   );
-  //   final List<BuyerModel> buyerData = [];
-  //   double totalInvoicing = 0;
-  //   double totalCommission = 0;
+  factory ProcessedSaleModel.fromRawModel(List<RawSaleModel> raw) {
+    final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
-  //   for (var element in raw) {
+    final dateData = setDateData(raw);
+    final totalInvoicing = raw.fold<double>(
+        0, (previusValue, element) => previusValue + element.invoicing);
 
-  //   }
-  // }
+    final totalCommission = raw.fold<double>(
+        0,
+        (previusValue, element) =>
+            previusValue + element.commissionValueGenerated);
+
+    return ProcessedSaleModel(
+      weekdayData: setWeekdayData(raw),
+      hourData: setCartesianData(raw, TypeData.hour),
+      status: setCartesianData(raw, TypeData.status),
+      origemData: setChartData(raw, TypeData.origem),
+      stateData: setChartData(raw, TypeData.state),
+      dateData: dateData,
+      paymentTypeData: setChartData(raw, TypeData.paymentType),
+      paymentTypeOfferData: setChartData(raw, TypeData.paymentTypeOffer),
+      countryData: setChartData(raw, TypeData.country),
+      mediaData: setGridMediaData(dateData),
+      totalCommission: formatter.format(totalCommission),
+      totalInvoicing: formatter.format(totalInvoicing),
+      buyerData: [],
+    );
+  }
 }
 
 enum TypeData {

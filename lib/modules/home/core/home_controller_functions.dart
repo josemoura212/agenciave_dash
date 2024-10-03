@@ -94,28 +94,28 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         .set(setChartData(dataResult, TypeData.paymentTypeOffer), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
-    _calcTotalFaturamento();
-    _calcTotalReceita();
+    // _calcTotalFaturamento();
+    // _calcTotalReceita();
     _gridMediaData.set(setGridMediaData(dateData));
     _hourData.set(setCartesianData(dataResult, TypeData.hour), force: true);
     _weekdayData.set(setWeekdayData(dataResult), force: true);
     _statusData.set(setCartesianData(data, TypeData.status), force: true);
   }
 
-  void _calcTotalFaturamento() {
-    final total = homeData.fold<double>(
-        0, (previusValue, element) => previusValue + element.invoicing);
+  // void _calcTotalFaturamento() {
+  //   final total = homeData.fold<double>(
+  //       0, (previusValue, element) => previusValue + element.invoicing);
 
-    _totalFaturamento.set(formatter.format(total));
-  }
+  //   _totalFaturamento.set(formatter.format(total));
+  // }
 
-  void _calcTotalReceita() {
-    final total = homeData.fold<double>(
-        0,
-        (previusValue, element) =>
-            previusValue + element.commissionValueGenerated);
-    _totalReceita.set(formatter.format(total));
-  }
+  // void _calcTotalReceita() {
+  //   final total = homeData.fold<double>(
+  //       0,
+  //       (previusValue, element) =>
+  //           previusValue + element.commissionValueGenerated);
+  //   _totalReceita.set(formatter.format(total));
+  // }
 
   void resetSelectedDate() {
     DateTime now = DateTime.now();
