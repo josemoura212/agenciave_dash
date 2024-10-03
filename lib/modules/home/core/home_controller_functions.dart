@@ -96,6 +96,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     _gridMediaData.set(setGridMediaData(dateData));
     _hourData.set(setHourData(dataResult), force: true);
     _weekdayData.set(setWeekdayData(dataResult), force: true);
+    _statusData.set(setStatusData(data), force: true);
   }
 
   void _calcTotalFaturamento() {

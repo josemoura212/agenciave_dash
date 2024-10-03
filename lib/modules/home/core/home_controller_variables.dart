@@ -27,6 +27,7 @@ enum GetData {
   gridMediaData,
   hourData,
   weekdayData,
+  status,
   totalVendas,
   totalFaturamento,
   totalReceita,
@@ -75,6 +76,9 @@ mixin _HomeControllerVariables {
   final Signal<List<WeekdayModel>> _weekdayData =
       Signal<List<WeekdayModel>>([]);
   List<WeekdayModel> get weekdayData => _weekdayData.value;
+
+  final Signal<List<CartesianModel>> _statusData =
+      Signal<List<CartesianModel>>([]);
 
   final Signal<int> _totalVendas = Signal<int>(0);
   int get totalVendas => _totalVendas.value;
@@ -159,9 +163,10 @@ mixin _HomeControllerVariables {
         return _gridMediaData.value;
       case GetData.hourData:
         return _hourData.value;
-
       case GetData.weekdayData:
         return _weekdayData.value;
+      case GetData.status:
+        return _statusData.value;
       case GetData.totalVendas:
         return _totalVendas.value;
       case GetData.totalFaturamento:

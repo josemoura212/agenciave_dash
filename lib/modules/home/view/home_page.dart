@@ -112,7 +112,12 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                       ],
                     ),
                   ),
-                  // const SliverToBoxAdapter(child: HourWidget()),
+                  const SliverToBoxAdapter(
+                      child: CartesianWidget(
+                    title: "Status de compra",
+                    tooltip: "Status",
+                    data: GetData.status,
+                  )),
                 ],
               ),
             ),
