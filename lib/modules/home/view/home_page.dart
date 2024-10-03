@@ -60,7 +60,11 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                 slivers: [
                   SliverToBoxAdapter(
                     child: Watch(
-                      (_) => Row(
+                      (_) => Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        runAlignment: WrapAlignment.center,
+                        alignment: WrapAlignment.center,
                         children: [
                           Visibility(
                             visible: controller.showOrigen,
@@ -76,14 +80,6 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                               chartData: controller.stateData,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Watch(
-                      (_) => Row(
-                        children: [
                           Visibility(
                             visible: controller.showPaymentType,
                             child: ChartWidget(
@@ -95,7 +91,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                             visible: controller
                                 .getShowAndHide(ShowAndHide.paymentTypeOffer),
                             child: ChartWidget(
-                              title: "Tipos de Pagamento",
+                              title: "Tipos de Pagamento Oferta",
                               chartData: controller.getData<List<ChartModel>>(
                                       GetData.paymentTypeOfferData)
                                   as List<ChartModel>,
@@ -119,11 +115,21 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                     ),
                   ),
                   const SliverToBoxAdapter(
-                      child: CartesianWidget(
-                    title: "Status de compra",
-                    tooltip: "Status",
-                    data: GetData.status,
-                  )),
+                    child: Row(
+                      children: [
+                        CartesianWidget(
+                          title: "Status de compra",
+                          tooltip: "Status",
+                          data: GetData.status,
+                        ),
+                        CartesianWidget(
+                          title: "Status de compra",
+                          tooltip: "Status",
+                          data: GetData.status,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

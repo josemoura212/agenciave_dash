@@ -53,6 +53,7 @@ class HomeController
         _localStore.readBool(LocalStorageConstants.origen),
         _localStore.readBool(LocalStorageConstants.state),
         _localStore.readBool(LocalStorageConstants.paymentType),
+        _localStore.readBool(LocalStorageConstants.paymentTypeOffer),
       ]);
 
       _selectedProduct.set(
@@ -63,6 +64,9 @@ class HomeController
       if (result[2] != null) _showState.set(result[2] as bool, force: true);
       if (result[3] != null) {
         _showPaymentType.set(result[3] as bool, force: true);
+      }
+      if (result[4] != null) {
+        _showPaymentTypeOffer.set(result[4] as bool, force: true);
       }
 
       return true;

@@ -15,7 +15,8 @@ class ChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2 - 50,
       child: Card(
         child: SfCircularChart(
           title: ChartTitle(text: title),
