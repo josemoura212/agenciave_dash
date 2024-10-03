@@ -24,6 +24,7 @@ enum GetData {
   origemData,
   stateData,
   paymentTypeData,
+  paymentTypeOfferData,
   gridMediaData,
   hourData,
   weekdayData,
@@ -38,6 +39,7 @@ enum ShowAndHide {
   origem,
   state,
   paymentType,
+  paymentTypeOffer,
 }
 
 mixin _HomeControllerVariables {
@@ -60,6 +62,9 @@ mixin _HomeControllerVariables {
   final Signal<List<ChartModel>> _paymentTypeData =
       Signal<List<ChartModel>>([]);
   List<ChartModel> get paymentTypeData => _paymentTypeData.value;
+
+  final Signal<List<ChartModel>> _paymentTypeOfferData =
+      Signal<List<ChartModel>>([]);
 
   final Signal<GridMediaModel> _gridMediaData = Signal<GridMediaModel>(
       GridMediaModel(
@@ -123,6 +128,8 @@ mixin _HomeControllerVariables {
   final Signal<bool> _showPaymentType = Signal<bool>(true);
   bool get showPaymentType => _showPaymentType.value;
 
+  final Signal<bool> _showPaymentTypeOffer = Signal<bool>(true);
+
   set focusedDay(DateTime focusedDay) {
     _focusedDay.value = focusedDay;
   }
@@ -147,6 +154,21 @@ mixin _HomeControllerVariables {
     ],
   };
 
+  bool getShowAndHide(ShowAndHide showAndHide) {
+    switch (showAndHide) {
+      case ShowAndHide.settings:
+        return _showSettings.value;
+      case ShowAndHide.origem:
+        return _showOrigen.value;
+      case ShowAndHide.state:
+        return _showState.value;
+      case ShowAndHide.paymentType:
+        return _showPaymentType.value;
+      case ShowAndHide.paymentTypeOffer:
+        return _showPaymentTypeOffer.value;
+    }
+  }
+
   Object getData<T>(GetData data) {
     switch (data) {
       case GetData.homeData:
@@ -159,6 +181,8 @@ mixin _HomeControllerVariables {
         return _stateData.value;
       case GetData.paymentTypeData:
         return _paymentTypeData.value;
+      case GetData.paymentTypeOfferData:
+        return _paymentTypeOfferData.value;
       case GetData.gridMediaData:
         return _gridMediaData.value;
       case GetData.hourData:

@@ -7,4 +7,5 @@ sealed class LocalStorageConstants {
   static const String origen = "origen";
   static const String state = "state";
   static const String paymentType = "paymentType";
+  static const String paymentTypeOffer = "paymentTypeOffer";
 }

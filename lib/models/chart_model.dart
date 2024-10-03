@@ -86,6 +86,29 @@ List<ChartModel> setOrigemData(List<HomeModel> data) {
   return origemTotal;
 }
 
+List<ChartModel> setPaymentTypeOffer(List<HomeModel> data) {
+  final List<ChartModel> paymentTypeOfferTotal = [];
+
+  final Map<String, int> countPaymentTypeOffer = {};
+
+  for (var item in data) {
+    final paymentTypeOffer = item.paymenteTypeOffer.toLowerCase();
+    countPaymentTypeOffer[paymentTypeOffer] =
+        (countPaymentTypeOffer[paymentTypeOffer] ?? 0) + item.quantity;
+  }
+
+  countPaymentTypeOffer.forEach((key, value) {
+    if (value == 0) return;
+    paymentTypeOfferTotal.add(ChartModel(
+        name: key,
+        value: value.toDouble(),
+        total: value,
+        text: "$key: ${(value * 100 / data.length).toStringAsFixed(2)}%"));
+  });
+
+  return paymentTypeOfferTotal;
+}
+
 List<ChartModel> setPaymentType(List<HomeModel> data) {
   final List<ChartModel> paymentTypeTotal = [];
 

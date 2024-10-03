@@ -211,6 +211,17 @@ class UpBar extends StatelessWidget {
                                   .toggleShowHide(ShowAndHide.paymentType),
                             ),
                             Spacer(),
+                            Text(
+                              "Tipos de Pagamento Oferta",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.paymentTypeOffer),
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.paymentTypeOffer),
+                            ),
+                            Spacer(),
                             IconButton(
                               icon: const Icon(Icons.brightness_6),
                               onPressed: () {

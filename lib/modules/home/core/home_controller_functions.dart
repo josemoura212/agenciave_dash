@@ -89,6 +89,7 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     _origemData.set(setOrigemData(dataResult), force: true);
     _stateData.set(setStateData(dataResult), force: true);
     _paymentTypeData.set(setPaymentType(dataResult), force: true);
+    _paymentTypeOfferData.set(setPaymentTypeOffer(dataResult), force: true);
 
     _totalVendas.set(dataResult.length, force: true);
     _calcTotalFaturamento();
@@ -191,6 +192,11 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         _showPaymentType.value = !_showPaymentType.value;
         _localStore.writeBool(
             LocalStorageConstants.paymentType, _showPaymentType.value);
+        break;
+      case ShowAndHide.paymentTypeOffer:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(LocalStorageConstants.paymentTypeOffer,
+            _showPaymentTypeOffer.value);
         break;
     }
   }

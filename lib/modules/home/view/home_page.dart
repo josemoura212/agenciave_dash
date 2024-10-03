@@ -1,4 +1,5 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
+import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/chart_widget.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/cartesian_widget.dart';
@@ -86,15 +87,20 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                           Visibility(
                             visible: controller.showPaymentType,
                             child: ChartWidget(
-                                title: "Tipo de Pagamento",
-                                chartData: controller.paymentTypeData),
+                              title: "Tipo de Pagamento",
+                              chartData: controller.paymentTypeData,
+                            ),
                           ),
-                          // Visibility(
-                          //   visible: controller.showCountry,
-                          //   child: ChartWidget(
-                          //       title: "Países",
-                          //       chartData: controller.countryData),
-                          // ),
+                          Visibility(
+                            visible: controller
+                                .getShowAndHide(ShowAndHide.paymentTypeOffer),
+                            child: ChartWidget(
+                              title: "Tipos de Pagamento",
+                              chartData: controller.getData<List<ChartModel>>(
+                                      GetData.paymentTypeOfferData)
+                                  as List<ChartModel>,
+                            ),
+                          ),
                         ],
                       ),
                     ),
