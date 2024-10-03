@@ -165,6 +165,8 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         _localStore.writeBool(LocalStorageConstants.paymentTypeOffer,
             _showPaymentTypeOffer.value);
         break;
+      case _:
+        break;
     }
   }
 }

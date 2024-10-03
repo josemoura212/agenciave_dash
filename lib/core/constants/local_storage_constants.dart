@@ -8,4 +8,8 @@ sealed class LocalStorageConstants {
   static const String state = "state";
   static const String paymentType = "paymentType";
   static const String paymentTypeOffer = "paymentTypeOffer";
+  static const String gridMedia = "gridMedia";
+  static const String weekday = "weekday";
+  static const String hour = "hour";
+  static const String status = "status";
 }

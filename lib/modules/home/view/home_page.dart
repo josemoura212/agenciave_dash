@@ -112,11 +112,6 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                             tooltip: "Status",
                             data: GetData.status,
                           ),
-                          CartesianWidget(
-                            title: "Status de compra",
-                            tooltip: "Status",
-                            data: GetData.status,
-                          ),
                         ],
                       ),
                     ),

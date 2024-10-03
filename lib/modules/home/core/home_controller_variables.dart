@@ -44,6 +44,10 @@ enum ShowAndHide {
   state,
   paymentType,
   paymentTypeOffer,
+  gridMedia,
+  weekday,
+  hour,
+  status,
 }
 
 mixin _HomeControllerVariables {
@@ -124,6 +128,8 @@ mixin _HomeControllerVariables {
         return _showPaymentType.value;
       case ShowAndHide.paymentTypeOffer:
         return _showPaymentTypeOffer.value;
+      case _:
+        return true;
     }
   }
 
