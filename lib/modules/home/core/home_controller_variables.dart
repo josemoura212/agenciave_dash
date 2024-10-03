@@ -68,8 +68,9 @@ mixin _HomeControllerVariables {
               vendas: 0, mediaFaturamento: "0.0", mediaReceita: "0.0")));
   GridMediaModel get gridMediaData => _gridMediaData.value;
 
-  final Signal<List<HourModel>> _hourData = Signal<List<HourModel>>([]);
-  List<HourModel> get hourData => _hourData.value;
+  final Signal<List<CartesianModel>> _hourData =
+      Signal<List<CartesianModel>>([]);
+  List<CartesianModel> get hourData => _hourData.value;
 
   final Signal<List<WeekdayModel>> _weekdayData =
       Signal<List<WeekdayModel>>([]);

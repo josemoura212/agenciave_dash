@@ -218,7 +218,6 @@ class UpBar extends StatelessWidget {
                               },
                               tooltip: "Mudar tema",
                             ),
-                            Spacer(),
                           ],
                         ),
                       ),

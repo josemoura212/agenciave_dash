@@ -3,7 +3,7 @@ import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
-import 'package:agenciave_dash/models/hour_model.dart';
+import 'package:agenciave_dash/models/cartesian_model.dart';
 import 'package:agenciave_dash/models/weekday_model.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter_getit/flutter_getit.dart';
@@ -59,9 +59,11 @@ class HomeController
           Product.values
               .firstWhere((element) => element.toString() == result[0]),
           force: true);
-      _showOrigen.set(result[1] as bool, force: true);
-      _showState.set(result[2] as bool, force: true);
-      _showPaymentType.set(result[3] as bool, force: true);
+      if (result[1] != null) _showOrigen.set(result[1] as bool, force: true);
+      if (result[2] != null) _showState.set(result[2] as bool, force: true);
+      if (result[3] != null) {
+        _showPaymentType.set(result[3] as bool, force: true);
+      }
 
       return true;
     } else {

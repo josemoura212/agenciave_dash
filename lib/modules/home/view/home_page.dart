@@ -1,7 +1,7 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/chart_widget.dart';
-import 'package:agenciave_dash/modules/home/view/widgets/hour_widget.dart';
+import 'package:agenciave_dash/modules/home/view/widgets/cartesian_widget.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/table_widget.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/up_bar.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/weekday_widget.dart';
@@ -104,10 +104,11 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                     child: Row(
                       children: [
                         WeekdayWidget(),
-                        HourWidget(
-                            title: "Vendas por hora",
-                            tooltip: "Vendas",
-                            data: controller.hourData)
+                        CartesianWidget(
+                          title: "Vendas por hora",
+                          tooltip: "Vendas",
+                          data: GetData.hourData,
+                        )
                       ],
                     ),
                   ),
