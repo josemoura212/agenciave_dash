@@ -164,27 +164,27 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
         break;
       case ShowAndHide.gridMedia:
         _showGridMedia.value = !_showGridMedia.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _localStore.writeBool(showHide.toString(), _showGridMedia.value);
         break;
       case ShowAndHide.weekday:
-        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _showWeekday.value = !_showWeekday.value;
+        _localStore.writeBool(showHide.toString(), _showWeekday.value);
         break;
       case ShowAndHide.hour:
-        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _showHour.value = !_showHour.value;
+        _localStore.writeBool(showHide.toString(), _showHour.value);
         break;
       case ShowAndHide.status:
-        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _showStatus.value = !_showStatus.value;
+        _localStore.writeBool(showHide.toString(), _showStatus.value);
         break;
       case ShowAndHide.recovery:
-        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _showRecovery.value = !_showRecovery.value;
+        _localStore.writeBool(showHide.toString(), _showRecovery.value);
         break;
       case ShowAndHide.country:
-        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _showCountry.value = !_showCountry.value;
+        _localStore.writeBool(showHide.toString(), _showCountry.value);
         break;
     }
   }

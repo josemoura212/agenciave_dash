@@ -11,31 +11,35 @@ class WeekdayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Injector.get<HomeController>();
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2 - 50,
-      child: Watch(
-        (_) => SfCartesianChart(
-          primaryXAxis: const CategoryAxis(),
-          title: const ChartTitle(text: 'Vendas por dia da semana'),
-          tooltipBehavior: TooltipBehavior(
-            enable: true,
-            header: "Vendas",
-          ),
-          series: [
-            ColumnSeries<WeekdayModel, String>(
-              dataSource: controller.getData(GetData.weekdayData),
-              xValueMapper: (WeekdayModel data, _) => data.weekday,
-              yValueMapper: (WeekdayModel data, _) => data.quantity,
-              dataLabelSettings: const DataLabelSettings(
-                isVisible: true,
-                labelPosition: ChartDataLabelPosition.outside,
-                textStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+
+    return Watch(
+      (_) => Visibility(
+        visible: controller.getShowAndHide(ShowAndHide.weekday),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width / 2 - 50,
+          child: SfCartesianChart(
+            primaryXAxis: const CategoryAxis(),
+            title: const ChartTitle(text: 'Vendas por dia da semana'),
+            tooltipBehavior: TooltipBehavior(
+              enable: true,
+              header: "Vendas",
+            ),
+            series: [
+              ColumnSeries<WeekdayModel, String>(
+                dataSource: controller.getData(GetData.weekdayData),
+                xValueMapper: (WeekdayModel data, _) => data.weekday,
+                yValueMapper: (WeekdayModel data, _) => data.quantity,
+                dataLabelSettings: const DataLabelSettings(
+                  isVisible: true,
+                  labelPosition: ChartDataLabelPosition.outside,
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

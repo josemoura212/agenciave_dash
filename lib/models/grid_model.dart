@@ -138,9 +138,9 @@ RecoveryModel setRecoveryData(List<RawSaleModel> data) {
         : "${(refundRate / total * 100).toStringAsFixed(2)}%",
     automaticRecovery: automaticRecovery == 0
         ? "0.0%"
-        : "${(automaticRecovery / expiredOrCanceled * 100).toStringAsFixed(2)}%",
+        : "${(expiredOrCanceled / automaticRecovery * 100).toStringAsFixed(2)}%",
     commercialRecovery: comemrcialRecovery == 0
         ? "0.0%"
-        : "${(comemrcialRecovery / expiredOrCanceled * 100).toStringAsFixed(2)}%",
+        : "${(expiredOrCanceled / comemrcialRecovery * 100).toStringAsFixed(2)}%",
   );
 }

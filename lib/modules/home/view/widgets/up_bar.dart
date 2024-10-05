@@ -228,6 +228,73 @@ class UpBar extends StatelessWidget {
                                   .toggleShowHide(ShowAndHide.paymentTypeOffer),
                             ),
                             Spacer(),
+                            Text(
+                              "Países",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.country),
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.country),
+                            ),
+                            Spacer(),
+                            Spacer(),
+                            Text(
+                              "Média de vendas",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.gridMedia),
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.gridMedia),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Dias da semana",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.weekday),
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.weekday),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Horas",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value:
+                                  controller.getShowAndHide(ShowAndHide.hour),
+                              onChanged: (_) =>
+                                  controller.toggleShowHide(ShowAndHide.hour),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Status",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value:
+                                  controller.getShowAndHide(ShowAndHide.status),
+                              onChanged: (_) =>
+                                  controller.toggleShowHide(ShowAndHide.status),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Recuperação",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Checkbox(
+                              value: controller
+                                  .getShowAndHide(ShowAndHide.recovery),
+                              onChanged: (_) => controller
+                                  .toggleShowHide(ShowAndHide.recovery),
+                            ),
+                            Spacer(),
                             IconButton(
                               icon: const Icon(Icons.brightness_6),
                               onPressed: () {

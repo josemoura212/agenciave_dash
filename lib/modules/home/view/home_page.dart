@@ -1,5 +1,4 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
-import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/chart_widget.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/cartesian_widget.dart';
@@ -67,43 +66,30 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                         alignment: WrapAlignment.center,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Visibility(
-                            visible:
-                                controller.getShowAndHide(ShowAndHide.origem),
-                            child: ChartWidget(
-                              title: "Origem das Vendas",
-                              chartData: controller.getData(GetData.origemData),
-                            ),
+                          ChartWidget(
+                            showAndHide: ShowAndHide.origem,
+                            title: "Origem das Vendas",
+                            chartData: GetData.origemData,
                           ),
-                          Visibility(
-                            visible:
-                                controller.getShowAndHide(ShowAndHide.state),
-                            child: ChartWidget(
-                              title: "Estados",
-                              chartData: controller.getData(GetData.stateData),
-                            ),
+                          ChartWidget(
+                            showAndHide: ShowAndHide.state,
+                            title: "Estados",
+                            chartData: GetData.stateData,
                           ),
-                          Visibility(
-                            visible: controller
-                                .getShowAndHide(ShowAndHide.paymentType),
-                            child: ChartWidget(
-                              title: "Tipo de Pagamento",
-                              chartData:
-                                  controller.getData(GetData.paymentTypeData),
-                            ),
+                          ChartWidget(
+                            showAndHide: ShowAndHide.paymentType,
+                            title: "Tipo de Pagamento",
+                            chartData: GetData.paymentTypeData,
                           ),
-                          Visibility(
-                            visible: controller
-                                .getShowAndHide(ShowAndHide.paymentTypeOffer),
-                            child: ChartWidget(
-                              title: "Tipos de Pagamento Oferta",
-                              chartData: controller.getData<List<ChartModel>>(
-                                  GetData.paymentTypeOfferData),
-                            ),
+                          ChartWidget(
+                            showAndHide: ShowAndHide.paymentTypeOffer,
+                            title: "Tipos de Pagamento Oferta",
+                            chartData: GetData.paymentTypeOfferData,
                           ),
                           ChartWidget(
                             title: "Países",
-                            chartData: controller.getData(GetData.countryData),
+                            chartData: GetData.countryData,
+                            showAndHide: ShowAndHide.country,
                           ),
                           TableWidget(),
                           WeekdayWidget(),
@@ -111,28 +97,34 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                             title: "Vendas por hora",
                             tooltip: "Vendas",
                             data: GetData.hourData,
+                            showAndHide: ShowAndHide.hour,
                           ),
                           CartesianWidget(
                             title: "Status de compra",
                             tooltip: "Status",
                             data: GetData.status,
+                            showAndHide: ShowAndHide.status,
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 2 - 50,
-                            child: Card(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                      "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
-                                  Divider(),
-                                  Text(
-                                      "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
-                                  Divider(),
-                                  Text(
-                                      "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
-                                ],
+                          Visibility(
+                            visible:
+                                controller.getShowAndHide(ShowAndHide.recovery),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 2 - 50,
+                              child: Card(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                        "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
+                                    Divider(),
+                                    Text(
+                                        "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
+                                    Divider(),
+                                    Text(
+                                        "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
