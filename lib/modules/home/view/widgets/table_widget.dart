@@ -23,7 +23,7 @@ class TableWidget extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "Media de vendas diarias: ${controller.gridMediaData.mediaDiaria.vendas}",
+                    "Média de vendas diarias: ${controller.gridMediaData.mediaDiaria.vendas}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class TableWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Media de faturamento diario: ${controller.gridMediaData.mediaDiaria.mediaFaturamento}",
+                    "Média de faturamento diario: ${controller.gridMediaData.mediaDiaria.mediaFaturamento}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class TableWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Media de receita diaria: ${controller.gridMediaData.mediaDiaria.mediaReceita}",
+                    "Média de receita diaria: ${controller.gridMediaData.mediaDiaria.mediaReceita}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class TableWidget extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "Media de vendas mensais: ${controller.gridMediaData.mediaMensal.vendas}",
+                    "Média de vendas mensais: ${controller.gridMediaData.mediaMensal.vendas}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class TableWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Media de faturamento mensal: ${controller.gridMediaData.mediaMensal.mediaFaturamento}",
+                    "Média de faturamento mensal: ${controller.gridMediaData.mediaMensal.mediaFaturamento}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class TableWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Media de receita mensal: ${controller.gridMediaData.mediaMensal.mediaReceita}",
+                    "Média de receita mensal: ${controller.gridMediaData.mediaMensal.mediaReceita}",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

@@ -16,6 +16,7 @@ class ProcessedSaleModel {
   final List<ChartModel> paymentTypeOfferData;
   final List<ChartModel> countryData;
   final GridMediaModel mediaData;
+  final RecoveryModel recoveryData;
   final List<DateModel> dateData;
   final List<BuyerModel> buyerData;
   final int totalSales;
@@ -31,6 +32,7 @@ class ProcessedSaleModel {
     required this.dateData,
     required this.paymentTypeData,
     required this.paymentTypeOfferData,
+    required this.recoveryData,
     required this.countryData,
     required this.mediaData,
     required this.totalSales,
@@ -49,6 +51,7 @@ class ProcessedSaleModel {
         paymentTypeOfferData = [],
         countryData = [],
         totalSales = 0,
+        recoveryData = RecoveryModel.empty(),
         mediaData = GridMediaModel.empty(),
         dateData = [],
         buyerData = [],
@@ -85,6 +88,7 @@ class ProcessedSaleModel {
       paymentTypeOfferData: setChartData(raw, TypeData.paymentTypeOffer),
       countryData: setChartData(raw, TypeData.country),
       mediaData: setGridMediaData(dateData),
+      recoveryData: setRecoveryData(raw),
       totalSales: totalSales,
       totalCommission: formatter.format(totalCommission),
       totalInvoicing: formatter.format(totalInvoicing),

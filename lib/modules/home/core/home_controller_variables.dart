@@ -26,6 +26,8 @@ enum GetData {
   paymentTypeData,
   paymentTypeOfferData,
   gridMediaData,
+  countryData,
+  recoveryData,
   hourData,
   weekdayData,
   status,
@@ -48,6 +50,25 @@ enum ShowAndHide {
   weekday,
   hour,
   status,
+  recovery,
+  country;
+
+  @override
+  toString() {
+    return switch (this) {
+      ShowAndHide.settings => "settings",
+      ShowAndHide.origem => "origin",
+      ShowAndHide.state => "state",
+      ShowAndHide.paymentType => "paymentType",
+      ShowAndHide.paymentTypeOffer => "paymentTypeOffer",
+      ShowAndHide.gridMedia => "gridMedia",
+      ShowAndHide.weekday => "weekday",
+      ShowAndHide.hour => "hour",
+      ShowAndHide.status => "status",
+      ShowAndHide.recovery => "recovery",
+      ShowAndHide.country => "country",
+    };
+  }
 }
 
 mixin _HomeControllerVariables {
@@ -63,36 +84,33 @@ mixin _HomeControllerVariables {
   ProcessedSaleModel get processedSaleData => _processedSaleData.value;
   GridMediaModel get gridMediaData => _processedSaleData.value.mediaData;
 
-  final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
-  DateTime? get rangeStartDay => _rangeStartDay.value;
-
-  final Signal<DateTime?> _rangeEndDay = Signal<DateTime?>(null);
-  DateTime? get rangeEndDay => _rangeEndDay.value;
-
-  final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
-  DateTime? get selectedDay => _selectedDay.value;
-
   final Signal<DateTime> _focusedDay = Signal<DateTime>(DateTime.now());
+  final Signal<DateTime?> _selectedDay = Signal<DateTime?>(null);
+  final Signal<DateTime?> _rangeStartDay = Signal<DateTime?>(null);
+  final Signal<DateTime?> _rangeEndDay = Signal<DateTime?>(null);
+  final Signal<RangeSelectionMode> _rangeSelectionMode =
+      Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
   DateTime get focusedDay => _focusedDay.value;
+  DateTime? get selectedDay => _selectedDay.value;
+  DateTime? get rangeEndDay => _rangeEndDay.value;
+  DateTime? get rangeStartDay => _rangeStartDay.value;
 
   final Signal<int> _selectedRelease = Signal<int>(1);
   int get selectedRelease => _selectedRelease.value;
-
   final Signal<Product> _selectedProduct = Signal<Product>(Product.vi);
   Product get selectedProduct => _selectedProduct.value;
 
-  final Signal<RangeSelectionMode> _rangeSelectionMode =
-      Signal<RangeSelectionMode>(RangeSelectionMode.toggledOff);
-
   final Signal<bool> _showSettings = Signal<bool>(false);
-
   final Signal<bool> _showOrigen = Signal<bool>(true);
-
   final Signal<bool> _showState = Signal<bool>(true);
-
   final Signal<bool> _showPaymentType = Signal<bool>(true);
-
   final Signal<bool> _showPaymentTypeOffer = Signal<bool>(true);
+  final Signal<bool> _showCountry = Signal<bool>(true);
+  final Signal<bool> _showGridMedia = Signal<bool>(true);
+  final Signal<bool> _showWeekday = Signal<bool>(true);
+  final Signal<bool> _showHour = Signal<bool>(true);
+  final Signal<bool> _showStatus = Signal<bool>(true);
+  final Signal<bool> _showRecovery = Signal<bool>(true);
 
   set focusedDay(DateTime focusedDay) {
     _focusedDay.value = focusedDay;
@@ -117,58 +135,43 @@ mixin _HomeControllerVariables {
   };
 
   bool getShowAndHide(ShowAndHide showAndHide) {
-    switch (showAndHide) {
-      case ShowAndHide.settings:
-        return _showSettings.value;
-      case ShowAndHide.origem:
-        return _showOrigen.value;
-      case ShowAndHide.state:
-        return _showState.value;
-      case ShowAndHide.paymentType:
-        return _showPaymentType.value;
-      case ShowAndHide.paymentTypeOffer:
-        return _showPaymentTypeOffer.value;
-      case _:
-        return true;
-    }
+    return switch (showAndHide) {
+      ShowAndHide.settings => _showSettings.value,
+      ShowAndHide.origem => _showOrigen.value,
+      ShowAndHide.state => _showState.value,
+      ShowAndHide.paymentType => _showPaymentType.value,
+      ShowAndHide.paymentTypeOffer => _showPaymentTypeOffer.value,
+      ShowAndHide.gridMedia => _showGridMedia.value,
+      ShowAndHide.weekday => _showWeekday.value,
+      ShowAndHide.hour => _showHour.value,
+      ShowAndHide.status => _showStatus.value,
+      ShowAndHide.recovery => _showRecovery.value,
+      ShowAndHide.country => _showCountry.value,
+    };
   }
 
   T getData<T>(GetData data) {
-    switch (data) {
-      case GetData.homeData:
-        return _homeData.value as T;
-      case GetData.dateData:
-        return _processedSaleData.value.dateData as T;
-      case GetData.origemData:
-        return _processedSaleData.value.origemData as T;
-      case GetData.stateData:
-        return _processedSaleData.value.stateData as T;
-      case GetData.paymentTypeData:
-        return _processedSaleData.value.paymentTypeData as T;
-      case GetData.paymentTypeOfferData:
-        return _processedSaleData.value.paymentTypeOfferData as T;
-      case GetData.gridMediaData:
-        return _processedSaleData.value.mediaData as T;
-      case GetData.hourData:
-        return _processedSaleData.value.hourData as T;
-      case GetData.weekdayData:
-        return _processedSaleData.value.weekdayData as T;
-      case GetData.status:
-        return _processedSaleData.value.status as T;
-      case GetData.totalVendas:
-        return _processedSaleData.value.totalSales as T;
-      case GetData.totalFaturamento:
-        return _processedSaleData.value.totalInvoicing as T;
-      case GetData.totalReceita:
-        return _processedSaleData.value.totalCommission as T;
-      case GetData.selectedRelease:
-        return _selectedRelease.value as T;
-      case GetData.selectedProduct:
-        return _selectedProduct.value as T;
-      case GetData.rangeSelectionMode:
-        return _rangeSelectionMode.value as T;
-      case GetData.showSettings:
-        return _showSettings.value as T;
-    }
+    return switch (data) {
+      GetData.countryData => _processedSaleData.value.countryData as T,
+      GetData.homeData => _homeData.value as T,
+      GetData.recoveryData => _processedSaleData.value.recoveryData as T,
+      GetData.dateData => _processedSaleData.value.dateData as T,
+      GetData.origemData => _processedSaleData.value.origemData as T,
+      GetData.stateData => _processedSaleData.value.stateData as T,
+      GetData.paymentTypeData => _processedSaleData.value.paymentTypeData as T,
+      GetData.paymentTypeOfferData =>
+        _processedSaleData.value.paymentTypeOfferData as T,
+      GetData.gridMediaData => _processedSaleData.value.mediaData as T,
+      GetData.hourData => _processedSaleData.value.hourData as T,
+      GetData.weekdayData => _processedSaleData.value.weekdayData as T,
+      GetData.status => _processedSaleData.value.status as T,
+      GetData.totalVendas => _processedSaleData.value.totalSales as T,
+      GetData.totalFaturamento => _processedSaleData.value.totalInvoicing as T,
+      GetData.totalReceita => _processedSaleData.value.totalCommission as T,
+      GetData.selectedRelease => _selectedRelease.value as T,
+      GetData.selectedProduct => _selectedProduct.value as T,
+      GetData.rangeSelectionMode => _rangeSelectionMode.value as T,
+      GetData.showSettings => _showSettings.value as T,
+    };
   }
 }

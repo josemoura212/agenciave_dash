@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                         runSpacing: 16,
                         runAlignment: WrapAlignment.center,
                         alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Visibility(
                             visible:
@@ -100,6 +101,10 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                                   GetData.paymentTypeOfferData),
                             ),
                           ),
+                          ChartWidget(
+                            title: "Países",
+                            chartData: controller.getData(GetData.countryData),
+                          ),
                           TableWidget(),
                           WeekdayWidget(),
                           CartesianWidget(
@@ -111,6 +116,25 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                             title: "Status de compra",
                             tooltip: "Status",
                             data: GetData.status,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 2 - 50,
+                            child: Card(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                      "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
+                                  Divider(),
+                                  Text(
+                                      "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
+                                  Divider(),
+                                  Text(
+                                      "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

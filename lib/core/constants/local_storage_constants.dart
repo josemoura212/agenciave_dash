@@ -12,4 +12,6 @@ sealed class LocalStorageConstants {
   static const String weekday = "weekday";
   static const String hour = "hour";
   static const String status = "status";
+  static const String recovery = "recovery";
+  static const String country = "country";
 }

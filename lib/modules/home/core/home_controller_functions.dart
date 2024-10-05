@@ -144,28 +144,47 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     switch (showHide) {
       case ShowAndHide.settings:
         _showSettings.value = !_showSettings.value;
-        _localStore.writeBool(
-            LocalStorageConstants.settings, _showSettings.value);
+        _localStore.writeBool(showHide.toString(), _showSettings.value);
         break;
       case ShowAndHide.origem:
         _showOrigen.value = !_showOrigen.value;
-        _localStore.writeBool(LocalStorageConstants.origen, _showOrigen.value);
+        _localStore.writeBool(showHide.toString(), _showOrigen.value);
         break;
       case ShowAndHide.state:
         _showState.value = !_showState.value;
-        _localStore.writeBool(LocalStorageConstants.state, _showState.value);
+        _localStore.writeBool(showHide.toString(), _showState.value);
         break;
       case ShowAndHide.paymentType:
         _showPaymentType.value = !_showPaymentType.value;
-        _localStore.writeBool(
-            LocalStorageConstants.paymentType, _showPaymentType.value);
+        _localStore.writeBool(showHide.toString(), _showPaymentType.value);
         break;
       case ShowAndHide.paymentTypeOffer:
         _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(LocalStorageConstants.paymentTypeOffer,
-            _showPaymentTypeOffer.value);
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
         break;
-      case _:
+      case ShowAndHide.gridMedia:
+        _showGridMedia.value = !_showGridMedia.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        break;
+      case ShowAndHide.weekday:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        break;
+      case ShowAndHide.hour:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        break;
+      case ShowAndHide.status:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        break;
+      case ShowAndHide.recovery:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        break;
+      case ShowAndHide.country:
+        _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
+        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
         break;
     }
   }

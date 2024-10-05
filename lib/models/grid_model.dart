@@ -1,4 +1,5 @@
 import 'package:agenciave_dash/models/date_model.dart';
+import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:intl/intl.dart';
 
 class GridMediaModel {
@@ -87,5 +88,59 @@ GridMediaModel setGridMediaData(List<DateModel> data) {
   return GridMediaModel(
     mediaDiaria: mediaDiaria,
     mediaMensal: mediaMensal,
+  );
+}
+
+class RecoveryModel {
+  final String refundRate;
+  final String automaticRecovery;
+  final String commercialRecovery;
+
+  RecoveryModel({
+    required this.refundRate,
+    required this.automaticRecovery,
+    required this.commercialRecovery,
+  });
+
+  RecoveryModel.empty()
+      : refundRate = '',
+        automaticRecovery = '',
+        commercialRecovery = '';
+}
+
+RecoveryModel setRecoveryData(List<RawSaleModel> data) {
+  var refundRate = 0.0;
+  var automaticRecovery = 0.0;
+  var comemrcialRecovery = 0.0;
+  var total = 0;
+  var expiredOrCanceled = 0;
+
+  for (var item in data) {
+    total += 1;
+    if (item.status == Status.disputed || item.status == Status.chargeback) {
+      refundRate += 1;
+    }
+    if (item.status == Status.canceled || item.status == Status.expired) {
+      expiredOrCanceled += 1;
+    }
+
+    if (item.origin.toLowerCase() == "listboos" ||
+        item.origin.toLowerCase() == "chatbot") {
+      automaticRecovery += item.invoicing;
+    } else if (item.origin.toLowerCase() == 'poliana') {
+      comemrcialRecovery += item.invoicing;
+    }
+  }
+
+  return RecoveryModel(
+    refundRate: refundRate == 0
+        ? "0.0%"
+        : "${(refundRate / total * 100).toStringAsFixed(2)}%",
+    automaticRecovery: automaticRecovery == 0
+        ? "0.0%"
+        : "${(automaticRecovery / expiredOrCanceled * 100).toStringAsFixed(2)}%",
+    commercialRecovery: comemrcialRecovery == 0
+        ? "0.0%"
+        : "${(comemrcialRecovery / expiredOrCanceled * 100).toStringAsFixed(2)}%",
   );
 }
