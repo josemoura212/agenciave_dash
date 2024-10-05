@@ -144,47 +144,54 @@ mixin _HomeControllerFunctions on _HomeControllerVariables {
     switch (showHide) {
       case ShowAndHide.settings:
         _showSettings.value = !_showSettings.value;
-        _localStore.writeBool(showHide.toString(), _showSettings.value);
+        _localStore.writeBool(
+            LocalStorageConstants.settings, _showSettings.value);
         break;
       case ShowAndHide.origem:
         _showOrigen.value = !_showOrigen.value;
-        _localStore.writeBool(showHide.toString(), _showOrigen.value);
+        _localStore.writeBool(LocalStorageConstants.origen, _showOrigen.value);
         break;
       case ShowAndHide.state:
         _showState.value = !_showState.value;
-        _localStore.writeBool(showHide.toString(), _showState.value);
+        _localStore.writeBool(LocalStorageConstants.state, _showState.value);
         break;
       case ShowAndHide.paymentType:
         _showPaymentType.value = !_showPaymentType.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentType.value);
+        _localStore.writeBool(
+            LocalStorageConstants.paymentType, _showPaymentType.value);
         break;
       case ShowAndHide.paymentTypeOffer:
         _showPaymentTypeOffer.value = !_showPaymentTypeOffer.value;
-        _localStore.writeBool(showHide.toString(), _showPaymentTypeOffer.value);
+        _localStore.writeBool(LocalStorageConstants.paymentTypeOffer,
+            _showPaymentTypeOffer.value);
         break;
       case ShowAndHide.gridMedia:
         _showGridMedia.value = !_showGridMedia.value;
-        _localStore.writeBool(showHide.toString(), _showGridMedia.value);
+        _localStore.writeBool(
+            LocalStorageConstants.gridMedia, _showGridMedia.value);
         break;
       case ShowAndHide.weekday:
         _showWeekday.value = !_showWeekday.value;
-        _localStore.writeBool(showHide.toString(), _showWeekday.value);
+        _localStore.writeBool(
+            LocalStorageConstants.weekday, _showWeekday.value);
         break;
       case ShowAndHide.hour:
         _showHour.value = !_showHour.value;
-        _localStore.writeBool(showHide.toString(), _showHour.value);
+        _localStore.writeBool(LocalStorageConstants.hour, _showHour.value);
         break;
       case ShowAndHide.status:
         _showStatus.value = !_showStatus.value;
-        _localStore.writeBool(showHide.toString(), _showStatus.value);
+        _localStore.writeBool(LocalStorageConstants.status, _showStatus.value);
         break;
       case ShowAndHide.recovery:
         _showRecovery.value = !_showRecovery.value;
-        _localStore.writeBool(showHide.toString(), _showRecovery.value);
+        _localStore.writeBool(
+            LocalStorageConstants.recovery, _showRecovery.value);
         break;
       case ShowAndHide.country:
         _showCountry.value = !_showCountry.value;
-        _localStore.writeBool(showHide.toString(), _showCountry.value);
+        _localStore.writeBool(
+            LocalStorageConstants.country, _showCountry.value);
         break;
     }
   }

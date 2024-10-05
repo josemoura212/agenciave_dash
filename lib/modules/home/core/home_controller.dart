@@ -51,6 +51,12 @@ class HomeController
         _localStore.readBool(LocalStorageConstants.state),
         _localStore.readBool(LocalStorageConstants.paymentType),
         _localStore.readBool(LocalStorageConstants.paymentTypeOffer),
+        _localStore.readBool(LocalStorageConstants.gridMedia),
+        _localStore.readBool(LocalStorageConstants.weekday),
+        _localStore.readBool(LocalStorageConstants.hour),
+        _localStore.readBool(LocalStorageConstants.status),
+        _localStore.readBool(LocalStorageConstants.recovery),
+        _localStore.readBool(LocalStorageConstants.country),
       ]);
 
       if (result[0] != null) {
@@ -66,6 +72,14 @@ class HomeController
       }
       if (result[4] != null) {
         _showPaymentTypeOffer.set(result[4] as bool, force: true);
+      }
+      if (result[5] != null) _showGridMedia.set(result[5] as bool, force: true);
+      if (result[6] != null) _showWeekday.set(result[6] as bool, force: true);
+      if (result[7] != null) _showHour.set(result[7] as bool, force: true);
+      if (result[8] != null) _showStatus.set(result[8] as bool, force: true);
+      if (result[9] != null) _showRecovery.set(result[9] as bool, force: true);
+      if (result[10] != null) {
+        _showCountry.set(result[10] as bool, force: true);
       }
 
       return true;
