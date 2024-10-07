@@ -50,89 +50,96 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
           }
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                const UpBar(),
-              ],
-              body: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Watch(
-                      (_) => Wrap(
-                        spacing: 16,
-                        runSpacing: 16,
-                        runAlignment: WrapAlignment.center,
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          ChartWidget(
-                            showAndHide: ShowAndHide.origem,
-                            title: "Origem das Vendas",
-                            chartData: GetData.origemData,
-                          ),
-                          ChartWidget(
-                            showAndHide: ShowAndHide.state,
-                            title: "Estados",
-                            chartData: GetData.stateData,
-                          ),
-                          ChartWidget(
-                            showAndHide: ShowAndHide.paymentType,
-                            title: "Tipo de Pagamento",
-                            chartData: GetData.paymentTypeData,
-                          ),
-                          ChartWidget(
-                            showAndHide: ShowAndHide.paymentTypeOffer,
-                            title: "Tipos de Pagamento Oferta",
-                            chartData: GetData.paymentTypeOfferData,
-                          ),
-                          ChartWidget(
-                            title: "Países",
-                            chartData: GetData.countryData,
-                            showAndHide: ShowAndHide.country,
-                          ),
-                          TableWidget(),
-                          WeekdayWidget(),
-                          CartesianWidget(
-                            title: "Vendas por hora",
-                            tooltip: "Vendas",
-                            data: GetData.hourData,
-                            showAndHide: ShowAndHide.hour,
-                          ),
-                          CartesianWidget(
-                            title: "Status de compra",
-                            tooltip: "Status",
-                            data: GetData.status,
-                            showAndHide: ShowAndHide.status,
-                          ),
-                          Visibility(
-                            visible:
-                                controller.getShowAndHide(ShowAndHide.recovery),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 2 - 50,
-                              child: Card(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                        "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
-                                    Divider(),
-                                    Text(
-                                        "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
-                                    Divider(),
-                                    Text(
-                                        "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
-                                  ],
+            child: Watch(
+              (_) => NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  const UpBar(),
+                ],
+                body: controller.homeData.isEmpty
+                    ? Center(
+                        child: SelectableText("Ainda não houve eventos"),
+                      )
+                    : CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              runAlignment: WrapAlignment.center,
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                ChartWidget(
+                                  showAndHide: ShowAndHide.origem,
+                                  title: "Origem das Vendas",
+                                  chartData: GetData.origemData,
                                 ),
-                              ),
+                                ChartWidget(
+                                  showAndHide: ShowAndHide.state,
+                                  title: "Estados",
+                                  chartData: GetData.stateData,
+                                ),
+                                ChartWidget(
+                                  showAndHide: ShowAndHide.paymentType,
+                                  title: "Tipo de Pagamento",
+                                  chartData: GetData.paymentTypeData,
+                                ),
+                                ChartWidget(
+                                  showAndHide: ShowAndHide.paymentTypeOffer,
+                                  title: "Tipos de Pagamento Oferta",
+                                  chartData: GetData.paymentTypeOfferData,
+                                ),
+                                ChartWidget(
+                                  title: "Países",
+                                  chartData: GetData.countryData,
+                                  showAndHide: ShowAndHide.country,
+                                ),
+                                TableWidget(),
+                                WeekdayWidget(),
+                                CartesianWidget(
+                                  title: "Vendas por hora",
+                                  tooltip: "Vendas",
+                                  data: GetData.hourData,
+                                  showAndHide: ShowAndHide.hour,
+                                ),
+                                CartesianWidget(
+                                  title: "Status de compra",
+                                  tooltip: "Status",
+                                  data: GetData.status,
+                                  showAndHide: ShowAndHide.status,
+                                ),
+                                Visibility(
+                                  visible: controller
+                                      .getShowAndHide(ShowAndHide.recovery),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            50,
+                                    child: Card(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                              "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
+                                          Divider(),
+                                          Text(
+                                              "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
+                                          Divider(),
+                                          Text(
+                                              "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ],
               ),
             ),
           );

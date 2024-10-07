@@ -3,7 +3,8 @@ part of "home_controller.dart";
 enum Product {
   vi,
   si,
-  pe;
+  pe,
+  cd;
 
   @override
   toString() {
@@ -14,6 +15,8 @@ enum Product {
         return 'SI';
       case Product.pe:
         return 'PE';
+      case Product.cd:
+        return 'CD';
     }
   }
 }
@@ -76,6 +79,7 @@ mixin _HomeControllerVariables {
   final _localStore = Injector.get<LocalStorage>();
 
   final Signal<List<RawSaleModel>> _homeData = Signal<List<RawSaleModel>>([]);
+  List<RawSaleModel> get homeData => _homeData.value;
   final Signal<List<RawSaleModel>> _homeDataBackup =
       Signal<List<RawSaleModel>>([]);
 
