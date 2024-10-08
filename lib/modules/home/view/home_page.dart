@@ -126,10 +126,10 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
                                               "Taxa de reembolso: ${controller.getData(GetData.recoveryData).refundRate}"),
                                           Divider(),
                                           Text(
-                                              "Taxa de conversão: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
+                                              "Taxa de recuperação automatico: ${controller.getData(GetData.recoveryData).automaticRecovery}"),
                                           Divider(),
                                           Text(
-                                              "Taxa de recuperação: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
+                                              "Taxa de recuperação comercial: ${controller.getData(GetData.recoveryData).commercialRecovery}"),
                                         ],
                                       ),
                                     ),

@@ -134,6 +134,8 @@ enum Status {
   billetPrint,
   denied,
   latePayment,
+  delayed,
+  canceledByUser,
   others;
 
   String get name {
@@ -160,6 +162,10 @@ enum Status {
         return 'Negado';
       case Status.latePayment:
         return 'Pagto Atrasado';
+      case Status.canceledByUser:
+        return 'Cancelado';
+      case Status.delayed:
+        return 'Atrasado';
       default:
         return 'Outros';
     }
@@ -173,7 +179,7 @@ enum Status {
         return Status.canceled;
       case 'reembolsado':
         return Status.refunded;
-      case 'disputado' || "disputed":
+      case 'disputado' || "disputed" || "reclamado":
         return Status.disputed;
       case 'boleto impresso' || "billet_printed":
         return Status.billetPrint;
@@ -189,6 +195,10 @@ enum Status {
         return Status.denied;
       case 'pagamento atrasado':
         return Status.latePayment;
+      case "cancelado":
+        return Status.canceledByUser;
+      case "atrasado":
+        return Status.delayed;
       default:
         return Status.others;
     }

@@ -116,11 +116,14 @@ RecoveryModel setRecoveryData(List<RawSaleModel> data) {
   var expiredOrCanceled = 0;
 
   for (var item in data) {
-    total += 1;
-    if (item.status == Status.disputed || item.status == Status.chargeback) {
+    if (item.status == Status.aproved || item.status == Status.completed) {
+      total += 1;
+    } else if (item.status == Status.disputed ||
+        item.status == Status.chargeback ||
+        item.status == Status.refunded) {
       refundRate += 1;
-    }
-    if (item.status == Status.canceled || item.status == Status.expired) {
+    } else if (item.status == Status.canceled ||
+        item.status == Status.expired) {
       expiredOrCanceled += 1;
     }
 
@@ -138,9 +141,9 @@ RecoveryModel setRecoveryData(List<RawSaleModel> data) {
         : "${(refundRate / total * 100).toStringAsFixed(2)}%",
     automaticRecovery: automaticRecovery == 0
         ? "0.0%"
-        : "${(expiredOrCanceled / automaticRecovery * 100).toStringAsFixed(2)}%",
+        : "${((automaticRecovery / expiredOrCanceled) * 100).toStringAsFixed(2)}%",
     commercialRecovery: comemrcialRecovery == 0
         ? "0.0%"
-        : "${(expiredOrCanceled / comemrcialRecovery * 100).toStringAsFixed(2)}%",
+        : "${((comemrcialRecovery / expiredOrCanceled) * 100).toStringAsFixed(2)}%",
   );
 }
