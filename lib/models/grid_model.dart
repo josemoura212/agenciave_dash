@@ -118,11 +118,11 @@ RecoveryModel setRecoveryData(List<RawSaleModel> data) {
   for (var item in data) {
     if (item.status == Status.aproved || item.status == Status.completed) {
       total += 1;
-    } else if (item.status == Status.disputed ||
-        item.status == Status.chargeback ||
-        item.status == Status.refunded) {
+    } else if (item.status == Status.chargeback ||
+        item.status == Status.refunded ||
+        item.status == Status.disputed) {
       refundRate += 1;
-    } else if (item.status == Status.canceled ||
+    } else if (item.status == Status.canceledByUser ||
         item.status == Status.expired) {
       expiredOrCanceled += 1;
     }
