@@ -20,20 +20,22 @@ List<ChartModel> setChartData(List<RawSaleModel> data, TypeData type) {
   final Map<String, int> dataMap = {};
 
   for (var item in data) {
-    final data = switch (type) {
-      TypeData.origem => _originFormat(item.origin),
-      TypeData.state => _stateFormat(item.state),
-      TypeData.paymentType => _paymentTypeFomart(item.paymentType),
-      TypeData.paymentTypeOffer =>
-        _paymentTypeOfferFormat(item.paymenteTypeOffer),
-      TypeData.country => item.country,
-      TypeData.status => throw UnimplementedError(),
-      TypeData.buyer => throw UnimplementedError(),
-      TypeData.media => throw UnimplementedError(),
-      TypeData.weekday => throw UnimplementedError(),
-      TypeData.hour => throw UnimplementedError(),
-    };
-    dataMap[data] = (dataMap[data] ?? 0) + item.quantity;
+    if (item.status == Status.aproved || item.status == Status.completed) {
+      final data = switch (type) {
+        TypeData.origem => _originFormat(item.origin),
+        TypeData.state => _stateFormat(item.state),
+        TypeData.paymentType => _paymentTypeFomart(item.paymentType),
+        TypeData.paymentTypeOffer =>
+          _paymentTypeOfferFormat(item.paymenteTypeOffer),
+        TypeData.country => item.country,
+        TypeData.status => throw UnimplementedError(),
+        TypeData.buyer => throw UnimplementedError(),
+        TypeData.media => throw UnimplementedError(),
+        TypeData.weekday => throw UnimplementedError(),
+        TypeData.hour => throw UnimplementedError(),
+      };
+      dataMap[data] = (dataMap[data] ?? 0) + item.quantity;
+    }
   }
 
   dataMap.forEach((key, value) {
