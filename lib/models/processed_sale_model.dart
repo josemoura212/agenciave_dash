@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:agenciave_dash/models/cartesian_model.dart';
 import 'package:agenciave_dash/models/chart_model.dart';
 import 'package:agenciave_dash/models/date_model.dart';
@@ -63,8 +61,6 @@ class ProcessedSaleModel {
   factory ProcessedSaleModel.fromRawModel(List<RawSaleModel> raw) {
     final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
-    log("=============== raw ${raw.length}");
-
     final dateData = setDateData(raw);
     final totalInvoicing = raw
         .where(
@@ -80,8 +76,6 @@ class ProcessedSaleModel {
         .where(
             (e) => e.status == Status.aproved || e.status == Status.completed)
         .fold(0, (p, e) => p + e.quantity);
-
-    log("=============== totalSales $totalSales");
 
     return ProcessedSaleModel(
       weekdayData: setWeekdayData(raw),

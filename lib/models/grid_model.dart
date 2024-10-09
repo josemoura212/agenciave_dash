@@ -129,12 +129,11 @@ RecoveryModel setRecoveryData(List<RawSaleModel> data) {
 
     if (item.origin.toLowerCase() == "listboos" ||
         item.origin.toLowerCase() == "chatbot") {
-      automaticRecovery += item.invoicing;
+      automaticRecovery += 1;
     } else if (item.origin.toLowerCase() == 'poliana') {
-      comemrcialRecovery += item.invoicing;
+      comemrcialRecovery += 1;
     }
   }
-
   return RecoveryModel(
     refundRate: refundRate == 0
         ? "0.0%"
