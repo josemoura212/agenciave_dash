@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
@@ -32,6 +34,7 @@ class HomeController
           showError("Erro ao buscar dados");
         case Right(value: List<RawSaleModel> data):
           _homeDataBackup.set(data, force: true);
+          log("=============== ${data.length}");
           if (_selectedProduct.value == Product.pe) {
             changeRelease(true, initial: true);
           } else {
