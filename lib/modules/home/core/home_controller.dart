@@ -1,5 +1,6 @@
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
+import 'package:agenciave_dash/models/ads_model.dart';
 import 'package:agenciave_dash/models/grid_model.dart';
 import 'package:agenciave_dash/models/processed_sale_model.dart';
 import 'package:asyncstate/asyncstate.dart';
@@ -25,18 +26,28 @@ class HomeController
 
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await _homeServices.getHomeData(_selectedProduct.value);
+      final result = await Future.wait([
+        _homeServices.getHomeData(_selectedProduct.value),
+        _homeServices.getAdsData(_selectedProduct.value),
+      ]);
 
-      switch (result) {
+      switch (result[0]) {
         case Left():
           showError("Erro ao buscar dados");
-        case Right(value: List<RawSaleModel> data):
-          _homeDataBackup.set(data, force: true);
+        case Right(value: var data):
+          _homeDataBackup.set(data as List<RawSaleModel>, force: true);
           if (_selectedProduct.value == Product.pe) {
             changeRelease(true, initial: true);
           } else {
             _setHomeData(data);
           }
+      }
+
+      switch (result[1]) {
+        case Left():
+          showError("Erro ao buscar dados");
+        case Right(value: var data):
+          _adsData.set(data as List<AdsModel>, force: true);
       }
     }
   }

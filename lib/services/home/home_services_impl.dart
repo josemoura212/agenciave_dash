@@ -1,5 +1,6 @@
 import 'package:agenciave_dash/core/exceptions/repository_exception.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
+import 'package:agenciave_dash/models/ads_model.dart';
 import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
@@ -15,4 +16,9 @@ class HomeServicesImpl implements HomeServices {
   Future<Either<RepositoryException, List<RawSaleModel>>> getHomeData(
           Product product) =>
       _homeRepository.getHomeData(product);
+
+  @override
+  Future<Either<RepositoryException, List<AdsModel>>> getAdsData(
+          Product product) =>
+      _homeRepository.getAdsData(product);
 }
