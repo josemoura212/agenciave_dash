@@ -26,28 +26,29 @@ class HomeController
 
   Future<void> getHomeData() async {
     if (await isAuthenticaded()) {
-      final result = await Future.wait([
-        _homeServices.getHomeData(_selectedProduct.value),
-        _homeServices.getAdsData(_selectedProduct.value),
-      ]);
+      final resultData =
+          await _homeServices.getHomeData(_selectedProduct.value);
+      if (selectedProduct != Product.black) {
+        final resultAds =
+            await _homeServices.getAdsData(_selectedProduct.value);
+        switch (resultAds) {
+          case Left():
+            showError("Erro ao buscar dados");
+          case Right(value: var data):
+            _adsData.set(data, force: true);
+        }
+      }
 
-      switch (result[0]) {
+      switch (resultData) {
         case Left():
           showError("Erro ao buscar dados");
         case Right(value: var data):
-          _homeDataBackup.set(data as List<RawSaleModel>, force: true);
+          _homeDataBackup.set(data, force: true);
           if (_selectedProduct.value == Product.pe) {
             changeRelease(true, initial: true);
           } else {
             _setHomeData(data);
           }
-      }
-
-      switch (result[1]) {
-        case Left():
-          showError("Erro ao buscar dados");
-        case Right(value: var data):
-          _adsData.set(data as List<AdsModel>, force: true);
       }
     }
   }
