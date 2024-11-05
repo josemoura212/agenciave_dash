@@ -167,7 +167,7 @@ class _UpBarState extends State<UpBar> {
                                     AnimatedSlideOdometerNumber(
                                       odometerNumber: OdometerNumber(data),
                                       duration: Duration(seconds: 1),
-                                      letterWidth: 30,
+                                      letterWidth: 10,
                                       numberTextStyle: TextStyle(
                                         fontSize: 25.0,
                                       ),
