@@ -117,4 +117,18 @@ class HomeController
       changeRelease(true);
     }
   }
+
+  void listenerCount() {
+    final (:channel, :dispose) = _homeServices.openChannelSocket();
+    _socketDispose = dispose;
+
+    _channel.set(channel.stream);
+  }
+
+  void dispose() {
+    _porcometroDataConnect?.dispose();
+    if (_socketDispose != null) {
+      _socketDispose!();
+    }
+  }
 }
