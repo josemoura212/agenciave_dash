@@ -4,20 +4,18 @@ enum Product {
   vi,
   si,
   pe,
-  cd;
+  cd,
+  black;
 
   @override
   toString() {
-    switch (this) {
-      case Product.vi:
-        return 'VI';
-      case Product.si:
-        return 'SI';
-      case Product.pe:
-        return 'PE';
-      case Product.cd:
-        return 'CD';
-    }
+    return switch (this) {
+      Product.vi => 'VI',
+      Product.si => 'SI',
+      Product.pe => 'SI',
+      Product.cd => 'SI',
+      Product.black => 'BLACK',
+    };
   }
 }
 

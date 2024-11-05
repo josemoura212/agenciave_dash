@@ -56,6 +56,13 @@ class UpBar extends StatelessWidget {
                     color: Colors.pinkAccent[400]!,
                     // colortText: Colors.black,
                   ),
+                  _PageToogle(
+                    controller: controller,
+                    title: "Black é tudo de graça",
+                    product: Product.black,
+                    color: Colors.orangeAccent[400]!,
+                    // colortText: Colors.black,
+                  ),
                   Spacer(),
                   Visibility(
                     visible: controller.getData(GetData.selectedProduct) ==
