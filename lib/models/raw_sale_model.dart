@@ -173,9 +173,9 @@ enum Status {
 
   factory Status.fromString(String status) {
     switch (status.toLowerCase()) {
-      case 'aprovado' || 'aproved':
+      case 'aprovado' || 'aproved' || "approved":
         return Status.aproved;
-      case 'pendente' || "delayed":
+      case 'pendente' || "delayed" || "canceled":
         return Status.canceled;
       case 'reembolsado':
         return Status.refunded;

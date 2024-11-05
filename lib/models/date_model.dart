@@ -32,21 +32,23 @@ setDateData(List<RawSaleModel> data) {
   final Map<DateTime, VendaModel> countDate = {};
 
   for (var item in data) {
-    final date =
-        DateTime(item.saleDate.year, item.saleDate.month, item.saleDate.day);
-    countDate.update(
-      date,
-      (value) => VendaModel(
-        total: value.total + item.quantity,
-        faturamento: value.faturamento + item.invoicing,
-        receita: value.receita + item.commissionValueGenerated,
-      ),
-      ifAbsent: () => VendaModel(
-        total: item.quantity,
-        faturamento: item.invoicing,
-        receita: item.commissionValueGenerated,
-      ),
-    );
+    if (item.status == Status.aproved || item.status == Status.completed) {
+      final date =
+          DateTime(item.saleDate.year, item.saleDate.month, item.saleDate.day);
+      countDate.update(
+        date,
+        (value) => VendaModel(
+          total: value.total + item.quantity,
+          faturamento: value.faturamento + item.invoicing,
+          receita: value.receita + item.commissionValueGenerated,
+        ),
+        ifAbsent: () => VendaModel(
+          total: item.quantity,
+          faturamento: item.invoicing,
+          receita: item.commissionValueGenerated,
+        ),
+      );
+    }
   }
 
   countDate.forEach((key, value) {

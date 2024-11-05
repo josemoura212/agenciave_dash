@@ -39,6 +39,7 @@ enum GetData {
   selectedProduct,
   rangeSelectionMode,
   showSettings,
+  adsData,
 }
 
 enum ShowAndHide {
@@ -80,6 +81,8 @@ mixin _HomeControllerVariables {
   List<RawSaleModel> get homeData => _homeData.value;
   final Signal<List<RawSaleModel>> _homeDataBackup =
       Signal<List<RawSaleModel>>([]);
+
+  final Signal<List<AdsModel>> _adsData = Signal<List<AdsModel>>([]);
 
   final Signal<ProcessedSaleModel> _processedSaleData =
       Signal<ProcessedSaleModel>(ProcessedSaleModel.empty());
@@ -174,6 +177,7 @@ mixin _HomeControllerVariables {
       GetData.selectedProduct => _selectedProduct.value as T,
       GetData.rangeSelectionMode => _rangeSelectionMode.value as T,
       GetData.showSettings => _showSettings.value as T,
+      GetData.adsData => _adsData.value as T,
     };
   }
 }
