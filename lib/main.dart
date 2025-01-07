@@ -7,13 +7,14 @@ import 'package:agenciave_dash/modules/splash/splash_module.dart';
 import 'package:asyncstate/asyncstate.dart' as asyncstate;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }
 
@@ -22,6 +23,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final title = dotenv.env['APP_NAME'];
     return FlutterGetIt(
       debugMode: kDebugMode,
       bindings: DashApplicationBindins(),
@@ -45,7 +47,8 @@ class MainApp extends StatelessWidget {
                   Locale('pt', 'BR'),
                 ],
                 debugShowCheckedModeBanner: false,
-                title: "Agência Vê Dashboard",
+                // title: "Agência Vê Dashboard",
+                title: title!,
                 theme: UiConfig.lightTheme,
                 darkTheme: UiConfig.darkTheme,
                 themeMode:
