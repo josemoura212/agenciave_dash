@@ -180,12 +180,4 @@ mixin _HomeControllerVariables {
       GetData.adsData => _adsData.value as T,
     };
   }
-
-  final porcometroData = listSignal<int>([]);
-  Connect? _porcometroDataConnect;
-  Function? _socketDispose;
-
-  final Signal<Stream?> _channel = Signal(null);
-
-  Stream? get channel => _channel.value;
 }

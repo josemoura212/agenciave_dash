@@ -3,34 +3,15 @@ import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/date_side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
-import 'package:odometer/odometer.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class UpBar extends StatefulWidget {
+class UpBar extends StatelessWidget {
   const UpBar({super.key});
 
   @override
-  State<UpBar> createState() => _UpBarState();
-}
-
-class _UpBarState extends State<UpBar> {
-  final controller = Injector.get<HomeController>();
-
-  @override
-  void initState() {
-    super.initState();
-    controller.listenerCount();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Injector.get<HomeController>();
     final themeManager = Injector.get<ThemeManager>();
 
     return Watch(
@@ -127,57 +108,6 @@ class _UpBarState extends State<UpBar> {
                             tooltip: "Lançamento Posterior",
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: controller.getData(GetData.selectedProduct) ==
-                        Product.black,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      width: 250,
-                      height: 45,
-                      child: Center(
-                        child: StreamBuilder(
-                            stream: controller.channel,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
-                                    backgroundColor: Colors.grey[200],
-                                  ),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text('Erro ao carregar os dados');
-                              } else if (snapshot.hasData) {
-                                final data = int.parse(snapshot.data);
-                                return Row(
-                                  children: [
-                                    Text(
-                                      "Contador: ",
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                    AnimatedSlideOdometerNumber(
-                                      odometerNumber: OdometerNumber(data),
-                                      duration: Duration(seconds: 1),
-                                      letterWidth: 10,
-                                      numberTextStyle: TextStyle(
-                                        fontSize: 25.0,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return Text('Sem dados');
-                              }
-                            }),
                       ),
                     ),
                   ),

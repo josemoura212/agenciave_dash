@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/models/ads_model.dart';
@@ -102,6 +104,7 @@ class HomeController
   }
 
   Future<void> changeProduct(Product product) async {
+    log("changeProduct ${product.toString()}");
     await _localStore.write(LocalStorageConstants.product, product.toString());
     _selectedProduct.set(product);
     _homeData.set([], force: true);
@@ -115,20 +118,6 @@ class HomeController
     await getHomeData().asyncLoader();
     if (product == Product.pe) {
       changeRelease(true);
-    }
-  }
-
-  void listenerCount() {
-    final (:channel, :dispose) = _homeServices.openChannelSocket();
-    _socketDispose = dispose;
-
-    _channel.set(channel.stream);
-  }
-
-  void dispose() {
-    _porcometroDataConnect?.dispose();
-    if (_socketDispose != null) {
-      _socketDispose!();
     }
   }
 }

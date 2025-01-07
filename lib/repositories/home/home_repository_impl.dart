@@ -10,7 +10,6 @@ import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final RestClient _restClient;
@@ -79,18 +78,5 @@ class HomeRepositoryImpl implements HomeRepository {
         message: "Erro ao buscar dados",
       ));
     }
-  }
-
-  @override
-  ({WebSocketChannel channel, Function dispose}) openChannelSocket() {
-    final channel = WebSocketChannel.connect(
-        Uri.parse("${LocalStorageConstants.baseUrlWs}/ws"));
-
-    return (
-      channel: channel,
-      dispose: () {
-        channel.sink.close();
-      }
-    );
   }
 }
