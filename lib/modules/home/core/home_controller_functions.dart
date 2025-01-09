@@ -1,6 +1,10 @@
 part of 'home_controller.dart';
 
 mixin _HomeControllerFunctions on _HomeControllerVariables {
+  void initProducts(List<ProductModel> products) {
+    _products.set(products, force: true);
+  }
+
   Future<void> changeRelease(bool toglee, {bool initial = false}) async {
     final start = 0;
     final end = release.length;

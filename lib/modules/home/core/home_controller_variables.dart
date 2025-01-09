@@ -83,6 +83,8 @@ mixin _HomeControllerVariables {
       Signal<List<RawSaleModel>>([]);
 
   final Signal<List<AdsModel>> _adsData = Signal<List<AdsModel>>([]);
+  final Signal<List<ProductModel>> _products = Signal<List<ProductModel>>([]);
+  List<ProductModel> get productData => _products.value;
 
   final Signal<ProcessedSaleModel> _processedSaleData =
       Signal<ProcessedSaleModel>(ProcessedSaleModel.empty());

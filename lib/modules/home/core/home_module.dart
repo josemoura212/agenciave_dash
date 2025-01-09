@@ -1,3 +1,4 @@
+import 'package:agenciave_dash/models/product_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/home_page.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
@@ -24,6 +25,9 @@ class HomeModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => {
-        "/": (context) => const HomePage(),
+        "/": (context) => HomePage(
+              products: ModalRoute.of(context)!.settings.arguments
+                  as List<ProductModel>,
+            ),
       };
 }
