@@ -1,15 +1,18 @@
 import 'dart:developer';
 
 import 'package:agenciave_dash/core/constants/local_storage_constants.dart';
+import 'package:agenciave_dash/core/exceptions/auth_exception.dart';
 import 'package:agenciave_dash/core/exceptions/repository_exception.dart';
 import 'package:agenciave_dash/core/fp/either.dart';
 import 'package:agenciave_dash/core/local_storage/local_storage.dart';
 import 'package:agenciave_dash/core/rest_client/rest_client.dart';
 import 'package:agenciave_dash/models/ads_model.dart';
+import 'package:agenciave_dash/models/product_model.dart';
 import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/repositories/home/home_repository.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final RestClient _restClient;
@@ -77,6 +80,30 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(RepositoryException(
         message: "Erro ao buscar dados",
       ));
+    }
+  }
+
+  @override
+  Future<Either<AuthException, List<ProductModel>>> getProducts(
+      {required String apiKey}) async {
+    try {
+      final response = await _restClient.post(
+        dotenv.env['BASE_URL']!,
+        options: Options(
+          headers: {"x-api-key": apiKey},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return Right((response.data as List)
+            .map((item) => ProductModel.fromJson(item))
+            .toList());
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        return Left(AuthUnauthorizedException());
+      } else {
+        return Left(AuthUnauthorizedException());
+      }
+    } catch (e) {
+      return Left(AuthUnauthorizedException());
     }
   }
 }

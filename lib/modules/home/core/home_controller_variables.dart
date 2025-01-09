@@ -12,8 +12,8 @@ enum Product {
     return switch (this) {
       Product.vi => 'VI',
       Product.si => 'SI',
-      Product.pe => 'SI',
-      Product.cd => 'SI',
+      Product.pe => 'PE',
+      Product.cd => 'CD',
       Product.black => 'BLACK',
     };
   }

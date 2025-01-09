@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
           // ignore: use_build_context_synchronously
           context,
           "/home",
-          (_) => false, arguments: result,
+          (_) => false,
         );
       }
     });
@@ -42,7 +42,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
           // ignore: use_build_context_synchronously
           context,
           "/home",
-          (_) => false, arguments: result,
+          (_) => false,
         );
       }
     }

@@ -1,5 +1,4 @@
 import 'package:agenciave_dash/core/helpers/messages.dart';
-import 'package:agenciave_dash/models/product_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/chart_widget.dart';
 import 'package:agenciave_dash/modules/home/view/widgets/cartesian_widget.dart';
@@ -12,8 +11,7 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.products});
-  final List<ProductModel> products;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -35,7 +33,6 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
           (_) => false,
         );
       }
-      controller.initProducts(widget.products);
       await controller.getHomeData().asyncLoader();
     });
     super.initState();
