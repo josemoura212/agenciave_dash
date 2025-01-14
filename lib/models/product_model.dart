@@ -12,7 +12,7 @@ class ProductModel {
     return ProductModel(
       product: Product.values.firstWhere((e) => e.toString() == json['name']),
       description: json['description'],
-      ads: json['ads'],
+      ads: json['ads'] ?? false,
     );
   }
 

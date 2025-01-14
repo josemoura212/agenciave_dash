@@ -29,40 +29,49 @@ class UpBar extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  _PageToogle(
-                    controller: controller,
-                    title: "Vendas Internas",
-                    product: Product.vi,
-                    color: Colors.greenAccent[400]!,
-                    colortText: Colors.black,
+                  ...controller.products.map(
+                    (e) => _PageToogle(
+                      controller: controller,
+                      title: e.description,
+                      product: e.product,
+                      color: Colors.greenAccent[400]!,
+                      // color: controller.getColor(e.product.index),
+                    ),
                   ),
-                  _PageToogle(
-                    controller: controller,
-                    title: "Stories Intencionais",
-                    product: Product.si,
-                    color: Colors.purpleAccent[400]!,
-                  ),
-                  _PageToogle(
-                    controller: controller,
-                    title: "Profissão Expert",
-                    product: Product.pe,
-                    color: Colors.yellowAccent[700]!,
-                    colortText: Colors.black,
-                  ),
-                  _PageToogle(
-                    controller: controller,
-                    title: "Cliente Novo Todo Dia",
-                    product: Product.cd,
-                    color: Colors.pinkAccent[400]!,
-                    // colortText: Colors.black,
-                  ),
-                  _PageToogle(
-                    controller: controller,
-                    title: "Black é tudo de graça",
-                    product: Product.black,
-                    color: Colors.orangeAccent[400]!,
-                    // colortText: Colors.black,
-                  ),
+                  // _PageToogle(
+                  //   controller: controller,
+                  //   title: "Vendas Internas",
+                  //   product: Product.vi,
+                  //   color: Colors.greenAccent[400]!,
+                  //   colortText: Colors.black,
+                  // ),
+                  // _PageToogle(
+                  //   controller: controller,
+                  //   title: "Stories Intencionais",
+                  //   product: Product.si,
+                  //   color: Colors.purpleAccent[400]!,
+                  // ),
+                  // _PageToogle(
+                  //   controller: controller,
+                  //   title: "Profissão Expert",
+                  //   product: Product.pe,
+                  //   color: Colors.yellowAccent[700]!,
+                  //   colortText: Colors.black,
+                  // ),
+                  // _PageToogle(
+                  //   controller: controller,
+                  //   title: "Cliente Novo Todo Dia",
+                  //   product: Product.cd,
+                  //   color: Colors.pinkAccent[400]!,
+                  //   // colortText: Colors.black,
+                  // ),
+                  // _PageToogle(
+                  //   controller: controller,
+                  //   title: "Black é tudo de graça",
+                  //   product: Product.black,
+                  //   color: Colors.orangeAccent[400]!,
+                  //   // colortText: Colors.black,
+                  // ),
                   Spacer(),
                   Visibility(
                     visible: controller.getData(GetData.selectedProduct) ==

@@ -42,6 +42,16 @@ enum GetData {
   adsData,
 }
 
+final colors = [
+  Colors.greenAccent[400]!,
+  const Color(0xff00C49F),
+  const Color(0xffFFBB28),
+  const Color(0xffFF8042),
+  const Color(0xffAF19FF),
+  const Color(0xffFF1919),
+  const Color(0xff19FFB5),
+];
+
 enum ShowAndHide {
   settings,
   origem,
@@ -84,7 +94,7 @@ mixin _HomeControllerVariables {
 
   final Signal<List<AdsModel>> _adsData = Signal<List<AdsModel>>([]);
   final Signal<List<ProductModel>> _products = Signal<List<ProductModel>>([]);
-  List<ProductModel> get productData => _products.value;
+  List<ProductModel> get products => _products.value;
 
   final Signal<ProcessedSaleModel> _processedSaleData =
       Signal<ProcessedSaleModel>(ProcessedSaleModel.empty());
