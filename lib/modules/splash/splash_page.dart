@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final result = await controller.isAuthenticate();
       messageListener(controller);
-      if (result.isNotEmpty) {
+      if (result) {
         Navigator.pushNamedAndRemoveUntil(
           // ignore: use_build_context_synchronously
           context,
@@ -37,7 +37,7 @@ class _SplashPageState extends State<SplashPage> with MessageViewMixin {
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       final result = await controller.checkAuth(apiKey: _apiKeyEC.text);
-      if (result.isNotEmpty && context.mounted) {
+      if (result && context.mounted) {
         Navigator.pushNamedAndRemoveUntil(
           // ignore: use_build_context_synchronously
           context,

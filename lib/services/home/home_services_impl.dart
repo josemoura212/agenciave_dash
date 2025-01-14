@@ -25,7 +25,6 @@ class HomeServicesImpl implements HomeServices {
       _homeRepository.getAdsData(product);
 
   @override
-  Future<Either<AuthException, List<ProductModel>>> getProducts(
-          {required String apiKey}) =>
-      _homeRepository.getProducts(apiKey: apiKey);
+  Future<Either<AuthException, List<ProductModel>>> getProducts() =>
+      _homeRepository.getProducts();
 }

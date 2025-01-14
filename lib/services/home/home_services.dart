@@ -11,6 +11,5 @@ abstract interface class HomeServices {
       Product product);
   Future<Either<RepositoryException, List<AdsModel>>> getAdsData(
       Product product);
-  Future<Either<AuthException, List<ProductModel>>> getProducts(
-      {required String apiKey});
+  Future<Either<AuthException, List<ProductModel>>> getProducts();
 }

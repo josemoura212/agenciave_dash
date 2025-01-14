@@ -121,4 +121,15 @@ class HomeController
       changeRelease(true);
     }
   }
+
+  Future<void> initProducts() async {
+    final result = await _homeServices.getProducts();
+
+    switch (result) {
+      case Left():
+        showError("Erro ao buscar produtos");
+      case Right(value: var data):
+        _products.set(data, force: true);
+    }
+  }
 }

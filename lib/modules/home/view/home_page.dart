@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> with MessageViewMixin {
           (_) => false,
         );
       }
-      await controller.getHomeData().asyncLoader();
+      await controller.initProducts().asyncLoader();
     });
     super.initState();
   }

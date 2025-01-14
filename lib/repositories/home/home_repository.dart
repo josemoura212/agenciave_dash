@@ -7,8 +7,7 @@ import 'package:agenciave_dash/models/raw_sale_model.dart';
 import 'package:agenciave_dash/modules/home/core/home_controller.dart';
 
 abstract interface class HomeRepository {
-  Future<Either<AuthException, List<ProductModel>>> getProducts(
-      {required String apiKey});
+  Future<Either<AuthException, List<ProductModel>>> getProducts();
   Future<Either<RepositoryException, List<RawSaleModel>>> getHomeData(
       Product product);
   Future<Either<RepositoryException, List<AdsModel>>> getAdsData(

@@ -84,9 +84,9 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<AuthException, List<ProductModel>>> getProducts(
-      {required String apiKey}) async {
+  Future<Either<AuthException, List<ProductModel>>> getProducts() async {
     try {
+      final apiKey = await _localStorage.read(LocalStorageConstants.apiKey);
       final response = await _restClient.post(
         dotenv.env['BASE_URL']!,
         options: Options(
